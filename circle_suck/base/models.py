@@ -5,6 +5,7 @@ from django.db import models
 
 from base.constants import *
 
+
 class School(object):
     """
     Using our own implementation to avoid populating a database
@@ -35,3 +36,26 @@ for conference_id, conference in CONFERENCES.items():
 
 for school_id, school in SCHOOLS.items():
     SCHOOLS[school_id] = School(school_id, school['name'], school['conference'])
+
+class Game(models.Model):
+    """
+    Stores information about a game's winner, loser, and their respective scores.
+    """
+
+    winner = models.CharField(max_length=5)
+    loser = models.CharField(max_length=5)
+    winner_score = models.PositiveIntegerField()
+    loser_score = models.PositiveIntegerField()
+    season = models.ForeignKey('Season', on_delete=models.CASCADE)
+    date = models.DateField()
+
+class Season(models.Model):
+    """
+    Contains a circle of suck for a given year and conference.
+    """
+
+    sport = models.CharField(max_length=100, choices=[(x, x) for x in SPORTS])
+    conference = models.CharField(max_length=100, choices=[(conference_id, conference['name']) for conference_id, conference in CONFERENCES.items()])
+    year = models.IntegerField()
+    circle_of_suck = models.TextField()
+

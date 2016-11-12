@@ -10,4 +10,4 @@ def merge_dicts(*dicts):
     >>> merge_dicts(a, b, c)
     { 'a': 1, 'b': 2, 'c': 3 }
     """
-    return dict(sum([d.items() for d in dicts], []))
+    return dict(sum([list(d.items()) for d in dicts], []))
