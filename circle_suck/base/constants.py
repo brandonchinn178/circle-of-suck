@@ -1,8 +1,14 @@
 from base.utils import merge_dicts
 
-# list of sports
-SPORTS = [
-    "football",
+# list of sports as choices.
+SPORTS_CHOICES = [
+    ('Football', 'Football')
+]
+
+# list of conference ID's to conference name pairs
+
+CONF_CHOICES = [
+    ('PAC_12','Pac-12'),
 ]
 
 # map ID to team name. Add logo image to `img/<conference_id>/<school_id>.png` (lowercase IDs)
