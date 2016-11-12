@@ -26,3 +26,9 @@ Installation
 1. Run `npm install` and `grunt build` (Requires Node.js and Sass)
 1. Run `python circle_suck/manage.py runserver`
 1. Go to `http://localhost:8000`
+
+Testing
+-------
+
+1. `cd circle_suck`
+1. `python manage.py test`
