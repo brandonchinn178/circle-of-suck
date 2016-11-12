@@ -43,8 +43,6 @@ class Game(models.Model):
     Stores information about a game's winner, loser, and their respective scores.
     """
 
-    objects = GameManager()
-
     winner = models.CharField(max_length=5)
     loser = models.CharField(max_length=5)
     winner_score = models.PositiveIntegerField()
