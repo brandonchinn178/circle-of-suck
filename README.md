@@ -1,12 +1,20 @@
 Circle of Suck
 ==============
 
-Cal Hacks 2016
-Brandon Chinn, Allan Levy, Matt Trinh, Leslie Tsai, Thomas Zhang
+**Cal Hacks 2016**
 
 A "circle of suck" is a cycle of college sports teams, where each team has an arrow pointing to a team they have lost to in the sport. Hopefully, at some point in the season, a full circle can be found, where each team has lost to some other team in the conference.
 
 This website will scrape an API with college sports scores and run a cycle-finding algorithm to find a circle of suck (or at least, the longest circles of suck).
+
+Team
+----
+
+- Brandon Chinn: Project Leader, Front-end Design
+- Allan Levy: Back-end development, longest-cycle algorithm
+- Matt Trinh: Back-end development, longest-cycle algorithm
+- Leslie Tsai: Front-end development
+- Thomas Zhang: Back-end development, longest-cycle-algorithm
 
 Installation
 ------------
