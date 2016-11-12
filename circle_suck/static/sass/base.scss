@@ -1,0 +1,87 @@
+@import "vars";
+
+html, body, div, span, h1, h2, h3, h4, h5, h6,
+p, a, ul, li, label, form, input, textarea, button,
+header, footer, td, th, pre {
+    color: $blue;
+    font-family: "Raleway", sans-serif;
+    font-weight:600;
+    font-size: 18px;
+    box-sizing: border-box; // padding included in width
+    margin: 0;
+    padding: 0;
+
+}
+h1 {
+    font-size: 72px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+header {
+	margin-bottom: 20px;
+}
+body {
+	padding: 20px;
+	width: 100%;
+	min-width: 500px;
+}
+button{
+    cursor:pointer;
+    padding: 7px 20px 5px;
+}
+
+.chosen-container-single {
+    .chosen-single {
+        border: 0 !important;
+        border-radius: 0;
+        background: $blue !important;
+        height: initial;
+        padding: 10px 0;
+        box-shadow: none;
+        span {
+            margin: 0;
+            color: $white;
+        }
+        div {
+            b {
+                position: relative;
+                background: none;
+                color: $white;
+                &:before {
+                    content: "\25BE";
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+    }
+    .chosen-drop {
+        background: $light-blue;
+        box-shadow: none;
+        border-radius: 0;
+        border-color: $gray;
+        .chosen-search input {
+            background: $white;
+        }
+        .chosen-results {
+            margin: 0;
+            padding: 0;
+            li {
+                padding: 10px;
+                &.highlighted {
+                    background: lighten($light-blue, 5);
+                    color: $blue;
+                }
+                &.no-results {
+                    color: $blue;
+                    background: $gray;
+                }
+            }
+        }
+    }
+    &.chosen-with-drop a.chosen-single div b:before {
+        transform: translateY(-50%) rotate(180deg);
+    }
+}

@@ -1,0 +1,26 @@
+{% load staticfiles partials %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>Circle of Suck</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:600,700" rel="stylesheet">
+    {% add_style "vendor/chosen.min.css" "base.css" %}
+    {% add_script "vendor/jquery-1.11.2.min.js" "vendor/chosen.jquery.min.js" %}
+    {% block head %}{% endblock %}
+</head>
+{% spaceless %}
+    <body>
+	    <header>
+	    	<h1> Circle of Suck </h1>
+	    	{% block header %}
+	    	{% endblock %}
+	    </header>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+{% endspaceless %}
+</html>
