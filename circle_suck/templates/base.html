@@ -1,0 +1,19 @@
+{% load staticfiles partials %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>Circle of Suck</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    {% add_style "base.css" %}
+    {% add_script "vendor/jquery-1.11.2.min.js" %}
+    {% block head %}{% endblock %}
+</head>
+{% spaceless %}
+    <body>
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+{% endspaceless %}
+</html>
