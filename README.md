@@ -10,10 +10,10 @@ This website will scrape an API with college sports scores and run a cycle-findi
 Team
 ----
 
-- Brandon Chinn: Project Leader, Front-end Design
+- Brandon Chinn: Project Leader, Front-end design
 - Allan Levy: Back-end development, longest-cycle algorithm
 - Matt Trinh: Back-end development, longest-cycle algorithm
-- Leslie Tsai: Front-end development
+- Leslie Tsai: Front-end design & development
 - Thomas Zhang: Back-end development, longest-cycle-algorithm
 
 Installation
