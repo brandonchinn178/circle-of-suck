@@ -1,14 +1,16 @@
 @import "vars";
 
 html, body, div, span, h1, h2, h3, h4, h5, h6,
-p, a, ul, li, label, form, input, textarea,
+p, a, ul, li, label, form, input, textarea, button,
 header, footer, td, th, pre {
     color: $blue;
     font-family: "Raleway", sans-serif;
     font-weight:600;
+    font-size: 18px;
     box-sizing: border-box; // padding included in width
     margin: 0;
     padding: 0;
+
 }
 h1 {
     font-size: 72px;
@@ -22,4 +24,8 @@ body {
 	padding: 20px;
 	width: 100%;
 	min-width: 500px;
+}
+button{
+    cursor:pointer;
+    padding: 7px 20px 5px;
 }

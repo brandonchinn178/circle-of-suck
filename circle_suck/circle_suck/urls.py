@@ -18,5 +18,5 @@ from base.views import *
 
 urlpatterns = [
 	url(r"^$", HomeView.as_view(), name="home"),
-	url(r"^$", ConferenceView.as_view(), name="conference"),
+	url(r"^conference/$", ConferenceView.as_view(), name="conference"),
 ]

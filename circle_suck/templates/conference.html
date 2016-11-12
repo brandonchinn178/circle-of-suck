@@ -1,19 +1,35 @@
 {% extends "base.html" %}
-{% load static %}
+{% load partials %}
 {% block head %}
     {% add_style 'conference.css' %}
 {% endblock %}
 
 {% block header %}
-    <div class='dropdown'> 
-        <select class='sport'> 
-            <option value="%">Sport</option>
-        </select>
-        <select class='conference'> 
-            <option value="%">Conference</option>
-        </select>
-    </div>
+    <select class='sport'> 
+        <option value="%">Sport</option>
+    </select>
+    <select class='conference'> 
+        <option value="%">Conference</option>
+    </select>   
 {% endblock %}
 {% block content %}
+    <div class='graph'>
+    </div>
+    <div class='school box'>
+        <span class="school-name"></span>
+        <span class="record"></span>
+    </div>
+    <div class='game box'>
+        <p class="date"></p>
+        <p class='winner'> 
+            <img src="" class='logo'>
+            <span class='winner-score'></span>
+        </p> 
+        <p class='loser'>
+            <img src="" class='logo'>
+            <span class='loser-score'></span>
+        </p>
 
+    </div>
+    <button type='button' class='graph-type'>Full Graph</button>
 {% endblock %}
