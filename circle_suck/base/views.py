@@ -11,3 +11,7 @@ class ConferenceView(TemplateView):
         context['schools'] = School.get_conference("PAC_12")
         return context
 
+    def dispatch(self, request, *args, **kwargs):
+        self.sport = request.GET['sport']
+        self.conference = request.GET['conference']
+        return super(ConferenceView, self).dispatch(request, *args, **kwargs)
