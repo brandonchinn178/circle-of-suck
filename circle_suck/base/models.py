@@ -46,7 +46,7 @@ class Game(models.Model):
     loser = models.CharField(max_length=5)
     winner_score = models.PositiveIntegerField()
     loser_score = models.PositiveIntegerField()
-    season = models.ForeignKey('Season', on_delete=models.,CASCADE)
+    season = models.ForeignKey('Season', on_delete=models.CASCADE)
     date = models.DateField()
 
 class Season(models.Model):
