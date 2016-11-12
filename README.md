@@ -13,6 +13,7 @@ Installation
 
 1. `git clone` this repository
 1. Install the requirements in `requirements.txt` in your favorite virtual environment (if you use `virtualenv`, name the directory `venv/`)
+1. Get the `.env` file from someone, run `source .env`
 1. Run `python circle_suck/manage.py migrate`
 1. Run `npm install` and `grunt build` (Requires Node.js and Sass)
 1. Run `python circle_suck/manage.py runserver`
