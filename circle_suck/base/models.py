@@ -65,9 +65,14 @@ class Season(models.Model):
         """
         Returns the circle of suck with School objects
         """
+        try:
+            circle_of_suck = json.loads(self.circle_of_suck)
+        except:
+            return []
+
         return [
             [School.get(school_id) for school_id in cycle]
-            for cycle in json.loads(self.circle_of_suck)
+            for cycle in circle_of_suck
         ]
 
     def set_circle_of_suck(self, circle_of_suck):

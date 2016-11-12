@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView
+from django.shortcuts import redirect
 
 from base.models import *
 from base.utils import flatten
@@ -14,13 +15,23 @@ class ConferenceView(TemplateView):
 
         context['season'] = self.season
         if self.season:
-            context['all_games'] = self.season.games.all()
+            context['all_games'] = [
+                {
+                    'winner': game.winner,
+                    'loser': game.loser,
+                    'winner_score': game.winner_score,
+                    'loser_score': game.loser_score,
+                    'date': game.date,
+                }
+                for game in self.season.games.all()
+            ]
 
-            circle_of_suck = self.season.get_circle_of_suck()
-            context['circle_of_suck'] = circle_of_suck
+            circles_of_suck = self.season.get_circle_of_suck()
+            context['circles_of_suck'] = circles_of_suck
 
             # all schools in a circle of suck
-            circle_schools = flatten(circle_of_suck)
+            circle_schools = flatten(circles_of_suck)
+            # all schools in conference
             all_schools = School.get_conference(self.season.conference)
             # schools not in any circles of suck
             context['extra_schools'] = set(all_schools) - set(circle_schools)
@@ -28,11 +39,20 @@ class ConferenceView(TemplateView):
         return context
 
     def dispatch(self, request, *args, **kwargs):
-        sport = request.GET['sport']
-        conference = request.GET['conference']
-        year = request.GET.get('year')
         try:
-            self.season = Season.objects.get(sport=sport, conference=conference)
+            kwargs = {
+                'sport': request.GET['sport'],
+                'conference': request.GET['conference'],
+            }
+        except:
+            return redirect('home')
+
+        if 'year' in request.GET:
+            kwargs['year'] = request.GET['year']
+
+        try:
+            self.season = Season.objects.get(**kwargs)
         except:
             self.season = None
+
         return super(ConferenceView, self).dispatch(request, *args, **kwargs)
