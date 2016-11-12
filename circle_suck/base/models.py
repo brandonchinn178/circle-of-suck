@@ -5,7 +5,6 @@ from django.db import models
 
 from base.constants import *
 
-
 class School(object):
     """
     Using our own implementation to avoid populating a database
@@ -42,6 +41,8 @@ class Game(models.Model):
     Stores information about a game's winner, loser, and their respective scores.
     """
 
+    objects = GameManager()
+
     winner = models.CharField(max_length=5)
     loser = models.CharField(max_length=5)
     winner_score = models.PositiveIntegerField()
@@ -59,3 +60,8 @@ class Season(models.Model):
     year = models.IntegerField()
     circle_of_suck = models.TextField()
 
+    def get_school_records(self, school):
+        """Return a tuple of lists that store the wins and losses respectively"""
+        win = 
+        losses =
+        return (wins, losses)
