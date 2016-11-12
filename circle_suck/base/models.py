@@ -61,7 +61,7 @@ class Season(models.Model):
     circle_of_suck = models.TextField()
 
     def get_school_records(self, school):
-        """Return a tuple of values that store the number of wins and losses respectively"""
+        """Return a tuple of values that store the number of wins and losses"""
         wins = len(list(self.games.filter(winner=school)))
         losses = len(list(self.games.filter(loser=school)))
         return (wins, losses)
