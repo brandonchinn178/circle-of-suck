@@ -1,7 +1,14 @@
 from django.views.generic import TemplateView
 from base.models import *
+
 class HomeView(TemplateView):
     template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['sports'] = SPORTS
+        context['conferences'] = CONFERENCES
+        return context
 
 class ConferenceView(TemplateView):
     template_name = "conference.html"

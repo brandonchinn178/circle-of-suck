@@ -10,13 +10,17 @@
 	<div class='dropdown'> 
 		<select class='sport'>
 			<option></option>
-			<option value="0">Football</option>
+            {% for sport in sports %}
+			     <option value="{{sport}}">{{sport}}</option>
+            {% endfor %}
 		</select>
 	</div>
 	<div class='dropdown'>
 		<select class='conference'> 
 			<option></option>
-			<option value="0">Pac-12</option>
+			{% for conference in conferences %}
+                 <option value="{{conference}}">{{conference}}</option>
+            {% endfor %}
 		</select>
 	</div>
 {% endblock %}
