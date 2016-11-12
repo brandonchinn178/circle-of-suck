@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+    {% add_style 'conference.css' %}
+{% endblock %}
+
+{% block header %}
+    <div class='dropdown'> 
+        <select class='sport'> 
+            <option value="%">Sport</option>
+        </select>
+        <select class='conference'> 
+            <option value="%">Conference</option>
+        </select>
+    </div>
+{% endblock %}
+{% block content %}
+
+{% endblock %}
