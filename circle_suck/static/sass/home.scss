@@ -1,3 +1,5 @@
+@import "vars";
+
 .content {
     padding-top: 125px;
     .dropdown{
@@ -6,8 +8,8 @@
     }
     select {
         align: center;
-        background-color: #577580;
-        color:#FFFFFF;
+        background-color: $blue;
+        color:$white;
         border: none;
         font-size: 48px;
         height: 66px;
