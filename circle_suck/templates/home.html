@@ -1,1 +1,21 @@
 {% extends "base.html" %}
+{% load partials %}
+
+{% block head %}
+    {% add_style 'home.css' %}
+{% endblock %}
+
+{% block content %}
+	<h1> Circle of Suck </h1>
+	<div class='dropdown'> 
+		<select class='sport'> 
+			<option value="0">Sport</option>
+
+			
+		</select>
+		<select class='conference'> 
+			<option value="0">Conference</option>
+			
+		</select>
+	</div>
+{% endblock %}

@@ -38,3 +38,4 @@ def add_script(*paths):
         '',
         '<script src="{}"></script>',
         [(get_static_path('js/%s' % path),) for path in paths]
+    )
