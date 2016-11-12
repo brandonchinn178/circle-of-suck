@@ -4,7 +4,7 @@ from django.conf import settings
 from django.db import models
 
 from base.constants import *
-import requests, json
+
 
 class School(object):
     """
@@ -42,11 +42,11 @@ class Game(models.Model):
     Stores information about a game's winner, loser, and their respective scores.
     """
 
-    winner = models.CharField()
-    loser = models.CharField()
-    winner_score = models.IntegerField(min_value=0)
-    loser_score = models.IntegerField(min_value=0)
-    season = Season()
+    winner = models.CharField(max_length=5)
+    loser = models.CharField(max_length=5)
+    winner_score = models.PositiveIntegerField()
+    loser_score = models.PositiveIntegerField()
+    season = models.ForeignKey('Season', on_delete=models.,CASCADE)
     date = models.DateField()
 
 class Season(models.Model):
@@ -54,8 +54,8 @@ class Season(models.Model):
     Contains a circle of suck for a given year and conference.
     """
 
-    sport = models.ChoiceField(choices=SPORTS_CHOICES)
-    conference = model.ChoiceField(choices=CONF_CHOICES)
+    sport = models.ChoiceField(choices=[(x, x) for x in SPORTS])
+    conference = model.ChoiceField(choices=[(conference_id, conference['name']) for conference_id, conference in CONFERENCES.items()])
     year = model.IntegerField()
     circle_of_suck = models.TextField()
 
