@@ -1,0 +1,9 @@
+django==1.10.3
+
+# heroku packages
+boto==2.35.2
+django-storages==1.5.0
+dj-database-url==0.4.1
+psycopg2==2.5.4
+libsass==0.11.1
+gunicorn==19.0.0
