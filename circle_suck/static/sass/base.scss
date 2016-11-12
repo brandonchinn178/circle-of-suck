@@ -1,0 +1,23 @@
+html, body, div, span, h1, h2, h3, h4, h5, h6,
+p, a, ul, li, label, form, input, textarea,
+header, footer, td, th, pre {
+    color: #577580;
+    font-family: "Raleway", sans-serif;
+    font-weight:600;
+    box-sizing: border-box; // padding included in width
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    font-size: 72px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+header {
+	margin-bottom: 20px;
+}
+body {
+	padding: 20px;
+	width: 100%;
+	min-width: 500px;
+}
