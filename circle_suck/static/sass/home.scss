@@ -1,9 +1,12 @@
 @import "vars";
 
 .content {
-    padding-top: 125px;
+    padding-top: 100px;
     .dropdown {
         text-align: center;
-        margin-bottom: 100px;
+        margin-bottom: 75px;
+        select {
+            width: 300px;
+        }
     }
 }

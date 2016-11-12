@@ -29,3 +29,59 @@ button{
     cursor:pointer;
     padding: 7px 20px 5px;
 }
+
+.chosen-container-single {
+    .chosen-single {
+        border: 0 !important;
+        border-radius: 0;
+        background: $blue !important;
+        height: initial;
+        padding: 10px 0;
+        box-shadow: none;
+        span {
+            margin: 0;
+            color: $white;
+        }
+        div {
+            b {
+                position: relative;
+                background: none;
+                color: $white;
+                &:before {
+                    content: "\25BE";
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+    }
+    .chosen-drop {
+        background: $light-blue;
+        box-shadow: none;
+        border-radius: 0;
+        border-color: $gray;
+        .chosen-search input {
+            background: $white;
+        }
+        .chosen-results {
+            margin: 0;
+            padding: 0;
+            li {
+                padding: 10px;
+                &.highlighted {
+                    background: lighten($light-blue, 5);
+                    color: $blue;
+                }
+                &.no-results {
+                    color: $blue;
+                    background: $gray;
+                }
+            }
+        }
+    }
+    &.chosen-with-drop a.chosen-single div b:before {
+        transform: translateY(-50%) rotate(180deg);
+    }
+}
