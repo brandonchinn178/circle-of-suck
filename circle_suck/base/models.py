@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
 
+import json
+
 from base.constants import *
 
 class School(object):
@@ -47,7 +49,7 @@ class Game(models.Model):
     loser = models.CharField(max_length=5)
     winner_score = models.PositiveIntegerField()
     loser_score = models.PositiveIntegerField()
-    season = models.ForeignKey('Season', on_delete=models.CASCADE)
+    season = models.ForeignKey('Season', on_delete=models.CASCADE, related_name='games')
     date = models.DateField()
 
 class Season(models.Model):
@@ -65,3 +67,20 @@ class Season(models.Model):
         win = 
         losses =
         return (wins, losses)
+
+    def get_circle_of_suck(self):
+        """
+        Returns the circle of suck with School objects
+        """
+        return [
+            [School.get(school_id) for school_id in cycle]
+            for cycle in json.loads(self.circle_of_suck)
+        ]
+
+    def set_circle_of_suck(self, circle_of_suck):
+        """
+        Set the given circle of suck, as a list of school IDs; see base.constants
+        for the list of school IDs (the IDs returned from the API). Still need
+        to save to store data in database
+        """
+        self.circle_of_suck = json.dumps(circle_of_suck)
