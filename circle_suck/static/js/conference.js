@@ -19,7 +19,7 @@ $(document).ready(function() {
 
     $(".circle-of-suck").each(function() {
         var n = $(this).children(".school").length;
-        var radius = 20 * n;
+        var radius = 25 * n * 0.8;
         var svgSize = $("svg.school").width();
 
         var size = 2 * radius + svgSize;
