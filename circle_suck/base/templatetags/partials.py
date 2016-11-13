@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django import template
 from django.templatetags.static import static as get_static_path
-from django.utils.html import format_html, format_html_join
+from django.utils.html import format_html, format_html_join, mark_safe
 
 register = template.Library()
 
@@ -54,4 +54,24 @@ def make_school(school):
         """,
         school.id,
         school.logo
+    )
+
+@register.simple_tag
+def make_arrow():
+    """
+    Make an SVG for an arrow
+
+    Source: http://jsfiddle.net/Z5Qkf/2/
+    """
+    return mark_safe(
+        """
+        <svg width="0" height="0" class="arrow">
+            <defs>
+                <marker id="head" orient="auto" markerwidth="4" markerheight="6" refx="3" refy="3">
+                    <path d="M1,1 L3,3 L1,5"></path>
+                </marker>
+            </defs>
+            <path class="arrow-body" marker-end="url(#head)"></path>
+        </svg>
+        """
     )

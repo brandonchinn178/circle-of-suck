@@ -36,3 +36,34 @@ $(document).ready(function() {
             $(".school-box").hide();
         });
 });
+
+/**
+ * Set the SVG arrow between the two schools
+ */
+function setArrow(school1, school2) {
+    // center of circles
+    var x1 = $(school1).position().left + $(school1).width() / 2;
+    var y1 = $(school1).position().top + $(school1).height() / 2;
+    var x2 = $(school2).position().left + $(school2).width() / 2;
+    var y2 = $(school2).position().top + $(school2).height() / 2;
+    var radius = $(school1).find("circle")[0].getBBox().width / 2;
+
+    // move to outside of circle
+    var ratio = radius / Math.hypot(x2-x1, y2-y1);
+    x1 += ratio * (x2 - x1);
+    y1 += ratio * (y2 - y1);
+    x2 -= ratio * (x2 - x1);
+    y2 -= ratio * (y2 - y1);
+    var width = x2 - x1;
+    var height = y2 - y1;
+
+    var container = $(school1).parent();
+    var arrow = $(school1).next("svg.arrow");
+    arrow.css({
+        width: Math.abs(width),
+        height: Math.abs(height),
+        left: x1 - container.position().left,
+        top: y1 - container.position().top,
+    });
+    arrow.find(".arrow-body").attr("d", "M0,0 L" + width + "," + height);
+}

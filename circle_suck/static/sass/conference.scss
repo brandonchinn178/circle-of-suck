@@ -40,6 +40,15 @@ header {
                 }
             }
         }
+        svg.arrow {
+            position: absolute;
+            path {
+                fill: none;
+                stroke: $pink;
+                stroke-linecap: round;
+                stroke-width: 5px;
+            }
+        }
     }
     .box{
         position: absolute;

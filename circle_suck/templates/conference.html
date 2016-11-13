@@ -34,6 +34,7 @@
                 <div class="circle-of-suck">
                     {% for school in circle_of_suck %}
                         {% make_school school %}
+                        {% make_arrow %}
                     {% endfor %}
                 </div>
             {% endfor %}
@@ -55,8 +56,7 @@
                 <img src="" class='logo'>
                 <span class='loser-score'></span>
             </p>
-
         </div>
-        <button type='button' class='graph-type'>Full Graph</button>
+        <!--<button type='button' class='graph-type'>Full Graph</button>-->
     {% endif %}
 {% endblock %}
