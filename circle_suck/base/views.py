@@ -10,17 +10,28 @@ from base.utils import flatten
 class HomeView(TemplateView):
     template_name = "home.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        self.year = request.GET.get('year', date.today().year)
+        self.season = None
+
+        try:
+            kwargs = {
+                'sport': request.GET['sport'],
+                'conference': request.GET['conference'],
+            }
+        except KeyError:
+            self.template_name = 'home.html'
+        else:
+            self.template_name = 'conference.html'
+            try:
+                self.season = Season.objects.get(year=self.year, **kwargs)
+            except:
+                pass
+
+        return super(HomeView, self).dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['sports'] = SPORTS
-        context['conferences'] = CONFERENCES
-        return context
-
-class ConferenceView(TemplateView):
-    template_name = "conference.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(ConferenceView, self).get_context_data(**kwargs)
 
         context['season'] = self.season
         context['year'] = self.year
@@ -58,24 +69,7 @@ class ConferenceView(TemplateView):
 
         context['sports'] = SPORTS
         context['conferences'] = CONFERENCES
-        context['current_sport'] = kwargs['sport']
-        context['current_conference'] = kwargs['conference']
+        context['current_sport'] = kwargs.get('sport')
+        context['current_conference'] = kwargs.get('conference')
 
         return context
-
-    def dispatch(self, request, *args, **kwargs):
-        try:
-            kwargs = {
-                'sport': request.GET['sport'],
-                'conference': request.GET['conference'],
-            }
-        except KeyError:
-            return redirect('home')
-
-        self.year = request.GET.get('year', date.today().year)
-        try:
-            self.season = Season.objects.get(year=self.year, **kwargs)
-        except:
-            self.season = None
-
-        return super(ConferenceView, self).dispatch(request, *args, **kwargs)

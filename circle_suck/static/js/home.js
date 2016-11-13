@@ -17,7 +17,7 @@ function checkSelection() {
     var conference = $("select.conference").val();
 
     if (sport && conference) {
-        window.location = "/conference/?" + $.param({
+        window.location = "?" + $.param({
             sport: sport,
             conference: conference,
         });

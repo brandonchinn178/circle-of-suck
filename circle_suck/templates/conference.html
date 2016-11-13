@@ -20,7 +20,7 @@
         <select class='conference'> 
             <option></option>
             {% for id, conference in conferences.items %}
-                <option value="{{id}}" {% if conference == current_conference %}selected="selected"{% endif %}>{{conference.name}}</option>
+                <option value="{{id}}" {% if id == current_conference %}selected="selected"{% endif %}>{{conference.name}}</option>
             {% endfor %}
         </select>
     </div>
