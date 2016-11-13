@@ -15,15 +15,11 @@ class Command(BaseCommand):
             self.update_circles(sport, sport_url, **options)
     
     def update_circles(self, sport, sport_url, **options):
-    	for conference in CONFERENCES:
-    		self.season = Season.objects.get(sport = sport, conference = conference, year = self.year)
+    	for conference_id, conference in CONFERENCES.items():
+    		self.season = Season.objects.get(sport = sport, conference = conference_id, year = self.year)
     		games = Game.objects.all().filter(season = self.season)
-    		graph = {}
-    		for school in CONFERENCES[conference]["schools"]:
-    			relevant_games = games.filter(loser = school.id)
-    			losses = []
-    			for game in relevant_games:
-    				losses.append(game.winner)
-    			graph[school.id] = losses
+    		graph = {
+			    school.id: games.filter(loser=school.id).values_list('winner', flat=True) for school in conference['schools']
+			}
     		circles = utils.find_all_connected(graph)
     		self.season.set_circle_of_suck(circles)
