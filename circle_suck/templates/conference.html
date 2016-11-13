@@ -31,15 +31,17 @@
     {% else %}
         <div class='graph'>
             {% for circle_of_suck in circles_of_suck %}
-                <div class="circle-of-suck">
+                <div class="school-group circle-of-suck">
                     {% for school in circle_of_suck %}
                         {% make_school school %}
                     {% endfor %}
                 </div>
             {% endfor %}
-            {% for school in extra_schools %}
-                {% make_school school %}
-            {% endfor %}
+                <div class="school-group extra-schools">
+                    {% for school in extra_schools %}
+                        {% make_school school %}
+                    {% endfor %}
+                </div>
         </div>
         <div class='school-box box'>
             <span class="school-name"></span>&nbsp;

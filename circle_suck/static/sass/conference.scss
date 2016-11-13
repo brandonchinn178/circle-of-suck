@@ -18,9 +18,19 @@ header {
 
 .content {
     .graph {
+        padding-top: 10px;
+        .school-group {
+            margin: 50px;
+        }
+        text-align: center;
         .circle-of-suck {
             position: relative;
             display: inline-block;
+            vertical-align: middle;
+            svg.school {
+                position: absolute;
+            }
+
         }
         svg.school {
             image {
