@@ -56,6 +56,7 @@ $(document).ready(function() {
 });
 
 function initCircleOfSuck() {
+    // initialize helper objects
     loserToGames = {};
     playedSchools = {};
     $.each(window.allSchools, function(school) {
@@ -71,7 +72,8 @@ function initCircleOfSuck() {
         }
     }
 
-    $(".circle-of-suck").each(function() {
+    // set up circle graph
+    $(".suck-graph .circle-of-suck").each(function() {
         arrangeSchools(this);
 
         var prev = $(this).children(".school").last();
@@ -95,6 +97,7 @@ function initCircleOfSuck() {
         drawSchoolArrow(loser, winner, _arrow);
     });
 
+    // initialize popup boxes for school details
     $(".school circle")
         .mouseover(function() {
             var id = $(this).parent().data("id");
@@ -139,15 +142,27 @@ function initCircleOfSuck() {
     });
 
     $(".full-graph .school circle").mouseover(function() {
-        // all schools who have not played hovered school fade away
+        fadeElement(".full-graph .arrow");
+        // all schools who have not played the hovered school fade away
+        var school = $(this).parent();
+        var id = school.data("id");
         var havePlayed = playedSchools[id];
         $.each(window.allSchools, function(school) {
             if (havePlayed.indexOf(school) === -1) {
                 fadeElement(".school." + school);
             }
         });
+
+        fadeElement(school, true);
+        $(".full-graph .arrow").each(function() {
+            var game = $(this).data("gameDetails");
+            if (game.winner === id || game.loser === id) {
+                fadeElement(this, true);
+            }
+        });
     });
 
+    // initialize popup boxes for game details
     $(".arrow")
         .mouseover(function() {
             var game = $(this).data("game-details");
@@ -162,6 +177,13 @@ function initCircleOfSuck() {
             $(".game-box .loser .logo img").attr("src", loser.find("image").attr("href"));
             $(".game-box .loser .score").text(game.loser_score);
             $(".game-box").show();
+
+            fadeElement(".school");
+            fadeElement(".arrow");
+            fadeElement(this, true);
+
+            fadeElement($(this).data("loser"), true);
+            fadeElement($(this).data("winner"), true);
         })
         .mousemove(function(e) {
             $(".game-box").css({
@@ -171,21 +193,11 @@ function initCircleOfSuck() {
         })
         .mouseleave(function() {
             $(".game-box").hide();
+            fadeElement(".school", true);
+            fadeElement(".arrow", true);
         });
 
-    $(".suck-graph .arrow").mouseover(function() {
-        fadeElement(".suck-graph .school");
-        fadeElement(".suck-graph .arrow");
-        fadeElement(this, true);
-        var prev = $(this).prev(); // can never be nothing
-        var next = $(this).next();
-        if (next.length === 0) {
-            next = $(this).parents(".circle-of-suck").find(".school:first");
-        }
-        fadeElement(prev, true);
-        fadeElement(next, true);
-    });
-
+    // initialize toggle graph button
     $(".toggle-graph").click(function() {
         if ($(".suck-graph").is(":visible")) {
             var fadeOut = ".suck-graph";
