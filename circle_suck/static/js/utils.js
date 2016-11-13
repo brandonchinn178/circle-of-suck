@@ -1,7 +1,9 @@
 var SVG_RADIUS;
 
 $(document).ready(function() {
-    SVG_RADIUS = $(".school:visible")[0].getBBox().width / 2 + 10;
+    if ($(".school").length > 0) {
+        SVG_RADIUS = $(".school:visible")[0].getBBox().width / 2 + 10;
+    }
 });
 
 /**

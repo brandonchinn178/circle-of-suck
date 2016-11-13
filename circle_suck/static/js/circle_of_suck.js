@@ -50,13 +50,20 @@ $(document).ready(function() {
 });
 
 function initCircleOfSuck() {
+    // nothing to initialize
+    if ($("p.no-stats").length !== 0) {
+        return;
+    }
+
     // initialize helper objects
     loserToGames = {};
     playedSchools = {};
-    $.each(window.allSchools, function(school) {
-        loserToGames[school] = [];
-        playedSchools[school] = [];
-    });
+    if (window.allSchools) {
+        $.each(window.allSchools, function(school) {
+            loserToGames[school] = [];
+            playedSchools[school] = [];
+        });
+    }
     if (window.allGames) {
         for (var i = 0; i < window.allGames.length; i++) {
             var game = window.allGames[i];
