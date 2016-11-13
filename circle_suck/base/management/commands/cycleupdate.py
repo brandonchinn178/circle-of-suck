@@ -5,11 +5,7 @@ import requests, datetime
 from base.constants import *
 from base.models import *
 
-API_KEYS = {
-    "Football": os.environ['API_KEY_NCAAFB'],
-    "Men's Basketball": os.environ['API_KEY_NCAAMB'],
-    "Women's Basketball": os.environ['API_KEY_NCAAWB'],
-}
+API_KEY =  os.environ['API_KEY']
 
 class Command(BaseCommand):
     help = 'gathers all game data for specified year (default: current year)'
