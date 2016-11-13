@@ -14,9 +14,9 @@ class Command(BaseCommand):
         parser.add_argument('--year', type=str, default=datetime.datetime.now().year)
 
     def handle(self, *args, **options):
-        self.year = options['year']
+        year = options['year']
 
-        url = 'http://api.sportradar.us/ncaafb-t1/' + str(self.year) + '/REG/schedule.json?api_key=' + API_KEY
+        url = 'http://api.sportradar.us/ncaafb-t1/' + str(year) + '/REG/schedule.json?api_key=' + API_KEY
         api = requests.get(url).json()
         weeks = api["weeks"]
         
@@ -28,7 +28,7 @@ class Command(BaseCommand):
                     if (SCHOOLS[game["home"]].conference != SCHOOLS[game["away"]].conference or game["status"] != "closed"):
                         continue
                     #check season, then create or use season not yet implemented properly
-                    season,_ = Season.objects.get_or_create(year = self.year, conference = SCHOOLS[game["home"]].conference)
+                    season,_ = Season.objects.get_or_create(year = year, conference = SCHOOLS[game["home"]].conference)
                     winner, loser = None, None
                     if game["home_points"] > game["away_points"]:
                         winner, loser = game["home"], game["away"]

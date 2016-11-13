@@ -10,11 +10,11 @@ class Command(BaseCommand):
         parser.add_argument('--year', type=str, default=datetime.datetime.now().year)
 
     def handle(self, *args, **options):
-        self.year = options['year']
+        year = options['year']
 
         for conference_id, conference in CONFERENCES.items():
             print '    - %s...' % conference['name']
-            season = Season.objects.get(conference = conference_id, year = self.year)
+            season = Season.objects.get(conference = conference_id, year = year)
             games = Game.objects.all().filter(season = season)
             graph = {
                 school.id: games.filter(loser=school.id).values_list('winner', flat=True)

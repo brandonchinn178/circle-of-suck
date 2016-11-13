@@ -50,6 +50,36 @@ BIG_TEN = {
     'WIS': "Badgers",
 }
 
+SEC = {
+    'BAMA': "Alabama Crimson Tide",
+    'ARK': "Arkansas Razorbacks",
+    'AUB': "Auburn Tigers",
+    'LSU': "LSU Tigers",
+    'MSST': "Mississippi State Bulldogs",
+    'MIS': "Ole Miss Rebels",
+    'TXAM': "Texas A&M Aggies",
+    'FLA': "Florida Gators",
+    'UGA': "Georgia Bulldogs",
+    'KEN': "Kentucky Wildcats",
+    'MIZ': "Missouri Tigers",
+    'SC': "South Carolina Gamecocks",
+    'TEN': "Tennessee Volunteers",
+    'VAN': "Vanderbilt Commodores,"
+}
+
+BIG_12 = {
+    'BAY': "Baylor Bears",
+    'ISU': "Iowa State Cyclones",
+    'KAN': "Kansas Jayhawks",
+    'KST': "Kansas State Wildcats",
+    'OKL': "Oklahoma Sooners",
+    'OKS': "Oklahoma State Cowboys",
+    'TCU': "TCU Horned Frogs",
+    'TEX': "Texas Longhorns",
+    'TT': "Texas Tech Red Raiders",
+    'WVU': "WVU Mountaineers"
+}
+
 # map ID to conference name and dictionary of schools
 CONFERENCES = {
     'PAC_12': {
@@ -63,6 +93,14 @@ CONFERENCES = {
     'BIG_TEN': {
         'name': 'Big Ten',
         'schools': BIG_TEN,
+    },
+    'SEC': {
+        'name': 'SEC',
+        'schools': SEC,
+    }, 
+    'BIG_12': {
+        'name': 'BIG-12',
+        'schools': BIG_12,
     },
 }
 
