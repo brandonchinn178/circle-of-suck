@@ -5,11 +5,6 @@ import requests, datetime
 from base.constants import *
 from base.models import *
 
-# map sport to url
-SPORTS_URLS = {
-    'Football': 'ncaafb-t1',
-}
-
 API_KEY = os.environ['API_KEY']
 
 class Command(BaseCommand):
