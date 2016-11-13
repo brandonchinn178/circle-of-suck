@@ -92,3 +92,29 @@ def find_all_cycles(graph, start):
     for endindex in endingindexes:
         all_paths += find_all_paths(graph, start, endindex)
     return all_paths
+
+def same_cycle(cycle1, cycle2):
+    """
+    checks if 2 cycles are the actually the same
+    :param cycle1:
+    :param cycle2:
+    :return true or false:
+
+    >>> cycle1 = [1, 2, 3]
+    >>> cycle2 = [2, 3, 1]
+    >>> same_cycle(cycle1, cycle2)
+    True
+    """
+    offset = 0
+    if len(cycle1) != len(cycle2):
+        return False
+    if cycle1 and cycle2:
+        for c in cycle2:
+            if c == cycle1[0]:
+                break
+            offset += 1
+    for i in range(len(cycle1)):
+        if cycle1[i] != cycle2[(i + offset) % len(cycle2)]:
+            return False
+    return True
+
