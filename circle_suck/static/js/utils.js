@@ -99,7 +99,6 @@ function drawSchoolArrow(school1, school2, arrow) {
  */
 function getURLParams() {
     return $.param({
-        sport: $("select.sport").val(),
         conference: $("select.conference").val(),
         year: window.currYear,
     });

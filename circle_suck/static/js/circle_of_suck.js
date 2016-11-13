@@ -4,10 +4,6 @@ var loserToGames;
 var playedSchools;
 
 $(document).ready(function() {
-    $("header select.sport").chosen({
-        placeholder_text_single: "---",
-        disable_search_threshold: 5,
-    });
 
     $("header select.conference").chosen({
         placeholder_text_single: "---",
@@ -15,9 +11,7 @@ $(document).ready(function() {
     });
 
     $("header select").change(function() {
-        var sport = $("select.sport").val();
-        var conference = $("select.conference").val();
-        window.search = getURLParams();
+        window.location.search = getURLParams();
     });
 
     window.currYear = parseInt($(".year span").text());

@@ -64,8 +64,6 @@ class Season(models.Model):
     """
     Contains a circle of suck for a given year and conference.
     """
-
-    sport = models.CharField(max_length=100, choices=[(x, x) for x in SPORTS])
     conference = models.CharField(max_length=100, choices=[(conference_id, conference['name']) for conference_id, conference in CONFERENCES.items()])
     year = models.IntegerField()
     circle_of_suck = models.TextField()
