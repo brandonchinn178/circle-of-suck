@@ -14,25 +14,52 @@ def merge_dicts(*dicts):
     """
     return dict(sum([d.items() for d in dicts], []))
 
-def find_all_connected(graph, minsize=2):
-	"""
+def find_all_connected(graph, minsize=3):
+    """
 	Takes in a graph in the format: {footballteam1:[footballteam1 beat these footballteams]...}
 	Ex: {Cal:[Utah, Oregon]...}
-	
+
 	Returns a list of all disjoint cycles in the given graph (not sorted by length)
 	"""
     listoflists = []
-    list = tarjan(graph)
-    for item in list[:]:
-        if len(item) <= minsize:
-            list.remove(item)
-    #print(list)
-    for con_comp in list:
+
+    #Use tarjan algorithm to divide into fully connected components
+    newlist = tarjan(graph)
+
+    #get rid of all connected components with fewer than minsize elements
+    for item in newlist[:]:
+        if len(item) < minsize:
+            newlist.remove(item)
+
+    #find all cycles in each fully connected component
+    while newlist:
+        con_comp = newlist[0]
+        newlist.remove(newlist[0])
+        #create graph of this connected component only
         newgraph = {}
-        for vertex, to in graph.items():
+        for vertex, outflow in graph.items():
             if vertex in con_comp:
-                newgraph[vertex] = to
-        listoflists.append(find_longest_cycle(newgraph))
+                newgraph[vertex] = outflow
+        #find cycles in this smaller graph
+        longest_cycle = find_longest_cycle(newgraph)
+        listoflists.append(longest_cycle)
+
+        #remove cycle from graph
+        temp_dict = {};
+        for elem in con_comp:
+            if elem not in longest_cycle:
+                temp_dict[elem] = newgraph[elem]
+        newgraph = temp_dict
+
+        #re-apply tarjan with smaller graph
+        subgraphs = tarjan(newgraph)
+
+        #remove all connected components with fewer than minsize elements, and rerun algorithm on the rest
+        for subgraph in subgraphs:
+            if len(subgraph) < minsize:
+                subgraphs.remove(subgraph)
+            else:
+                newlist.append(subgraph)
     return listoflists
 
 def find_all_cycles(graph, start):
@@ -98,3 +125,4 @@ def find_longest_cycle(graph):
         cycles += find_all_cycles(graph, item)
     #print(cycles)
     return max(cycles, key = lambda x: len(x))
+print(find_all_connected({"Utah":["UDub"],"UDub":[],"OSU":["Utah","Wazzu","UDub","Colorado"],"Cal":["OSU","ASU", "U$C"],"Oregon":["UDub", "Wazzu", "Cal","Colorado"],"Arizona":["Utah", "UDub", "U$C", "Stanfurd","UCLA"],"ASU":["Oregon","Colorado","U$C","Wazzu"],"Colorado":["U$C"],"U$C":["Utah","Stanfurd"], "UCLA":["Utah","ASU","Wazzu","Stanfurd"], "Stanfurd":["Colorado","UDub","Wazzu"]}))
