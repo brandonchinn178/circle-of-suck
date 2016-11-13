@@ -17,6 +17,15 @@ $(document).ready(function() {
         });
     });
 
+    // all school circles should be the same size
+    $(".circle-of-suck .school").each(function(i) {
+        var next = $(this).nextAll(".school").first();
+        if (next.length === 0) {
+            next = $(this).siblings(".school").first();
+        }
+        drawSchoolArrow(this, next);
+    });
+
     $("svg.school circle")
         .mouseover(function(e) {
             var id = $(this).parent().data("id");
@@ -36,6 +45,27 @@ $(document).ready(function() {
             $(".school-box").hide();
         });
 });
+
+/**
+ * Draw an SVG arrow from the given svg.school to the other svg.school
+ */
+function drawSchoolArrow(school1, school2) {
+    // centers of circles
+    var radius = $("svg.school circle")[0].getBBox().width/2;
+    var x1 = $(school1).find("circle").offset().left + radius;
+    var y1 = $(school1).find("circle").offset().top + radius;
+    var x2 = $(school2).find("circle").offset().left + radius;
+    var y2 = $(school2).find("circle").offset().top + radius;
+
+    // move arrow to edge of circles
+    var ratio = radius / Math.hypot(x2 - x1, y2 - y1);
+    x1 += ratio * (x2 - x1);
+    y1 += ratio * (y2 - y1);
+    x2 -= ratio * (x2 - x1);
+    y2 -= ratio * (y2 - y1);
+
+    drawArrow(x1, y1, x2, y2);
+}
 
 /**
  * Draw an SVG arrow from the given (x1,y1) coordinate to the given (x2,y2) coordinate
