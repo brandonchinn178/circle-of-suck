@@ -20,6 +20,15 @@ class School(object):
             conference_id.lower(), school_id.lower()
         )
 
+    def __repr__(self):
+        return '<School %s>' % self.id
+
+    def __str__(self):
+        return self.name
+
+    def __eq__(self, other):
+        return self.id == other.id
+
     @classmethod
     def get_conference(cls, conference_id):
         """Return list of schools in given conference"""
@@ -30,14 +39,14 @@ class School(object):
         return SCHOOLS[school_id]
 
 # convert CONFERENCES and SCHOOLS to map to School objects initially
-for conference_id, conference in CONFERENCES.items():
-    conference['schools'] = [
-        School(school_id, name, conference_id)
-        for school_id, name in conference['schools'].items()
-    ]
-
 for school_id, school in SCHOOLS.items():
     SCHOOLS[school_id] = School(school_id, school['name'], school['conference'])
+
+for conference in CONFERENCES.values():
+    conference['schools'] = [
+        School.get(school_id)
+        for school_id in conference['schools'].keys()
+    ]
 
 class Game(models.Model):
     """
@@ -81,4 +90,12 @@ class Season(models.Model):
         for the list of school IDs (the IDs returned from the API). Still need
         to save to store data in database
         """
-        self.circle_of_suck = json.dumps(circle_of_suck)
+        if len(circle_of_suck) == 0:
+            self.circle_of_suck = ''
+        else:
+            if isinstance(circle_of_suck[0][0], School):
+                circle_of_suck = [
+                    [school.id for school in cycle]
+                    for cycle in circle_of_suck
+                ]
+            self.circle_of_suck = json.dumps(circle_of_suck)
