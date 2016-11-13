@@ -1,9 +1,10 @@
 from base.utils import merge_dicts
 
 # list of sports
-SPORTS = [
-    'Football',
-]
+SPORTS_URLS = {
+    'Football': 'ncaafb-t1',
+}
+SPORTS = sorted(SPORTS_URLS.keys())
 
 # map ID to team name. Add logo image to `img/<conference_id>/<school_id>.png` (lowercase IDs)
 PAC_12 = {
