@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'circleofsuck')
 DEBUG = not IS_HEROKU
 
 if IS_HEROKU:
-    ALLOWED_HOSTS = ['.herokuapp.com']
+    ALLOWED_HOSTS = ['.circle-of-suck.com', '.herokuapp.com']
 else:
     ALLOWED_HOSTS = []
 
