@@ -33,6 +33,13 @@ header {
                     content: "\25BB";
                 }
             }
+            &.disabled {
+                color: $gray;
+                cursor: default;
+                &:hover {
+                    color: $gray;
+                }
+            }
             &:hover {
                 color: lighten($blue, 20);
             }
