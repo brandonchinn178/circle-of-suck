@@ -16,7 +16,6 @@ class HomeView(TemplateView):
 
         try:
             kwargs = {
-                'sport': request.GET['sport'],
                 'conference': request.GET['conference'],
             }
         except KeyError:
@@ -67,9 +66,7 @@ class HomeView(TemplateView):
             context['all_games'] = json.dumps(all_games)
             context['all_schools'] = json.dumps(all_schools)
 
-        context['sports'] = SPORTS
         context['conferences'] = CONFERENCES
-        context['current_sport'] = kwargs.get('sport')
         context['current_conference'] = kwargs.get('conference')
 
         return context

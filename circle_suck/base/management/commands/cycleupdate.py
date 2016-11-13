@@ -15,16 +15,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.year = options['year']
-        for sport, sport_url in SPORTS_URLS.items():
-            print 'Running for %s...' % sport
-            self.update_api(sport, sport_url, **options)
-        print 'done.'
-    
-    def update_api(self, sport, sport_url, **options):
-        url = 'http://api.sportradar.us/'+ sport_url + '/' + str(self.year) + '/REG/schedule.json?api_key=' + API_KEY
+
+        url = 'http://api.sportradar.us/ncaafb-t1/' + str(self.year) + '/REG/schedule.json?api_key=' + API_KEY
         api = requests.get(url).json()
         weeks = api["weeks"]
-
+        
         #filter out all non-closed games
         for week in weeks:
             games = week["games"]
@@ -33,7 +28,7 @@ class Command(BaseCommand):
                     if (SCHOOLS[game["home"]].conference != SCHOOLS[game["away"]].conference or game["status"] != "closed"):
                         continue
                     #check season, then create or use season not yet implemented properly
-                    season,_ = Season.objects.get_or_create(year = self.year, sport = sport, conference = SCHOOLS[game["home"]].conference)
+                    season,_ = Season.objects.get_or_create(year = self.year, conference = SCHOOLS[game["home"]].conference)
                     winner, loser = None, None
                     if game["home_points"] > game["away_points"]:
                         winner, loser = game["home"], game["away"]
@@ -45,3 +40,4 @@ class Command(BaseCommand):
                                                defaults = {'winner_score': winner_score, 'loser_score': loser_score})
                 except KeyError:
                     continue
+        print 'done.'

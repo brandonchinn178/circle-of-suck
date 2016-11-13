@@ -11,12 +11,6 @@
 
 {% block header %}
     <div class="dropdowns">
-        <select class='sport'> 
-            <option></option>
-            {% for sport in sports %}
-                <option value="{{ sport }}" {% if sport == current_sport %}selected="selected"{% endif %}>{{ sport }}</option>
-            {% endfor %}
-        </select>
         <select class='conference'> 
             <option></option>
             {% for id, conference in conferences.items %}

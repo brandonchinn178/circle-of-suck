@@ -11,15 +11,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.year = options['year']
-        for sport, sport_url in SPORTS_URLS.items():
-            print 'Running for %s...' % sport
-            self.update_circles(sport, sport_url, **options)
-        print 'done.'
-    
-    def update_circles(self, sport, sport_url, **options):
+
         for conference_id, conference in CONFERENCES.items():
             print '    - %s...' % conference['name']
-            season = Season.objects.get(sport = sport, conference = conference_id, year = self.year)
+            season = Season.objects.get(conference = conference_id, year = self.year)
             games = Game.objects.all().filter(season = season)
             graph = {
                 school.id: games.filter(loser=school.id).values_list('winner', flat=True)
