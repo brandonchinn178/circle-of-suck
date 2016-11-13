@@ -1,22 +1,13 @@
 // map school to all games lost
-var loserToGames = {};
+var loserToGames;
 
 $(document).ready(function() {
-    for (var i = 0; i < window.allGames.length; i++) {
-        var game = window.allGames[i];
-        var gamesLost = loserToGames[game.loser];
-        if (gamesLost) {
-            gamesLost.push(game);
-        } else {
-            loserToGames[game.loser] = [game];
-        }
-    }
-
-    $("select.sport").chosen({
+    $("header select.sport").chosen({
         placeholder_text_single: "Select",
         disable_search_threshold: 5,
     });
-    $("select.conference").chosen({
+
+    $("header select.conference").chosen({
         placeholder_text_single: "Select Value",
         disable_search_threshold: 5,
     });
@@ -24,11 +15,63 @@ $(document).ready(function() {
     $("header select").change(function() {
         var sport = $("select.sport").val();
         var conference = $("select.conference").val();
-        window.location = "/conference/?" + $.param({
+        window.search = $.param({
             sport: sport,
             conference: conference,
         });
     });
+
+    window.currYear = parseInt($(".year span").text());
+    $(".year a").click(function() {
+        // TODO: disable arrows
+        if ($(this).hasClass("increment")) {
+            window.currYear++;
+        } else {
+            window.currYear--;
+        }
+        // load next year's circle of suck
+        $(this).siblings("span").text(window.currYear);
+        var url = "?" + $.param({
+            sport: $("select.sport").val(),
+            conference: $("select.conference").val(),
+            year: window.currYear,
+        });
+        $.ajax(url, {
+            success: function(data) {
+                // TODO: update URL, arrows
+
+                $(".content > *:not(.year)").remove();
+                var html = $(data);
+                html.filter(".content").children().not(".year").appendTo(".content");
+                var js = html.filter("script.season-information").text();
+                // re-set the window variables from <script> tags
+                eval(js);
+
+                initCircleOfSuck();
+            },
+            error: function() {
+                alert("An error occurred.");
+            },
+        });
+        return false;
+    });
+
+    initCircleOfSuck();
+});
+
+function initCircleOfSuck() {
+    loserToGames = {};
+    if (window.allGames) {
+        for (var i = 0; i < window.allGames.length; i++) {
+            var game = window.allGames[i];
+            var gamesLost = loserToGames[game.loser];
+            if (gamesLost) {
+                gamesLost.push(game);
+            } else {
+                loserToGames[game.loser] = [game];
+            }
+        }
+    }
 
     $(".circle-of-suck").each(function() {
         var n = $(this).children(".school").length;
@@ -103,7 +146,7 @@ $(document).ready(function() {
         .mouseleave(function() {
             $(".game-box").hide();
         });
-});
+}
 
 /**
  * Draw an SVG arrow from the given svg.school to the other svg.school

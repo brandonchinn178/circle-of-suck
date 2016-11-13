@@ -19,9 +19,32 @@ header {
 .content {
     .year {
         text-align: center;
-        p {
+        a {
+            text-decoration: none;
+            &.decrement {
+                margin-right: 20px;
+                &:before {
+                    content: "\25C5";
+                }
+            }
+            &.increment {
+                margin-left: 20px;
+                &:before {
+                    content: "\25BB";
+                }
+            }
+            &:hover {
+                color: lighten($blue, 20);
+            }
+        }
+        span {
             font-size: 24px;
         }
+    }
+    p.no-stats {
+        text-align: center;
+        margin: 20px 0;
+        color: $pink;
     }
     .graph {
         text-align: center;

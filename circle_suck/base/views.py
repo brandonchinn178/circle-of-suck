@@ -2,6 +2,7 @@ from django.views.generic import TemplateView
 from django.shortcuts import redirect
 
 import json
+from datetime import date
 
 from base.models import *
 from base.utils import flatten
@@ -22,6 +23,7 @@ class ConferenceView(TemplateView):
         context = super(ConferenceView, self).get_context_data(**kwargs)
 
         context['season'] = self.season
+        context['year'] = self.year
         if self.season:
             circles_of_suck = self.season.get_circle_of_suck()
             context['circles_of_suck'] = circles_of_suck
@@ -67,14 +69,12 @@ class ConferenceView(TemplateView):
                 'sport': request.GET['sport'],
                 'conference': request.GET['conference'],
             }
-        except:
+        except KeyError:
             return redirect('home')
 
-        if 'year' in request.GET:
-            kwargs['year'] = request.GET['year']
-
+        self.year = request.GET.get('year', date.today().year)
         try:
-            self.season = Season.objects.get(**kwargs)
+            self.season = Season.objects.get(year=self.year, **kwargs)
         except:
             self.season = None
 
