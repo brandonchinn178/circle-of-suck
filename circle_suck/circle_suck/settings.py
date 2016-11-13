@@ -24,7 +24,7 @@ IS_HEROKU = bool(os.environ.get('IS_HEROKU'))
 SECRET_KEY = os.environ.get('SECRET_KEY', 'circleofsuck')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = not HEROKU
+DEBUG = not IS_HEROKU
 
 if IS_HEROKU:
     ALLOWED_HOSTS = ['.herokuapp.com']
