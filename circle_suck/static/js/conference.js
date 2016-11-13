@@ -38,32 +38,35 @@ $(document).ready(function() {
 });
 
 /**
- * Set the SVG arrow between the two schools
+ * Draw an SVG arrow from the given (x1,y1) coordinate to the given (x2,y2) coordinate
+ *
+ * Source: http://jsfiddle.net/Z5Qkf/2/
  */
-function setArrow(school1, school2) {
-    // center of circles
-    var x1 = $(school1).position().left + $(school1).width() / 2;
-    var y1 = $(school1).position().top + $(school1).height() / 2;
-    var x2 = $(school2).position().left + $(school2).width() / 2;
-    var y2 = $(school2).position().top + $(school2).height() / 2;
-    var radius = $(school1).find("circle")[0].getBBox().width / 2;
+function drawArrow(x1, y1, x2, y2) {
+    var svg = $("<svg>")
+        .attr("width", Math.abs(x2 - x1))
+        .attr("height", Math.abs(y2 - y1))
+        .addClass("arrow")
+        .css({
+            left: x1,
+            top: y1,
+        });
+    var head = $("<marker>")
+        .attr("id", "head")
+        .attr("orient", "auto")
+        .attr("markerWidth", "4")
+        .attr("markerHeight", "6")
+        .attr("refX", "3")
+        .attr("refY", "3");
+    var headPath = $("<path>").attr("d", "M1,1 L3,3 L1,5").appendTo(head);
+    $("<defs>").append(head).appendTo(svg);
+    $("<path>")
+        .attr("marker-end", "url(#head)")
+        .attr("d", "M0,0 L" + x2 + "," + y2)
+        .appendTo(svg);
 
-    // move to outside of circle
-    var ratio = radius / Math.hypot(x2-x1, y2-y1);
-    x1 += ratio * (x2 - x1);
-    y1 += ratio * (y2 - y1);
-    x2 -= ratio * (x2 - x1);
-    y2 -= ratio * (y2 - y1);
-    var width = x2 - x1;
-    var height = y2 - y1;
-
-    var container = $(school1).parent();
-    var arrow = $(school1).next("svg.arrow");
-    arrow.css({
-        width: Math.abs(width),
-        height: Math.abs(height),
-        left: x1 - container.position().left,
-        top: y1 - container.position().top,
-    });
-    arrow.find(".arrow-body").attr("d", "M0,0 L" + width + "," + height);
+    // just appending <svg> will not recognize it as an SVG
+    // http://stackoverflow.com/a/23588413/4966649
+    var container = $("<div>").append(svg);
+    $(container.html()).appendTo(".graph");
 }
