@@ -86,9 +86,11 @@ def find_all_cycles(graph, start):
                     paths.append(newpath)
         return paths
 
-    endingindexes = [k for k, v in graph.items() if starting in v]
+    endingindexes = [k for k, v in graph.items() if start in v]
 
     all_paths = []
     for endindex in endingindexes:
-        all_paths += find_all_paths(graph, starting, endindex)
+        all_paths += find_all_paths(graph, start, endindex)
     return all_paths
+
+print(find_all_connected({1:[2],2:[3],3:[4],4:[1,5,8],5:[6,7],6:[7],7:[4],8:[9],9:[4,10],10:[8],11:[10,12],12:[13],13:[14],14:[11,15]}))
