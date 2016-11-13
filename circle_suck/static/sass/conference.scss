@@ -42,15 +42,19 @@ header {
         }
     }
     .box{
+        position: absolute;
         display: none;
         background-color: $light-blue;
         text-color: $black;
         text-align: center;
-        padding: 5px;
-        .school{
+        padding: 10px;
+        &.school-box {
             max-width: 200px;
+            span.record {
+                white-space: nowrap;
+            }
         }
-        .game{
+        &.game-box {
             width: 200px;
         }
     }

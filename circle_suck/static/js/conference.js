@@ -8,10 +8,7 @@ $(document).ready(function() {
         disable_search_threshold: 5,
     });
 
-    /**
-     * Check if a select value has changed, if so, redirect to the correct conference page
-     */
-    $("select").change(function() {
+    $("header select").change(function() {
         var sport = $("select.sport").val();
         var conference = $("select.conference").val();
         window.location = "/conference/?" + $.param({
@@ -19,4 +16,23 @@ $(document).ready(function() {
             conference: conference,
         });
     });
+
+    $("svg.school circle")
+        .mouseover(function(e) {
+            var id = $(this).parent().data("id");
+            var data = window.allSchools[id];
+
+            $(".school-box .school-name").text(data.name);
+            $(".school-box .record").text("(" + data.record[0] + "-" + data.record[1] + ")");
+            $(".school-box").show();
+        })
+        .mousemove(function(e) {
+            $(".school-box").css({
+                top: e.pageY + 10,
+                left: e.pageX + 10,
+            });
+        })
+        .mouseleave(function() {
+            $(".school-box").hide();
+        });
 });
