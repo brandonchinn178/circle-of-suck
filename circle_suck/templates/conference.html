@@ -36,11 +36,17 @@
         </div>
         <div class='graph'>
             {% for circle_of_suck in circles_of_suck %}
-                <div class="school-group circle-of-suck">
+                <svg class="school-group circle-of-suck">
+                    <defs>
+                        <marker id="head" orient="auto" markerWidth="4" markerHeight="6" refX="2" refY="3">
+                            <path d="M1,1 L3,3 L1,5"></path>
+                        </marker>
+                    </defs>
                     {% for school in circle_of_suck %}
                         {% make_school school %}
+                        <path class="arrow" marker-end="url(#head)"></path>
                     {% endfor %}
-                </div>
+                </svg>
             {% endfor %}
             {% if extra_schools %}
                 <div class="school-group extra-schools">
@@ -58,14 +64,13 @@
             <p class="date"></p>
             <p class='winner'> 
                 <img src="" class='logo'>
-                <span class='winner-score'></span>
+                <span class='score'></span>
             </p> 
             <p class='loser'>
                 <img src="" class='logo'>
-                <span class='loser-score'></span>
+                <span class='score'></span>
             </p>
-
         </div>
-        <button type='button' class='graph-type'>Full Graph</button>
+        <!--<button type='button' class='graph-type'>Full Graph</button>-->
     {% endif %}
 {% endblock %}

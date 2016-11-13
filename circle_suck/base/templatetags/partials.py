@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django import template
 from django.templatetags.static import static as get_static_path
-from django.utils.html import format_html, format_html_join
+from django.utils.html import format_html, format_html_join, mark_safe
 
 register = template.Library()
 
@@ -47,7 +47,7 @@ def make_school(school):
     """
     return format_html(
         """
-        <svg width="100" height="100" class='school' data-id="{}">
+        <svg class="school" data-id="{}">
             <image href="{}" x="25" y="25"></image>
             <circle cx="50" cy="50" r="40"></circle>
         </svg>
