@@ -11,3 +11,13 @@ def merge_dicts(*dicts):
     { 'a': 1, 'b': 2, 'c': 3 }
     """
     return dict(sum([list(d.items()) for d in dicts], []))
+
+def flatten(l):
+    """
+    Flatten a list of lists
+
+    >>> x = [[1,2,3], [4,5]]
+    >>> flatten(x)
+    [1,2,3,4,5]
+    """
+    return [x for sublist in l for x in sublist]
