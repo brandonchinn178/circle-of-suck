@@ -2,6 +2,7 @@
 {% load partials %}
 {% block head %}
     {% add_style 'conference.css' %}
+    {% add_script 'conference.js' %}
     <script>
         window.allGames = {{ all_games|safe }};
         window.allSchools = {{ all_schools|safe }};
@@ -10,40 +11,58 @@
 
 {% block header %}
     <select class='sport'> 
-        <option value="%">Sport</option>
+        <option></option>
+        {% for sport in sports %}
+            {% if sport == current_sport %}
+                <option value="{{sport}}" selected="selected">{{sport}}</option>
+            {% else %}
+                <option>{{sport}}</option>
+            {% endif %}
+        {% endfor %}
     </select>
     <select class='conference'> 
-        <option value="%">Conference</option>
+        <option></option>
+        {% for key, value in conferences.items %}
+            {% if sport == current_sport %}
+                <option value="{{key}}" selected="selected">{{value.name}}</option>
+            {% else %}
+                <option value="{{key}}">{{value.name}}</option>
+            {% endif %}
+        {% endfor %}
     </select>   
 {% endblock %}
 {% block content %}
-    <div class='graph'>
-        {% for circle_of_suck in circles_of_suck %}
-            <div class="circle-of-suck">
-                {% for school in circle_of_suck %}
-                    {% make_school school %}
-                {% endfor %}
-            </div>
-        {% endfor %}
-        {% for school in extra_schools %}
-            {% make_school school %}
-        {% endfor %}
-    </div>
-    <div class='school-box box'>
-        <span class="school-name"></span>
-        <span class="record"></span>
-    </div>
-    <div class='game-box box'>
-        <p class="date"></p>
-        <p class='winner'> 
-            <img src="" class='logo'>
-            <span class='winner-score'></span>
-        </p> 
-        <p class='loser'>
-            <img src="" class='logo'>
-            <span class='loser-score'></span>
-        </p>
+    {% if not season %}
+        <p>The given sport and conference does not have any stats for the season. </p>
+    {% else %}
+        <div class='graph'>
+            {% for circle_of_suck in circles_of_suck %}
+                <div class="circle-of-suck">
+                    {% for school in circle_of_suck %}
+                        {% make_school school %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            {% for school in extra_schools %}
+                {% make_school school %}
+            {% endfor %}
+        </div>
+        <div class='school-box box'>
+            <span class="school-name"></span>
+            <span class="record"></span>
+        </div>
+        <div class='game-box box'>
+            <p class="date"></p>
+            <p class='winner'> 
+                <img src="" class='logo'>
+                <span class='winner-score'></span>
+            </p> 
+            <p class='loser'>
+                <img src="" class='logo'>
+                <span class='loser-score'></span>
+            </p>
 
-    </div>
-    <button type='button' class='graph-type'>Full Graph</button>
+        </div>
+        <button type='button' class='graph-type'>Full Graph</button>
+    {% endif %}
 {% endblock %}

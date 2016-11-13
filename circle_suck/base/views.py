@@ -49,6 +49,11 @@ class ConferenceView(TemplateView):
                 for school in all_schools
             }
 
+        context['sports'] = SPORTS
+        context['conferences'] = CONFERENCES
+        context['current_sport'] = kwargs['sport']
+        context['current_conference'] = kwargs['conference']
+
         return context
 
     def dispatch(self, request, *args, **kwargs):
