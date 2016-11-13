@@ -11,15 +11,17 @@ header {
             width: 150px;
         }
         .chosen-container {
-            margin: 20px 10px;
+            margin: 10px;
         }
     }
 }
 
 .content {
-    h3 {
+    .year {
         text-align: center;
-        font-size: 32px;
+        p {
+            font-size: 24px;
+        }
     }
     .graph {
         text-align: center;
@@ -27,6 +29,7 @@ header {
             position: relative;
             display:inline-block;
             margin: 30px;
+            margin-top: 0;
             vertical-align: middle;
             &.circle-of-suck svg.school {
                 position: absolute;
