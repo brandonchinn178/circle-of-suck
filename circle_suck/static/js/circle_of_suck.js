@@ -1,5 +1,7 @@
 // map school to all games lost
 var loserToGames;
+// maps school to all schools who played it
+var playedSchools;
 
 $(document).ready(function() {
     $("header select.sport").chosen({
@@ -55,47 +57,42 @@ $(document).ready(function() {
 
 function initCircleOfSuck() {
     loserToGames = {};
+    playedSchools = {};
+    $.each(window.allSchools, function(school) {
+        loserToGames[school] = [];
+        playedSchools[school] = [];
+    });
     if (window.allGames) {
         for (var i = 0; i < window.allGames.length; i++) {
             var game = window.allGames[i];
-            var gamesLost = loserToGames[game.loser];
-            if (gamesLost) {
-                gamesLost.push(game);
-            } else {
-                loserToGames[game.loser] = [game];
-            }
+            loserToGames[game.loser].push(game);
+            playedSchools[game.loser].push(game.winner);
+            playedSchools[game.winner].push(game.loser);
         }
     }
 
     $(".circle-of-suck").each(function() {
-        var n = $(this).children(".school").length;
-        var radius = Math.min(250, 50 * (n-1));
-        var svgSize = $("svg.school")[0].getBBox().width + 20;
+        arrangeSchools(this);
 
-        var size = 2 * radius + svgSize;
-        var center = size/2;
-        var offset = Math.PI/4; // treat 45deg as 0deg
-        var angle = 2 * Math.PI / n;
-
-        var prev = $();
-        $(this).children(".school").each(function(i) {
-            var cx = center + Math.cos(angle * i + offset) * radius;
-            var cy = center + Math.sin(angle * i + offset) * radius;
-            $(this)
-                .attr("x", cx - svgSize/2)
-                .attr("y", cy - svgSize/2);
-
-            if (prev.length !== 0) {
-                drawSchoolArrow(prev, this);
-            }
+        var prev = $(this).children(".school").last();
+        $(this).children(".school").each(function() {
+            var arrow = $(prev).next(".arrow");
+            drawSchoolArrow(prev, this, arrow);
             prev = this;
-        });
-        drawSchoolArrow(prev, $(this).children(".school:first"));
+        })
+    });
 
-        $(this).css({
-            width: size,
-            height: size,
-        });
+    // set up full graph
+    var svg = $(".full-graph svg");
+    $(".suck-graph svg.school").clone().appendTo(svg);
+    arrangeSchools(svg);
+
+    var arrow = $(".arrow:first").clone();
+    window.allGames.forEach(function(game) {
+        var winner = svg.find(".school." + game.winner);
+        var loser = svg.find(".school." + game.loser);
+        var _arrow = arrow.clone().appendTo(svg);
+        drawSchoolArrow(loser, winner, _arrow);
     });
 
     $(".school circle")
@@ -114,7 +111,42 @@ function initCircleOfSuck() {
         })
         .mouseleave(function() {
             $(".school-box").hide();
+            fadeElement(".school", true);
+            fadeElement(".arrow", true);
         });
+
+    $(".suck-graph .school circle").mouseover(function() {
+        fadeElement(".suck-graph .school");
+        fadeElement(".suck-graph .arrow");
+        var school = $(this).parent();
+        fadeElement(school, true);
+
+        var circle = $(this).parents(".circle-of-suck");
+        if (circle.length !== 0) {
+            var prev = $(school).prevAll(".school").first();
+            var next = $(school).nextAll(".school").first();
+            if (prev.length === 0) {
+                prev = circle.find(".school:last");
+            }
+            if (next.length === 0) {
+                next = circle.find(".school:first");
+            }
+            fadeElement(prev, true);
+            fadeElement(prev.next(".arrow"), true);
+            fadeElement(next, true);
+            fadeElement(next.prev(".arrow"), true);
+        }
+    });
+
+    $(".full-graph .school circle").mouseover(function() {
+        // all schools who have not played hovered school fade away
+        var havePlayed = playedSchools[id];
+        $.each(window.allSchools, function(school) {
+            if (havePlayed.indexOf(school) === -1) {
+                fadeElement(".school." + school);
+            }
+        });
+    });
 
     $(".arrow")
         .mouseover(function() {
@@ -140,6 +172,56 @@ function initCircleOfSuck() {
         .mouseleave(function() {
             $(".game-box").hide();
         });
+
+    $(".suck-graph .arrow").mouseover(function() {
+        fadeElement(".suck-graph .school");
+        fadeElement(".suck-graph .arrow");
+        fadeElement(this, true);
+        var prev = $(this).prev(); // can never be nothing
+        var next = $(this).next();
+        if (next.length === 0) {
+            next = $(this).parents(".circle-of-suck").find(".school:first");
+        }
+        fadeElement(prev, true);
+        fadeElement(next, true);
+    });
+
+    $(".toggle-graph").click(function() {
+        if ($(".suck-graph").is(":visible")) {
+            var fadeOut = ".suck-graph";
+            var fadeIn = ".full-graph";
+            var text = "Circle Graph";
+        } else {
+            var fadeOut = ".full-graph";
+            var fadeIn = ".suck-graph";
+            var text = "Full Graph";
+        }
+
+        $(this).text(text);
+        $(fadeOut).fadeOut(function() {
+            $(fadeIn).fadeIn();
+        });
+    });
+}
+
+/*** UTILITY FUNCTIONS ***/
+
+/**
+ * Fade out the given element (school or arrow), since we can't add/remove
+ * classes to SVG elements.
+ */
+function fadeElement(element, undo) {
+    if ($(element).is(".school")) {
+        var opacity = undo ? "0" : "0.6";
+        var stroke = undo ? "#577580" : "#8CA7B1";
+        $(element).find("circle").css({
+            fill: "rgba(255,255,255," + opacity + ")",
+            stroke: stroke,
+        });
+    } else {
+        var stroke = undo ? "#EB8181" : "#F2ADAD";
+        $(element).find("path").css("stroke", stroke);
+    }
 }
 
 /**
@@ -192,9 +274,36 @@ function activateYear(pushHistory) {
 }
 
 /**
+ * Arrange the schools in the given container in a polygon formation.
+ */
+function arrangeSchools(container) {
+    var n = $(container).find(".school").length;
+    var radius = Math.min(250, 50 * (n - 1));
+    var svgSize = $("svg.school")[0].getBBox().width + 20;
+
+    var size = 2 * radius + svgSize;
+    var center = size/2;
+    var offset = Math.PI/4; // treat 45deg as 0deg
+    var angle = 2 * Math.PI / n;
+
+    $(container).find(".school").each(function(i) {
+        var cx = center + Math.cos(angle * i + offset) * radius;
+        var cy = center + Math.sin(angle * i + offset) * radius;
+        $(this)
+            .attr("x", cx - svgSize/2)
+            .attr("y", cy - svgSize/2);
+    });
+
+    $(container).css({
+        width: size,
+        height: size,
+    });
+}
+
+/**
  * Draw an SVG arrow from the given svg.school to the other svg.school
  */
-function drawSchoolArrow(school1, school2) {
+function drawSchoolArrow(school1, school2, arrow) {
     // centers of svg
     var radius = $(school1)[0].getBBox().width / 2 + 10;
     var x1 = parseInt($(school1).attr("x")) + radius;
@@ -222,7 +331,7 @@ function drawSchoolArrow(school1, school2) {
         game = game[0];
     }
 
-    var arrow = $(school1).next(".arrow")
+    arrow
         .data("game-details", game)
         .data("loser", $(school1))
         .data("winner", $(school2));
