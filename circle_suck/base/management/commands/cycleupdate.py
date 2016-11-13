@@ -39,10 +39,8 @@ class Command(BaseCommand):
                 try:
                     if (SCHOOLS[game["home"]].conference != SCHOOLS[game["away"]].conference or game["status"] != "closed"):
                         continue
-                    #print(game["home"] + " " + game["away"] + " " + str(game["status"] == "closed"))
                     #check season, then create or use season not yet implemented properly
                     season,_ = Season.objects.get_or_create(year = self.year, sport = self.sport, conference = SCHOOLS[game["home"]].conference)
-                    #print("test")
                     winner, loser = None, None
                     if game["home_points"] > game["away_points"]:
                         winner, loser = game["home"], game["away"]
@@ -50,10 +48,7 @@ class Command(BaseCommand):
                     else:
                         loser, winner = game["home"], game["away"]
                         winner_score, loser_score = game["away_points"], game["home_points"]
-                    # print(game["scheduled"][0:10])
                     Game.objects.get_or_create(season = season, winner = winner, loser = loser, date = game["scheduled"][0:10],
                                                defaults = {'winner_score': winner_score, 'loser_score': loser_score})
-                    
-                    print(winner + " " + str(winner_score) + " -- " + loser + " " + str(loser_score))
                 except KeyError:
                     continue
