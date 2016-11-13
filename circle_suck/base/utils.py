@@ -1,5 +1,4 @@
 from tarjan import *
-import timeit
 
 def merge_dicts(*dicts):
     """
@@ -25,7 +24,6 @@ def find_all_connected(graph, minsize=3):
     >>> find_all_connected(testgraph)
     [[8, 6, 7]]
 	"""
-    start = timeit.default_timer()
     listoflists = []
 
     #Use tarjan algorithm to divide into fully connected components
@@ -65,7 +63,6 @@ def find_all_connected(graph, minsize=3):
                 subgraphs.remove(subgraph)
             else:
                 newlist.append(subgraph)
-    print(timeit.default_timer() - start)
     return listoflists
 
 def find_longest_cycle(graph):
