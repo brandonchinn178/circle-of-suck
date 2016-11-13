@@ -47,7 +47,7 @@ def make_school(school):
     """
     return format_html(
         """
-        <svg width="100" height="100" class='school' data-id="{}">
+        <svg class="school" data-id="{}">
             <image href="{}" x="25" y="25"></image>
             <circle cx="50" cy="50" r="40"></circle>
         </svg>

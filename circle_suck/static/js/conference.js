@@ -20,25 +20,27 @@ $(document).ready(function() {
     $(".circle-of-suck").each(function() {
         var n = $(this).children(".school").length;
         var radius = Math.min(250, 50 * (n-1));
-        var svgSize = $("svg.school").width();
+        var svgSize = $("svg.school")[0].getBBox().width;
 
         var size = 2 * radius + svgSize;
         var center = size/2;
         var offset = Math.PI/4; // treat 45deg as 0deg
         var angle = 2 * Math.PI / n;
 
-        var prev = $(this).children(".school").last();
+        var prev = $();
         $(this).children(".school").each(function(i) {
             var cx = center + Math.cos(angle * i + offset) * radius;
             var cy = center + Math.sin(angle * i + offset) * radius;
-            $(this).css({
-                left: cx - svgSize/2,
-                top: cy - svgSize/2,
-            });
+            $(this)
+                .attr("x", cx - svgSize/2)
+                .attr("y", cy - svgSize/2);
 
-            drawSchoolArrow(prev, this);
+            if (prev.length !== 0) {
+                drawSchoolArrow(prev, this);
+            }
             prev = this;
         });
+        drawSchoolArrow(prev, $(this).children(".school:first"));
 
         $(this).css({
             width: size,
@@ -46,7 +48,7 @@ $(document).ready(function() {
         });
     });
 
-    $("svg.school circle")
+    $(".school circle")
         .mouseover(function(e) {
             var id = $(this).parent().data("id");
             var data = window.allSchools[id];
@@ -69,82 +71,21 @@ $(document).ready(function() {
  * Draw an SVG arrow from the given svg.school to the other svg.school
  */
 function drawSchoolArrow(school1, school2) {
-    // centers of circles
-    var radius = $("svg.school circle")[0].getBBox().width/2;
-    var x1 = $(school1).find("circle").offset().left + radius;
-    var y1 = $(school1).find("circle").offset().top + radius;
-    var x2 = $(school2).find("circle").offset().left + radius;
-    var y2 = $(school2).find("circle").offset().top + radius;
+    // centers of svg
+    var radius = $(school1)[0].getBBox().width / 2 + 10;
+    var x1 = parseInt($(school1).attr("x")) + radius;
+    var y1 = parseInt($(school1).attr("y")) + radius;
+    var x2 = parseInt($(school2).attr("x")) + radius;
+    var y2 = parseInt($(school2).attr("y")) + radius;
 
-    // move arrow to edge of circles
-    var ratio = radius / Math.hypot(x2 - x1, y2 - y1);
-    x1 += ratio * (x2 - x1);
-    y1 += ratio * (y2 - y1);
-    x2 -= ratio * (x2 - x1);
-    y2 -= ratio * (y2 - y1);
+    // move arrow to edge of circles, manual adjustments
+    var hyp = Math.hypot(x2 - x1, y2 - y1);
+    x1 += (radius / hyp) * (x2 - x1);
+    y1 += (radius / hyp) * (y2 - y1);
+    x2 -= ((radius + 25) / hyp) * (x2 - x1);
+    y2 -= ((radius + 25) / hyp) * (y2 - y1);
 
-    drawArrow(x1, y1, x2, y2);
-}
-
-/**
- * Draw an SVG arrow from the given (x1,y1) coordinate to the given (x2,y2) coordinate
- *
- * Source: http://jsfiddle.net/Z5Qkf/2/
- */
-function drawArrow(x1, y1, x2, y2) {
-    var svg = $("<svg>").addClass("arrow");
-    var head = $("<marker>")
-        .attr("id", "head")
-        .attr("orient", "auto")
-        .attr("markerWidth", "4")
-        .attr("markerHeight", "6")
-        .attr("refX", "2")
-        .attr("refY", "3");
-    var headPath = $("<path>").attr("d", "M1,1 L3,3 L1,5").appendTo(head);
-    $("<defs>").append(head).appendTo(svg);
-
-    var deltaX = x2 - x1;
-    var deltaY = y2 - y1;
-    var width = deltaX === 0 ? 50 : Math.abs(deltaX);
-    var height = deltaY === 0 ? 50 : Math.abs(deltaY);
-
-    var corner = [x1, y1]; // the top left corner of the arrow
-    var start = [0, 0]; // defaults start at top left corner
-    var end = [deltaX, deltaY]; // defaults end at bottom right corner
-
-    if (deltaX < 0) {
-        corner[0] = x1 + deltaX;
-        // needs to start at right corner
-        start[0] = -deltaX;
-        // needs to end at left corner
-        end[0] = 0;
-    }
-    if (deltaY < 0) {
-        corner[1] = y1 + deltaY;
-        // needs to start at bottom corner
-        start[1] = -deltaY;
-        // needs to end at top corner
-        end[1] = 0;
-    }
-
-    $("<path>")
-        .addClass("arrow-body")
-        .attr("marker-end", "url(#head)")
-        // M <startX> <startY> L <endX> <endY>
-        .attr("d", "M " + start[0] + " " + start[1] + " L " + end[0] + " " + end[1])
-        .appendTo(svg);
-
-    var viewBox = [-10, -10, width + 20, height + 20];
-    svg.attr("viewBox", viewBox.join(" "))
-        .css({
-            left: corner[0],
-            top: corner[1],
-            width: width,
-            height: height,
-        });
-
-    // just appending <svg> will not recognize it as an SVG
-    // http://stackoverflow.com/a/23588413/4966649
-    var container = $("<div>").append(svg);
-    $(container.html()).appendTo(".graph");
+    // TODO: add data to arrow
+    var path = ["M", x1, y1, "L", x2, y2];
+    $(school1).next("path.arrow").attr("d", path.join(" "));
 }
