@@ -17,9 +17,13 @@ header {
 }
 
 .content {
-    h3 {
-        text-align: center;
+    .year{
         font-size: 32px;
+        display:inline-block;
+        button.arrows{
+            border:none;
+            background-color:transparent;
+        }
     }
     .graph {
         .school-group {
