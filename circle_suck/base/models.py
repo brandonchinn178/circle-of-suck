@@ -71,8 +71,8 @@ class Season(models.Model):
 
     def get_record(self, school):
         """Return a tuple of values that store the number of wins and losses"""
-        wins = self.games.filter(winner=school).count()
-        losses = self.games.filter(loser=school).count()
+        wins = self.games.filter(winner=school.id).count()
+        losses = self.games.filter(loser=school.id).count()
         return (wins, losses)
 
     def get_circle_of_suck(self):

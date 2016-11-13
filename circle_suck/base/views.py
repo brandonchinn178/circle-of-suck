@@ -47,7 +47,7 @@ class ConferenceView(TemplateView):
             all_schools = {
                 school.id: {
                     'name': school.name,
-                    'record': list(self.season.get_record(school)),
+                    'record': self.season.get_record(school),
                 }
                 for school in all_schools
             }
