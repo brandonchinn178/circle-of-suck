@@ -53,6 +53,5 @@ def make_school(school):
         </svg>
         """,
         school.id,
-        school.name,
         school.logo
     )

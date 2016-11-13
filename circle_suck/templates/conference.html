@@ -2,6 +2,10 @@
 {% load partials %}
 {% block head %}
     {% add_style 'conference.css' %}
+    <script>
+        window.allGames = {{ all_games|safe }};
+        window.allSchools = {{ all_schools|safe }};
+    </script>
 {% endblock %}
 
 {% block header %}
