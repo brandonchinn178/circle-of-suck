@@ -22,7 +22,7 @@ class HomeView(TemplateView):
         except KeyError:
             self.template_name = 'home.html'
         else:
-            self.template_name = 'conference.html'
+            self.template_name = 'circle_of_suck.html'
             try:
                 self.season = Season.objects.get(year=self.year, **kwargs)
             except:
