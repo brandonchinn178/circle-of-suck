@@ -18,6 +18,7 @@ class School(object):
         self.logo = settings.STATIC_URL + 'img/%s/%s.png' % (
             conference_id.lower(), school_id.lower()
         )
+        self.conference = conference_id
 
     def __repr__(self):
         return '<School %s>' % self.id
