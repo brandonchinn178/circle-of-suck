@@ -41,6 +41,10 @@ class ConferenceView(TemplateView):
             all_schools = School.get_conference(self.season.conference)
             # schools not in any circles of suck
             context['extra_schools'] = set(all_schools) - set(circle_schools)
+        context['sports'] = SPORTS
+        context['conferences'] = CONFERENCES
+        context['current_sport'] = kwargs['sport']
+        context['current_conference'] = kwargs['conference']
 
         return context
 
