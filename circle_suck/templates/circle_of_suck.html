@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load partials %}
 {% block head %}
-    {% add_style 'conference.css' %}
-    {% add_script 'conference.js' %}
-    <script>
-        window.allGames = {{ all_games|safe }};
-        window.allSchools = {{ all_schools|safe }};
+    {% add_style 'circle_of_suck.css' %}
+    {% add_script 'circle_of_suck.js' %}
+    <script class="season-information">
+        window.allGames = {{ all_games|safe|default:"null" }};
+        window.allSchools = {{ all_schools|safe|default:"null" }};
     </script>
 {% endblock %}
 
@@ -20,18 +20,21 @@
         <select class='conference'> 
             <option></option>
             {% for id, conference in conferences.items %}
-                <option value="{{id}}" {% if sport == current_sport %}selected="selected"{% endif %}>{{conference.name}}</option>
+                <option value="{{id}}" {% if id == current_conference %}selected="selected"{% endif %}>{{conference.name}}</option>
             {% endfor %}
         </select>
     </div>
 {% endblock %}
+
 {% block content %}
+    <div class='year'>
+        <a class="decrement" href="#"></a>
+        <span>{{ year }}</span>
+        <a class="increment" href="#"></a>
+    </div>
     {% if not season %}
-        <p>The given sport and conference does not have any stats for the season. </p>
+        <p class="no-stats">The given sport and conference does not have any stats for the season.</p>
     {% else %}
-        <div class='year'>
-            <p>{{season.year}}</p>
-        </div>
         <div class='graph'>
             {% for circle_of_suck in circles_of_suck %}
                 <svg class="school-group circle-of-suck">
@@ -42,7 +45,10 @@
                     </defs>
                     {% for school in circle_of_suck %}
                         {% make_school school %}
-                        <path class="arrow" marker-end="url(#head)"></path>
+                        <g class="arrow">
+                            <path class="arrow-body" marker-end="url(#head)"></path>
+                            <line></line>
+                        </g>
                     {% endfor %}
                 </svg>
             {% endfor %}
@@ -60,12 +66,12 @@
         </div>
         <div class='game-box box'>
             <p class="date"></p>
-            <p class='winner'> 
-                <img src="" class='logo'>
+            <p class='score-box winner'> 
+                <span class="logo"><img src=""></span>
                 <span class='score'></span>
             </p> 
-            <p class='loser'>
-                <img src="" class='logo'>
+            <p class='score-box loser'>
+                <span class="logo"><img src=""></span>
                 <span class='score'></span>
             </p>
         </div>

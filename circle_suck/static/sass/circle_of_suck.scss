@@ -19,9 +19,39 @@ header {
 .content {
     .year {
         text-align: center;
-        p {
+        a {
+            text-decoration: none;
+            &.decrement {
+                margin-right: 20px;
+                &:before {
+                    content: "\25C5";
+                }
+            }
+            &.increment {
+                margin-left: 20px;
+                &:before {
+                    content: "\25BB";
+                }
+            }
+            &.disabled {
+                color: $gray;
+                cursor: default;
+                &:hover {
+                    color: $gray;
+                }
+            }
+            &:hover {
+                color: lighten($blue, 20);
+            }
+        }
+        span {
             font-size: 24px;
         }
+    }
+    p.no-stats {
+        text-align: center;
+        margin: 20px 0;
+        color: $pink;
     }
     .graph {
         text-align: center;
@@ -60,9 +90,15 @@ header {
             stroke: $pink;
             stroke-linecap: round;
             stroke-linejoin: round;
-            &.arrow {
+        }
+        .arrow {
+            cursor: pointer;
+            path.arrow-body {
                 stroke-width: 5px;
-                cursor: pointer;
+            }
+            line {
+                stroke-width: 30px;
+                stroke: rgba(255,255,255,0);
             }
         }
     }
@@ -70,7 +106,7 @@ header {
         position: absolute;
         display: none;
         background-color: $light-blue;
-        text-color: $black;
+        color: $black;
         text-align: center;
         padding: 10px;
         &.school-box {
@@ -81,16 +117,28 @@ header {
         }
         &.game-box {
             width: 150px;
-            img.logo {
-                height: 30px;
-                vertical-align: middle;
-            }
-            span.score {
-                display: inline-block;
-                width: 50px;
-            }
-            .winner {
+            .date {
                 margin-bottom: 10px;
+            }
+            p.score-box {
+                display: inline-block;
+                width: 80px;
+                span {
+                    display: inline-block;
+                    width: 30px;
+                    vertical-align: middle;
+                    &.logo img {
+                        max-height: 30px;
+                        max-width: 30px;
+                        vertical-align: middle;
+                    }
+                    &.score {
+                        width: 50px;
+                    }
+                }
+                &.winner {
+                    margin-bottom: 10px;
+                }
             }
         }
     }

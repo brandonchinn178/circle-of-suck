@@ -24,14 +24,15 @@ def flatten(l):
     """
     return [x for sublist in l for x in sublist]
 
-def find_all_connected(graph, minsize=3):
+def find_cycles(graph, minsize=3):
     """
-	Takes in a graph in the format: {footballteam1:[footballteam1 beat these footballteams]...}
-	Ex: {Cal:[Utah, Oregon]...}
-	Returns a list of all disjoint cycles in the given graph (not sorted by length)
+	Takes in a graph in the format: {u: [v1, v2, ...], ...}, where (u, v1), (u, v2),
+    etc are directed edges in a graph.
+
+	Returns a list of all disjoint cycles in the given graph
 
     >>> testgraph = {1:[2],2:[1,5],3:[4],4:[3,5],5:[6],6:[7],7:[8],8:[6,9],9:[]})
-    >>> find_all_connected(testgraph)
+    >>> find_cycles(testgraph)
     [[8, 6, 7]]
 	"""
     listoflists = []
@@ -73,7 +74,8 @@ def find_all_connected(graph, minsize=3):
                 subgraphs.remove(subgraph)
             else:
                 newlist.append(subgraph)
-    return listoflists
+
+    return sorted(listoflists, key=lambda l: -len(l))
 
 def find_longest_cycle(graph):
     cycles = []
@@ -88,11 +90,11 @@ def find_longest_cycle(graph):
         items_left -= 1
 
         #Once we have a cycle larger than the amount of elements 
-            #we are yet to try starting the algorithm at, we must 
-            #have the longest cycle in the graph. Any newly discovered
-            #cycles would only exist in the elements not yet checked,
-            #and we already know there are fewer of those than there
-            #are elements in our longest cycle so far.
+        #we are yet to try starting the algorithm at, we must 
+        #have the longest cycle in the graph. Any newly discovered
+        #cycles would only exist in the elements not yet checked,
+        #and we already know there are fewer of those than there
+        #are elements in our longest cycle so far.
         if max_cycle_len > items_left:
             break
     return max(cycles, key = lambda x: len(x))
@@ -118,28 +120,3 @@ def find_all_cycles(graph, start):
     for endindex in endingindexes:
         all_paths += find_all_paths(graph, start, endindex)
     return all_paths
-
-def same_cycle(cycle1, cycle2):
-    """
-    checks if 2 cycles are the actually the same
-    :param cycle1:
-    :param cycle2:
-    :return true or false:
-
-    >>> cycle1 = [1, 2, 3]
-    >>> cycle2 = [2, 3, 1]
-    >>> same_cycle(cycle1, cycle2)
-    True
-    """
-    offset = 0
-    if len(cycle1) != len(cycle2):
-        return False
-    if cycle1 and cycle2:
-        for c in cycle2:
-            if c == cycle1[0]:
-                break
-            offset += 1
-    for i in range(len(cycle1)):
-        if cycle1[i] != cycle2[(i + offset) % len(cycle2)]:
-            return False
-    return True
