@@ -1,0 +1,10 @@
+#!/bin/bash
+
+day_of_week=$(date +'%u')
+
+# updates every Sunday
+if [[ $day_of_week -eq 0 ]]; then
+    echo "Updating circles of suck..."
+    python circle_suck/manage.py cycleupdate
+    python circle_suck/manage.py makecycles
+fi
