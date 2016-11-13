@@ -1,14 +1,19 @@
 @import "vars";
 
-h1 {
-    display: inline;
-}
-
-header select {
-    width: 150px;
-    padding: 7px 20px 5px;
-    right: 20px;
-    top: 20px; 
+header {
+    h1 {
+        display: inline-block;
+    }
+    .dropdowns {
+        float: right;
+        text-align: center;
+        select {
+            width: 150px;
+        }
+        .chosen-container {
+            margin: 20px 10px;
+        }
+    }
 }
 
 .content {

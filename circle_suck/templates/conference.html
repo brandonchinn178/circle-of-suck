@@ -10,26 +10,20 @@
 {% endblock %}
 
 {% block header %}
-    <select class='sport'> 
-        <option></option>
-        {% for sport in sports %}
-            {% if sport == current_sport %}
-                <option value="{{sport}}" selected="selected">{{sport}}</option>
-            {% else %}
-                <option>{{sport}}</option>
-            {% endif %}
-        {% endfor %}
-    </select>
-    <select class='conference'> 
-        <option></option>
-        {% for key, value in conferences.items %}
-            {% if sport == current_sport %}
-                <option value="{{key}}" selected="selected">{{value.name}}</option>
-            {% else %}
-                <option value="{{key}}">{{value.name}}</option>
-            {% endif %}
-        {% endfor %}
-    </select>   
+    <div class="dropdowns">
+        <select class='sport'> 
+            <option></option>
+            {% for sport in sports %}
+                <option value="{{ sport }}" {% if sport == current_sport %}selected="selected"{% endif %}>{{ sport }}</option>
+            {% endfor %}
+        </select>
+        <select class='conference'> 
+            <option></option>
+            {% for id, conference in conferences.items %}
+                <option value="{{id}}" {% if sport == current_sport %}selected="selected"{% endif %}>{{conference.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
 {% endblock %}
 {% block content %}
     {% if not season %}
