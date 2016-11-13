@@ -1,10 +1,10 @@
 $(document).ready(function() {
     $("select.sport").chosen({
-        placeholder_text_single: "Select Sport",
+        placeholder_text_single: "Select a Sport",
         disable_search_threshold: 5,
     }).change(checkSelection);
     $("select.conference").chosen({
-        placeholder_text_single: "Select Conference",
+        placeholder_text_single: "Select a Conference",
         disable_search_threshold: 5,
     }).change(checkSelection);
 });
@@ -17,7 +17,7 @@ function checkSelection() {
     var conference = $("select.conference").val();
 
     if (sport && conference) {
-        window.location = "/conference/?" + $.param({
+        window.location = "?" + $.param({
             sport: sport,
             conference: conference,
         });

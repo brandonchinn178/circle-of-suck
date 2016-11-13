@@ -1,34 +1,71 @@
 // map school to all games lost
-var loserToGames = {};
+var loserToGames;
 
 $(document).ready(function() {
-    for (var i = 0; i < window.allGames.length; i++) {
-        var game = window.allGames[i];
-        var gamesLost = loserToGames[game.loser];
-        if (gamesLost) {
-            gamesLost.push(game);
-        } else {
-            loserToGames[game.loser] = [game];
-        }
-    }
-
-    $("select.sport").chosen({
-        placeholder_text_single: "Select",
+    $("header select.sport").chosen({
+        placeholder_text_single: "---",
         disable_search_threshold: 5,
     });
-    $("select.conference").chosen({
-        placeholder_text_single: "Select Value",
+
+    $("header select.conference").chosen({
+        placeholder_text_single: "---",
         disable_search_threshold: 5,
     });
 
     $("header select").change(function() {
         var sport = $("select.sport").val();
         var conference = $("select.conference").val();
-        window.location = "/conference/?" + $.param({
-            sport: sport,
-            conference: conference,
-        });
+        window.search = getURLParams();
     });
+
+    window.currYear = parseInt($(".year span").text());
+    if (window.currYear >= new Date().getFullYear()) {
+        $(".year .increment").addClass("disabled");
+    }
+
+    $(".year a").click(function() {
+        if ($(this).hasClass("disabled")) {
+            return false;
+        }
+        // disable arrows
+        $(".year a").addClass("disabled");
+
+        if ($(this).hasClass("increment")) {
+            window.currYear++;
+        } else {
+            window.currYear--;
+        }
+        // load next year's circle of suck
+        activateYear(true);
+        return false;
+    });
+
+    initCircleOfSuck();
+
+    // when pressing the back button, check to see if it's a year we loaded
+    // by AJAX
+    $(window).on("popstate", function(e) {
+        var state = e.originalEvent.state;
+        if (state) {
+            window.currYear = state.year;
+            activateYear(false);
+        }
+    });
+});
+
+function initCircleOfSuck() {
+    loserToGames = {};
+    if (window.allGames) {
+        for (var i = 0; i < window.allGames.length; i++) {
+            var game = window.allGames[i];
+            var gamesLost = loserToGames[game.loser];
+            if (gamesLost) {
+                gamesLost.push(game);
+            } else {
+                loserToGames[game.loser] = [game];
+            }
+        }
+    }
 
     $(".circle-of-suck").each(function() {
         var n = $(this).children(".school").length;
@@ -103,7 +140,56 @@ $(document).ready(function() {
         .mouseleave(function() {
             $(".game-box").hide();
         });
-});
+}
+
+/**
+ * Return parameters for the URL, including sport, conference, and year
+ */
+function getURLParams() {
+    return $.param({
+        sport: $("select.sport").val(),
+        conference: $("select.conference").val(),
+        year: window.currYear,
+    });
+}
+
+/**
+ * Show the circle of suck for the year window.currYear. If pushHistory
+ * is true, update the URL. Otherwise, don't.
+ */
+function activateYear(pushHistory) {
+    $(".year span").text(window.currYear);
+    $.ajax("?" + getURLParams(), {
+        success: function(data) {
+            $(".year a").removeClass("disabled");
+            if (window.currYear >= new Date().getFullYear()) {
+                $(".year .increment").addClass("disabled");
+            }
+
+            // update URL
+            if (pushHistory) {
+                history.pushState({year: window.currYear}, "", "?" + getURLParams());
+            }
+
+            // repopulate HTML
+            $(".content > *:not(.year)").remove();
+            var html = $(data);
+            var toAdd = html.filter(".content").children().not(".year");
+            toAdd.css("opacity", 0)
+                .animate({opacity: 1}, 500)
+                .appendTo(".content");
+
+            // re-set the window variables from <script> tags
+            var js = html.filter("script.season-information").text();
+            eval(js);
+
+            initCircleOfSuck();
+        },
+        error: function() {
+            alert("An error occurred.");
+        },
+    });
+}
 
 /**
  * Draw an SVG arrow from the given svg.school to the other svg.school
