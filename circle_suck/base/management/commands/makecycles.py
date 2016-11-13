@@ -21,5 +21,5 @@ class Command(BaseCommand):
     		graph = {
 			    school.id: games.filter(loser=school.id).values_list('winner', flat=True) for school in conference['schools']
 			}
-    		circles = utils.find_all_connected(graph)
+    		circles = utils.find_cycles(graph)
     		self.season.set_circle_of_suck(circles)
