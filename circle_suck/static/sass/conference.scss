@@ -46,7 +46,10 @@ header {
                 fill: none;
                 stroke: $pink;
                 stroke-linecap: round;
-                stroke-width: 5px;
+                stroke-linejoin: round;
+                &.arrow-body {
+                    stroke-width: 5px;
+                }
             }
         }
     }

@@ -43,27 +43,56 @@ $(document).ready(function() {
  * Source: http://jsfiddle.net/Z5Qkf/2/
  */
 function drawArrow(x1, y1, x2, y2) {
-    var svg = $("<svg>")
-        .attr("width", Math.abs(x2 - x1))
-        .attr("height", Math.abs(y2 - y1))
-        .addClass("arrow")
-        .css({
-            left: x1,
-            top: y1,
-        });
+    var svg = $("<svg>").addClass("arrow");
     var head = $("<marker>")
         .attr("id", "head")
         .attr("orient", "auto")
         .attr("markerWidth", "4")
         .attr("markerHeight", "6")
-        .attr("refX", "3")
+        .attr("refX", "2")
         .attr("refY", "3");
     var headPath = $("<path>").attr("d", "M1,1 L3,3 L1,5").appendTo(head);
     $("<defs>").append(head).appendTo(svg);
+
+    var deltaX = x2 - x1;
+    var deltaY = y2 - y1;
+    var width = deltaX === 0 ? 50 : Math.abs(deltaX);
+    var height = deltaY === 0 ? 50 : Math.abs(deltaY);
+
+    var corner = [x1, y1]; // the top left corner of the arrow
+    var start = [0, 0]; // defaults start at top left corner
+    var end = [deltaX, deltaY]; // defaults end at bottom right corner
+
+    if (deltaX < 0) {
+        corner[0] = x1 + deltaX;
+        // needs to start at right corner
+        start[0] = -deltaX;
+        // needs to end at left corner
+        end[0] = 0;
+    }
+    if (deltaY < 0) {
+        corner[1] = y1 + deltaY;
+        // needs to start at bottom corner
+        start[1] = -deltaY;
+        // needs to end at top corner
+        end[1] = 0;
+    }
+
     $("<path>")
+        .addClass("arrow-body")
         .attr("marker-end", "url(#head)")
-        .attr("d", "M0,0 L" + x2 + "," + y2)
+        // M <startX> <startY> L <endX> <endY>
+        .attr("d", "M " + start[0] + " " + start[1] + " L " + end[0] + " " + end[1])
         .appendTo(svg);
+
+    var viewBox = [-10, -10, width + 20, height + 20];
+    svg.attr("viewBox", viewBox.join(" "))
+        .css({
+            left: corner[0],
+            top: corner[1],
+            width: width,
+            height: height,
+        });
 
     // just appending <svg> will not recognize it as an SVG
     // http://stackoverflow.com/a/23588413/4966649
