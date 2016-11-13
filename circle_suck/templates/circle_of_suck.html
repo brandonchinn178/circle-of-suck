@@ -11,12 +11,6 @@
 
 {% block header %}
     <div class="dropdowns">
-        <select class='sport'> 
-            <option></option>
-            {% for sport in sports %}
-                <option value="{{ sport }}" {% if sport == current_sport %}selected="selected"{% endif %}>{{ sport }}</option>
-            {% endfor %}
-        </select>
         <select class='conference'> 
             <option></option>
             {% for id, conference in conferences.items %}
@@ -33,7 +27,7 @@
         <a class="increment" href="#"></a>
     </div>
     {% if not season %}
-        <p class="no-stats">The given sport and conference does not have any stats for the season.</p>
+        <p class="no-stats">The given conference does not have any stats for the season.</p>
     {% else %}
         <div class='graph'>
             {% for circle_of_suck in circles_of_suck %}

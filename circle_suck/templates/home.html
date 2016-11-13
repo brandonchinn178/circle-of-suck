@@ -7,20 +7,12 @@
 {% endblock %}
 
 {% block content %}
-    <div class='dropdown'> 
-        <select class='sport'>
-            <option></option>
-            {% for sport in sports %}
-                 <option value="{{sport}}" {% if sport == current_sport %}selected{% endif %}>{{sport}}</option>
-            {% endfor %}
-        </select>
-    </div>
-    <div class='dropdown'>
-        <select class='conference'> 
-            <option></option>
-            {% for id, conference in conferences.items %}
-                 <option value="{{id}}" {% if id == current_conference %}selected{% endif %}>{{conference.name}}</option>
-            {% endfor %}
-        </select>
-    </div>
+<div class='dropdown'>
+    <select class='conference'> 
+        <option></option>
+        {% for id, conference in conferences.items %}
+             <option value="{{id}}" {% if id == current_conference %}selected{% endif %}>{{conference.name}}</option>
+        {% endfor %}
+    </select>
+</div>
 {% endblock %}

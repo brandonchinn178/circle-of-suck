@@ -2,10 +2,6 @@
 var loserToGames;
 
 $(document).ready(function() {
-    $("header select.sport").chosen({
-        placeholder_text_single: "---",
-        disable_search_threshold: 5,
-    });
 
     $("header select.conference").chosen({
         placeholder_text_single: "---",
@@ -13,9 +9,7 @@ $(document).ready(function() {
     });
 
     $("header select").change(function() {
-        var sport = $("select.sport").val();
-        var conference = $("select.conference").val();
-        window.search = getURLParams();
+        window.location.search = getURLParams();
     });
 
     window.currYear = parseInt($(".year span").text());
@@ -143,11 +137,10 @@ function initCircleOfSuck() {
 }
 
 /**
- * Return parameters for the URL, including sport, conference, and year
+ * Return parameters for the URL, including conference and year
  */
 function getURLParams() {
     return $.param({
-        sport: $("select.sport").val(),
         conference: $("select.conference").val(),
         year: window.currYear,
     });
