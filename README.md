@@ -5,16 +5,16 @@ Circle of Suck
 
 A "circle of suck" is a cycle of college sports teams, where each team has an arrow pointing to a team they have lost to in the sport. Hopefully, at some point in the season, a full circle can be found, where each team has lost to some other team in the conference.
 
-This website will scrape from http://developer.sportradar.com/files/indexFootball.html#ncaa-football-api with college sports scores and run a cycle-finding algorithm to find a circle of suck (or at least, the longest circles of suck).
+This website scrapes data from [Sportradar](http://developer.sportradar.com/) with college sports scores and run a cycle-finding algorithm to find a circle of suck (or at least, the longest circles of suck).
 
 Team
 ----
 
-- Brandon Chinn: Project Leader, Front-end design
+- Brandon Chinn: Project Leader, Front-end design & development
 - Allan Levy: Back-end development, longest-cycle algorithm
-- Matt Trinh: Back-end development, longest-cycle algorithm
+- Matt Trinh: Back-end development, API research
 - Leslie Tsai: Front-end design & development
-- Thomas Zhang: Back-end development, longest-cycle-algorithm
+- Thomas Zhang: Longest-cycle algorithm, API scraping
 
 Installation
 ------------

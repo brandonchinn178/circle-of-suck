@@ -5,7 +5,11 @@ import requests, datetime
 from base.constants import *
 from base.models import *
 
-API_KEY = os.environ['API_KEY']
+API_KEYS = {
+    "Football": os.environ['API_KEY_NCAAFB'],
+    "Men's Basketball": os.environ['API_KEY_NCAAMB'],
+    "Women's Basketball": os.environ['API_KEY_NCAAWB'],
+}
 
 class Command(BaseCommand):
     help = 'gathers all game data for specified year (default: current year)'
@@ -15,13 +19,15 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.year = options['year']
-        for sport, sport_url in SPORTS_URLS.items():
+        for sport in SPORTS:
             print 'Running for %s...' % sport
             self.update_api(sport, sport_url, **options)
         print 'done.'
     
-    def update_api(self, sport, sport_url, **options):
-        url = 'http://api.sportradar.us/'+ sport_url + '/' + str(self.year) + '/REG/schedule.json?api_key=' + API_KEY
+    def update_api(self, sport, **options):
+        sport_url = SPORTS_URLS[sport]
+        api_key = API_KEYS[sport]
+        url = 'http://api.sportradar.us/'+ sport_url + '/' + str(self.year) + '/REG/schedule.json?api_key=' + api_key
         api = requests.get(url).json()
         weeks = api["weeks"]
 
