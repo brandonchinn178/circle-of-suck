@@ -1,6 +1,8 @@
 from django.views.generic import TemplateView
 from django.shortcuts import redirect
 
+import json
+
 from base.models import *
 from base.utils import flatten
 
@@ -31,23 +33,26 @@ class ConferenceView(TemplateView):
             # schools not in any circles of suck
             context['extra_schools'] = set(all_schools) - set(circle_schools)
 
-            context['all_games'] = [
+            all_games = [
                 {
                     'winner': game.winner,
                     'loser': game.loser,
                     'winner_score': game.winner_score,
                     'loser_score': game.loser_score,
-                    'date': game.date,
+                    # format date as 'month/day/year'
+                    'date': game.date.strftime('%-m/%-d/%Y'),
                 }
                 for game in self.season.games.all()
             ]
-            context['all_schools'] = {
+            all_schools = {
                 school.id: {
                     'name': school.name,
                     'record': list(self.season.get_record(school)),
                 }
                 for school in all_schools
             }
+            context['all_games'] = json.dumps(all_games)
+            context['all_schools'] = json.dumps(all_schools)
 
         context['sports'] = SPORTS
         context['conferences'] = CONFERENCES
