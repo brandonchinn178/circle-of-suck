@@ -7,16 +7,20 @@
 {% endblock %}
 
 {% block content %}
-	<div class='dropdown'> 
-		<select class='sport'>
-			<option></option>
-			<option value="0">Football</option>
-		</select>
-	</div>
-	<div class='dropdown'>
-		<select class='conference'> 
-			<option></option>
-			<option value="0">Pac-12</option>
-		</select>
-	</div>
+    <div class='dropdown'> 
+        <select class='sport'>
+            <option></option>
+            {% for sport in sports %}
+                 <option value="{{sport}}">{{sport}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class='dropdown'>
+        <select class='conference'> 
+            <option></option>
+            {% for key, value in conferences.items %}
+                 <option value="{{key}}">{{value.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
 {% endblock %}

@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django import template
 from django.templatetags.static import static as get_static_path
-from django.utils.html import format_html_join
+from django.utils.html import format_html, format_html_join, mark_safe
 
 register = template.Library()
 
@@ -38,4 +38,20 @@ def add_script(*paths):
         '',
         '<script src="{}"></script>',
         [(get_static_path('js/%s' % path),) for path in paths]
+    )
+
+@register.simple_tag
+def make_school(school):
+    """
+    Make an SVG for a school
+    """
+    return format_html(
+        """
+        <svg class="school" data-id="{}">
+            <image href="{}" x="25" y="25"></image>
+            <circle cx="50" cy="50" r="40"></circle>
+        </svg>
+        """,
+        school.id,
+        school.logo
     )
