@@ -4,7 +4,28 @@ h1 {
 }
 .content {
     .graph {
-
+        .circle-of-suck {
+            position: relative;
+            display: inline-block;
+        }
+        svg.school {
+            image {
+                width: 50px;
+                height: 50px;
+            }
+            circle {
+                stroke: $blue;
+                stroke-width:5px;
+                fill: transparent;
+                cursor: pointer;
+                transition: 0.2s;
+                &:hover {
+                    fill: rgba(255,255,255,0.3);
+                    stroke: lighten($blue, 5);
+                    r: 41px;
+                }
+            }
+        }
     }
     .box{
         display: none;
@@ -30,16 +51,5 @@ h1 {
         position: absolute;
         bottom: 20px;
         right: 20px;
-    }
-    .school {
-        circle {
-            fill: $white;
-            stroke: $blue;
-            stroke-width:5px;
-        }
-        image{
-            width: 50px;
-            height: 50px;
-        }
     }
 }

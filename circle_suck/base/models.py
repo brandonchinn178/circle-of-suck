@@ -7,7 +7,6 @@ import json
 
 from base.constants import *
 
-
 class School(object):
     """
     Using our own implementation to avoid populating a database
@@ -69,6 +68,12 @@ class Season(models.Model):
     conference = models.CharField(max_length=100, choices=[(conference_id, conference['name']) for conference_id, conference in CONFERENCES.items()])
     year = models.IntegerField()
     circle_of_suck = models.TextField()
+
+    def get_school_records(self, school):
+        """Return a tuple of values that store the number of wins and losses"""
+        wins = self.games.filter(winner=school).count()
+        losses = self.games.filter(loser=school).count()
+        return (wins, losses)
 
     def get_circle_of_suck(self):
         """

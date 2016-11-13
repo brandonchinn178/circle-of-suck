@@ -21,6 +21,16 @@ class ConferenceView(TemplateView):
 
         context['season'] = self.season
         if self.season:
+            circles_of_suck = self.season.get_circle_of_suck()
+            context['circles_of_suck'] = circles_of_suck
+
+            # all schools in a circle of suck
+            circle_schools = flatten(circles_of_suck)
+            # all schools in conference
+            all_schools = School.get_conference(self.season.conference)
+            # schools not in any circles of suck
+            context['extra_schools'] = set(all_schools) - set(circle_schools)
+
             context['all_games'] = [
                 {
                     'winner': game.winner,
@@ -31,16 +41,13 @@ class ConferenceView(TemplateView):
                 }
                 for game in self.season.games.all()
             ]
-
-            circles_of_suck = self.season.get_circle_of_suck()
-            context['circles_of_suck'] = circles_of_suck
-
-            # all schools in a circle of suck
-            circle_schools = flatten(circles_of_suck)
-            # all schools in conference
-            all_schools = School.get_conference(self.season.conference)
-            # schools not in any circles of suck
-            context['extra_schools'] = set(all_schools) - set(circle_schools)
+            context['all_schools'] = {
+                school.id: {
+                    'name': school.name,
+                    'record': 
+                }
+                for school in all_schools
+            }
 
         return context
 
