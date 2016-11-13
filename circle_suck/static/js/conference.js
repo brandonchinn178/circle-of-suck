@@ -88,9 +88,9 @@ $(document).ready(function() {
             var loser = $(this).data("loser");
             var winner = $(this).data("winner");
             $(".game-box .date").text(game.date);
-            $(".game-box .winner .logo").attr("src", winner.find("image").attr("href"));
+            $(".game-box .winner .logo img").attr("src", winner.find("image").attr("href"));
             $(".game-box .winner .score").text(game.winner_score);
-            $(".game-box .loser .logo").attr("src", loser.find("image").attr("href"));
+            $(".game-box .loser .logo img").attr("src", loser.find("image").attr("href"));
             $(".game-box .loser .score").text(game.loser_score);
             $(".game-box").show();
         })
@@ -136,10 +136,17 @@ function drawSchoolArrow(school1, school2) {
         game = game[0];
     }
 
-    var path = ["M", x1, y1, "L", x2, y2];
-    $(school1).next("path.arrow")
-        .attr("d", path.join(" "))
+    var arrow = $(school1).next(".arrow")
         .data("game-details", game)
         .data("loser", $(school1))
         .data("winner", $(school2));
+
+    var path = ["M", x1, y1, "L", x2, y2];
+    arrow.find("path.arrow-body")
+        .attr("d", path.join(" "));
+    arrow.find("line")
+        .attr("x1", x1)
+        .attr("y1", y1)
+        .attr("x2", x2)
+        .attr("y2", y2);
 }

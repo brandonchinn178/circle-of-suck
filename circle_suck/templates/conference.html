@@ -42,7 +42,10 @@
                     </defs>
                     {% for school in circle_of_suck %}
                         {% make_school school %}
-                        <path class="arrow" marker-end="url(#head)"></path>
+                        <g class="arrow">
+                            <path class="arrow-body" marker-end="url(#head)"></path>
+                            <line></line>
+                        </g>
                     {% endfor %}
                 </svg>
             {% endfor %}
@@ -60,12 +63,12 @@
         </div>
         <div class='game-box box'>
             <p class="date"></p>
-            <p class='winner'> 
-                <img src="" class='logo'>
+            <p class='score-box winner'> 
+                <span class="logo"><img src=""></span>
                 <span class='score'></span>
             </p> 
-            <p class='loser'>
-                <img src="" class='logo'>
+            <p class='score-box loser'>
+                <span class="logo"><img src=""></span>
                 <span class='score'></span>
             </p>
         </div>
