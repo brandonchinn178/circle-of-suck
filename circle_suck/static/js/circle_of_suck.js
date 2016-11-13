@@ -1,5 +1,7 @@
 // map school to all games lost
 var loserToGames;
+// maps school to all schools who played it
+var playedSchools;
 
 $(document).ready(function() {
 
@@ -48,50 +50,48 @@ $(document).ready(function() {
 });
 
 function initCircleOfSuck() {
+    // initialize helper objects
     loserToGames = {};
+    playedSchools = {};
+    $.each(window.allSchools, function(school) {
+        loserToGames[school] = [];
+        playedSchools[school] = [];
+    });
     if (window.allGames) {
         for (var i = 0; i < window.allGames.length; i++) {
             var game = window.allGames[i];
-            var gamesLost = loserToGames[game.loser];
-            if (gamesLost) {
-                gamesLost.push(game);
-            } else {
-                loserToGames[game.loser] = [game];
-            }
+            loserToGames[game.loser].push(game);
+            playedSchools[game.loser].push(game.winner);
+            playedSchools[game.winner].push(game.loser);
         }
     }
 
-    $(".circle-of-suck").each(function() {
-        var n = $(this).children(".school").length;
-        var radius = Math.min(250, 50 * (n-1));
-        var svgSize = $("svg.school")[0].getBBox().width + 20;
+    // set up circle graph
+    $(".suck-graph .circle-of-suck").each(function() {
+        arrangeSchools(this);
 
-        var size = 2 * radius + svgSize;
-        var center = size/2;
-        var offset = Math.PI/4; // treat 45deg as 0deg
-        var angle = 2 * Math.PI / n;
-
-        var prev = $();
-        $(this).children(".school").each(function(i) {
-            var cx = center + Math.cos(angle * i + offset) * radius;
-            var cy = center + Math.sin(angle * i + offset) * radius;
-            $(this)
-                .attr("x", cx - svgSize/2)
-                .attr("y", cy - svgSize/2);
-
-            if (prev.length !== 0) {
-                drawSchoolArrow(prev, this);
-            }
+        var prev = $(this).children(".school").last();
+        $(this).children(".school").each(function() {
+            var arrow = $(prev).next(".arrow");
+            drawSchoolArrow(prev, this, arrow);
             prev = this;
-        });
-        drawSchoolArrow(prev, $(this).children(".school:first"));
-
-        $(this).css({
-            width: size,
-            height: size,
-        });
+        })
     });
 
+    // set up full graph
+    var svg = $(".full-graph svg");
+    $(".suck-graph svg.school").clone().appendTo(svg);
+    arrangeSchools(svg);
+
+    var arrow = $(".arrow:first").clone();
+    window.allGames.forEach(function(game) {
+        var winner = svg.find(".school." + game.winner);
+        var loser = svg.find(".school." + game.loser);
+        var _arrow = arrow.clone().appendTo(svg);
+        drawSchoolArrow(loser, winner, _arrow);
+    });
+
+    // initialize popup boxes for school details
     $(".school circle")
         .mouseover(function() {
             var id = $(this).parent().data("id");
@@ -108,8 +108,55 @@ function initCircleOfSuck() {
         })
         .mouseleave(function() {
             $(".school-box").hide();
+            fadeElement(".school", true);
+            fadeElement(".arrow", true);
         });
 
+    $(".suck-graph .school circle").mouseover(function() {
+        fadeElement(".suck-graph .school");
+        fadeElement(".suck-graph .arrow");
+        var school = $(this).parent();
+        fadeElement(school, true);
+
+        var circle = $(this).parents(".circle-of-suck");
+        if (circle.length !== 0) {
+            var prev = $(school).prevAll(".school").first();
+            var next = $(school).nextAll(".school").first();
+            if (prev.length === 0) {
+                prev = circle.find(".school:last");
+            }
+            if (next.length === 0) {
+                next = circle.find(".school:first");
+            }
+            fadeElement(prev, true);
+            fadeElement(prev.next(".arrow"), true);
+            fadeElement(next, true);
+            fadeElement(next.prev(".arrow"), true);
+        }
+    });
+
+    $(".full-graph .school circle").mouseover(function() {
+        fadeElement(".full-graph .arrow");
+        // all schools who have not played the hovered school fade away
+        var school = $(this).parent();
+        var id = school.data("id");
+        var havePlayed = playedSchools[id];
+        $.each(window.allSchools, function(school) {
+            if (havePlayed.indexOf(school) === -1) {
+                fadeElement(".school." + school);
+            }
+        });
+
+        fadeElement(school, true);
+        $(".full-graph .arrow").each(function() {
+            var game = $(this).data("gameDetails");
+            if (game.winner === id || game.loser === id) {
+                fadeElement(this, true);
+            }
+        });
+    });
+
+    // initialize popup boxes for game details
     $(".arrow")
         .mouseover(function() {
             var game = $(this).data("game-details");
@@ -124,6 +171,13 @@ function initCircleOfSuck() {
             $(".game-box .loser .logo img").attr("src", loser.find("image").attr("href"));
             $(".game-box .loser .score").text(game.loser_score);
             $(".game-box").show();
+
+            fadeElement(".school");
+            fadeElement(".arrow");
+            fadeElement(this, true);
+
+            fadeElement($(this).data("loser"), true);
+            fadeElement($(this).data("winner"), true);
         })
         .mousemove(function(e) {
             $(".game-box").css({
@@ -133,16 +187,26 @@ function initCircleOfSuck() {
         })
         .mouseleave(function() {
             $(".game-box").hide();
+            fadeElement(".school", true);
+            fadeElement(".arrow", true);
         });
-}
 
-/**
- * Return parameters for the URL, including conference and year
- */
-function getURLParams() {
-    return $.param({
-        conference: $("select.conference").val(),
-        year: window.currYear,
+    // initialize toggle graph button
+    $(".toggle-graph").click(function() {
+        if ($(".suck-graph").is(":visible")) {
+            var fadeOut = ".suck-graph";
+            var fadeIn = ".full-graph";
+            var text = "Circle Graph";
+        } else {
+            var fadeOut = ".full-graph";
+            var fadeIn = ".suck-graph";
+            var text = "Full Graph";
+        }
+
+        $(this).text(text);
+        $(fadeOut).fadeOut(function() {
+            $(fadeIn).fadeIn();
+        });
     });
 }
 
@@ -182,50 +246,4 @@ function activateYear(pushHistory) {
             alert("An error occurred.");
         },
     });
-}
-
-/**
- * Draw an SVG arrow from the given svg.school to the other svg.school
- */
-function drawSchoolArrow(school1, school2) {
-    // centers of svg
-    var radius = $(school1)[0].getBBox().width / 2 + 10;
-    var x1 = parseInt($(school1).attr("x")) + radius;
-    var y1 = parseInt($(school1).attr("y")) + radius;
-    var x2 = parseInt($(school2).attr("x")) + radius;
-    var y2 = parseInt($(school2).attr("y")) + radius;
-
-    // move arrow to edge of circles, manual adjustments
-    var hyp = Math.hypot(x2 - x1, y2 - y1);
-    x1 += (radius / hyp) * (x2 - x1);
-    y1 += (radius / hyp) * (y2 - y1);
-    x2 -= ((radius + 25) / hyp) * (x2 - x1);
-    y2 -= ((radius + 25) / hyp) * (y2 - y1);
-
-    var school1Id = $(school1).data("id");
-    var school2Id = $(school2).data("id");
-    var lostGames = loserToGames[school1Id] || [];
-    var game = lostGames.filter(function(game) {
-        return game.winner === school2Id;
-    });
-
-    if (game.length === 0) {
-        game = null;
-    } else {
-        game = game[0];
-    }
-
-    var arrow = $(school1).next(".arrow")
-        .data("game-details", game)
-        .data("loser", $(school1))
-        .data("winner", $(school2));
-
-    var path = ["M", x1, y1, "L", x2, y2];
-    arrow.find("path.arrow-body")
-        .attr("d", path.join(" "));
-    arrow.find("line")
-        .attr("x1", x1)
-        .attr("y1", y1)
-        .attr("x2", x2)
-        .attr("y2", y2);
 }

@@ -29,7 +29,7 @@
     {% if not season %}
         <p class="no-stats">The given conference does not have any stats for the season.</p>
     {% else %}
-        <div class='graph'>
+        <div class='suck-graph graph'>
             {% for circle_of_suck in circles_of_suck %}
                 <svg class="school-group circle-of-suck">
                     <defs>
@@ -54,6 +54,15 @@
                 </div>
             {% endif %}
         </div>
+        <div class="full-graph graph">
+            <svg>
+                <defs>
+                    <marker id="head" orient="auto" markerWidth="4" markerHeight="6" refX="2" refY="3">
+                        <path d="M1,1 L3,3 L1,5"></path>
+                    </marker>
+                </defs>
+            </svg>
+        </div>
         <div class='school-box box'>
             <span class="school-name"></span>&nbsp;
             <span class="record"></span>
@@ -69,6 +78,6 @@
                 <span class='score'></span>
             </p>
         </div>
-        <!--<button type='button' class='graph-type'>Full Graph</button>-->
+        <button type='button' class='toggle-graph'>Full Graph</button>
     {% endif %}
 {% endblock %}
