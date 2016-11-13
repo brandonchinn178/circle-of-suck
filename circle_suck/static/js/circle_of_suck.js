@@ -9,8 +9,7 @@ $(document).ready(function() {
     });
 
     $("header select").change(function() {
-        var conference = $("select.conference").val();
-        window.search = getURLParams();
+        window.location.search = getURLParams();
     });
 
     window.currYear = parseInt($(".year span").text());
