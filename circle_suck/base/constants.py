@@ -60,7 +60,7 @@ CONFERENCES = {
         'name': 'ACC',
         'schools': ACC,
     },
-    'BIG-TEN': {
+    'BIG_TEN': {
         'name': 'Big Ten',
         'schools': BIG_TEN,
     },
