@@ -16,13 +16,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.year = options['year']
         for sport, sport_url in SPORTS_URLS.items():
+            print 'Running for %s...' % sport
             self.update_api(sport, sport_url, **options)
+        print 'done.'
     
     def update_api(self, sport, sport_url, **options):
-        try:
-            self.sport = options['--sport']
-        except:
-            self.sport = "Football"
         url = 'http://api.sportradar.us/'+ sport_url + '/' + str(self.year) + '/REG/schedule.json?api_key=' + API_KEY
         api = requests.get(url).json()
         weeks = api["weeks"]
@@ -35,7 +33,7 @@ class Command(BaseCommand):
                     if (SCHOOLS[game["home"]].conference != SCHOOLS[game["away"]].conference or game["status"] != "closed"):
                         continue
                     #check season, then create or use season not yet implemented properly
-                    season,_ = Season.objects.get_or_create(year = self.year, sport = self.sport, conference = SCHOOLS[game["home"]].conference)
+                    season,_ = Season.objects.get_or_create(year = self.year, sport = sport, conference = SCHOOLS[game["home"]].conference)
                     winner, loser = None, None
                     if game["home_points"] > game["away_points"]:
                         winner, loser = game["home"], game["away"]
