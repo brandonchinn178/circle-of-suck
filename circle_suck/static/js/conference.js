@@ -17,20 +17,39 @@ $(document).ready(function() {
         });
     });
 
-    // all school circles should be the same size
-    $(".circle-of-suck .school").each(function(i) {
-        var next = $(this).nextAll(".school").first();
-        if (next.length === 0) {
-            next = $(this).siblings(".school").first();
-        }
-        drawSchoolArrow(this, next);
+    $(".circle-of-suck").each(function() {
+        var n = $(this).children(".school").length;
+        var radius = Math.min(250, 50 * (n-1));
+        var svgSize = $("svg.school").width();
+
+        var size = 2 * radius + svgSize;
+        var center = size/2;
+        var offset = Math.PI/4; // treat 45deg as 0deg
+        var angle = 2 * Math.PI / n;
+
+        var prev = $(this).children(".school").last();
+        $(this).children(".school").each(function(i) {
+            var cx = center + Math.cos(angle * i + offset) * radius;
+            var cy = center + Math.sin(angle * i + offset) * radius;
+            $(this).css({
+                left: cx - svgSize/2,
+                top: cy - svgSize/2,
+            });
+
+            drawSchoolArrow(prev, this);
+            prev = this;
+        });
+
+        $(this).css({
+            width: size,
+            height: size,
+        });
     });
 
     $("svg.school circle")
         .mouseover(function(e) {
             var id = $(this).parent().data("id");
             var data = window.allSchools[id];
-
             $(".school-box .school-name").text(data.name);
             $(".school-box .record").text("(" + data.record[0] + "-" + data.record[1] + ")");
             $(".school-box").show();

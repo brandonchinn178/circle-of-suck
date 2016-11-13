@@ -29,17 +29,24 @@
     {% if not season %}
         <p>The given sport and conference does not have any stats for the season. </p>
     {% else %}
+        <div class='year'>
+            <h3>{{season.year}}</h3>
+        </div>
         <div class='graph'>
             {% for circle_of_suck in circles_of_suck %}
-                <div class="circle-of-suck">
+                <div class="school-group circle-of-suck">
                     {% for school in circle_of_suck %}
                         {% make_school school %}
                     {% endfor %}
                 </div>
             {% endfor %}
-            {% for school in extra_schools %}
-                {% make_school school %}
-            {% endfor %}
+            {% if extra_schools %}
+                <div class="school-group extra-schools">
+                    {% for school in extra_schools %}
+                        {% make_school school %}
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
         <div class='school-box box'>
             <span class="school-name"></span>&nbsp;
