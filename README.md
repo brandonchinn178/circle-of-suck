@@ -10,11 +10,11 @@ This website scrapes data from [Sportradar](http://developer.sportradar.com/) wi
 Team
 ----
 
-- Brandon Chinn: Project Leader, Front-end design & development
-- Allan Levy: Back-end development, longest-cycle algorithm
-- Matt Trinh: Back-end development, API research
-- Leslie Tsai: Front-end design & development
-- Thomas Zhang: Longest-cycle algorithm, API scraping
+- [@brandonchinn178](http://github.com/brandonchinn178): Project Leader, Front-end design & development
+- [@allanwlevy](http://github.com/allanwlevy): Back-end development, longest-cycle algorithm
+- [@matt-trinh](http://github.com/matt-trinh): Back-end development, API research
+- [@leslietsai](http://github.com/leslietsai): Front-end design & development
+- [@thomasgreen](http://github.com/thomasgreen): Longest-cycle algorithm, API scraping
 
 Installation
 ------------
