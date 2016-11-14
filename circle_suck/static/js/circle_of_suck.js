@@ -1,5 +1,3 @@
-// map school to all games lost
-var loserToGames;
 // maps school to all schools who played it
 var playedSchools;
 
@@ -55,19 +53,19 @@ function initCircleOfSuck() {
         return;
     }
 
-    // initialize helper objects
-    loserToGames = {};
+    // map schools to games they won
+    window.winnerToGames = {};
     playedSchools = {};
     if (window.allSchools) {
         $.each(window.allSchools, function(school) {
-            loserToGames[school] = [];
+            window.winnerToGames[school] = [];
             playedSchools[school] = [];
         });
     }
     if (window.allGames) {
         for (var i = 0; i < window.allGames.length; i++) {
             var game = window.allGames[i];
-            loserToGames[game.loser].push(game);
+            window.winnerToGames[game.winner].push(game);
             playedSchools[game.loser].push(game.winner);
             playedSchools[game.winner].push(game.loser);
         }
@@ -95,7 +93,7 @@ function initCircleOfSuck() {
         var winner = svg.find(".school." + game.winner);
         var loser = svg.find(".school." + game.loser);
         var _arrow = arrow.clone().appendTo(svg);
-        drawSchoolArrow(loser, winner, _arrow);
+        drawSchoolArrow(winner, loser, _arrow);
     });
 
     // initialize popup boxes for school details

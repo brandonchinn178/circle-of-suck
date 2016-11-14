@@ -70,9 +70,9 @@ function drawSchoolArrow(school1, school2, arrow) {
 
     var school1Id = $(school1).data("id");
     var school2Id = $(school2).data("id");
-    var lostGames = loserToGames[school1Id] || [];
-    var game = lostGames.filter(function(game) {
-        return game.winner === school2Id;
+    var wonGames = window.winnerToGames[school1Id] || [];
+    var game = wonGames.filter(function(game) {
+        return game.loser === school2Id;
     });
 
     if (game.length === 0) {

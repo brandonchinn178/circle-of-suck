@@ -17,7 +17,7 @@ class Command(BaseCommand):
             season = Season.objects.get(conference = conference_id, year = self.year)
             games = Game.objects.all().filter(season = season)
             graph = {
-                school.id: games.filter(loser=school.id).values_list('winner', flat=True)
+                school.id: games.filter(winner=school.id).values_list('loser', flat=True)
                 for school in conference['schools']
             }
             circles = utils.find_cycles(graph)
