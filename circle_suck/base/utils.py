@@ -42,25 +42,17 @@ def find_cycles(graph, minsize=3):
     for node1, nodes in graph.items():
         all_edges.extend([(node1, node2) for node2 in nodes])
     G.add_edges_from(all_edges)
-    cycles = []
+    all_cycles = []
 
     while len(G.nodes()) > 0:
-        longest_cycle = find_longest_cycle(G)
+        cycles = list(nx.simple_cycles(G))
+        if len(cycles) == 0:
+            break
+        longest_cycle = max(cycles, key=lambda c: len(c))
         if len(longest_cycle) < minsize:
             break
         else:
-            cycles.append(longest_cycle)
+            all_cycles.append(longest_cycle)
             G.remove_nodes_from(longest_cycle)
 
-    return cycles
-
-def find_longest_cycle(graph):
-    longest_cycle = []
-    longest_cycle_len = 0
-    for cycle in nx.simple_cycles(graph):
-        cycle_len = len(cycle)
-        if cycle_len > longest_cycle_len:
-            longest_cycle = cycle
-            longest_cycle_len = cycle_len
-
-    return longest_cycle
+    return all_cycles
