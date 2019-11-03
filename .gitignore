@@ -1,15 +1,2 @@
 .DS_Store
-.env
-
-*.pyc
-*.sqlite3
-*.css.map
-
-# Remove all CSS files from CSS directory..
-circle_suck/static/css/*.css
-# ... except CSS files in the vendor/ and fonts/ directories
-!circle_suck/static/css/vendor/*.css
-
-venv/
 node_modules/
-.sass-cache/
