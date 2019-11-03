@@ -37,10 +37,15 @@ export const App: FC = () => {
 
   return (
     <div>
-      <p>Circle of suck:</p>
-      <TeamList teams={pathOfSuck.map(getTeam)} />
-      <p>Remaining teams:</p>
-      <TeamList teams={leftOutTeams} />
+      <header>
+        <h1>PAC-12 Circle of Suck</h1>
+      </header>
+      <main>
+        <p>Circle of suck:</p>
+        <TeamList teams={pathOfSuck.map(getTeam)} />
+        <p>Remaining teams:</p>
+        <TeamList teams={leftOutTeams} />
+      </main>
     </div>
   )
 }
