@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import React, { FC } from 'react'
 
-import { useGetGames, useGetTeams } from './lib/api'
+import { Team, useGetGames, useGetTeams } from './lib/api'
 import { getLongestPath } from './lib/graph'
 
 export const App: FC = () => {
@@ -10,6 +10,14 @@ export const App: FC = () => {
 
   if (!games || !teams) {
     return null
+  }
+
+  const getTeam = (school: string): Team => {
+    const team = _.find(teams, { school })
+    if (!team) {
+      throw new Error(`Could not find team: ${school}`)
+    }
+    return team
   }
 
   // maps winner team -> loser team
@@ -30,17 +38,17 @@ export const App: FC = () => {
   return (
     <div>
       <p>Circle of suck:</p>
-      <ul>
-        {pathOfSuck.map((team) =>
-          <li key={team}>{team}</li>
-        )}
-      </ul>
+      <TeamList teams={pathOfSuck.map(getTeam)} />
       <p>Remaining teams:</p>
-      <ul>
-        {leftOutTeams.map((team) =>
-          <li key={team.abbreviation}>{team.school}</li>
-        )}
-      </ul>
+      <TeamList teams={leftOutTeams} />
     </div>
   )
 }
+
+const TeamList: FC<{ teams: Team[] }> = ({ teams }) => (
+  <ul>
+    {teams.map(({ abbreviation, school }) =>
+      <li key={abbreviation}>{school} ({abbreviation})</li>
+    )}
+  </ul>
+)
