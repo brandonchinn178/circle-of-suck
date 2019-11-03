@@ -1,27 +1,46 @@
 import _ from 'lodash'
 import React, { FC } from 'react'
 
-import { Game, getGames, useAPI } from './lib/api'
+import { useGetGames, useGetTeams } from './lib/api'
 import { getLongestPath } from './lib/graph'
 
 export const App: FC = () => {
-  const games = useAPI(getGames, 2019, 'PAC')
+  const games = useGetGames(2019, 'PAC')
+  const teams = useGetTeams('PAC')
 
-  if (!games) {
+  if (!games || !teams) {
     return null
   }
 
+  // maps winner team -> loser team
   const gameGraph = {}
-  _.each(games, ({ winner, loser }) => {
-    _.merge(gameGraph, { [winner]: [loser] })
+  _.each(games, ({ conference_game, away_team, home_team, away_points, home_points }) => {
+    if (!conference_game) {
+      return
+    }
+
+    const game = away_points > home_points ? { [away_team]: [home_team] } : { [home_team]: [away_team] }
+    _.merge(gameGraph, game)
   })
+
   const pathOfSuck = getLongestPath(gameGraph)
 
+  const leftOutTeams = _.filter(teams, (team) => !_.includes(pathOfSuck, team.school))
+
   return (
-    <ul>
-      {pathOfSuck.map((team) =>
-        <li key={team}>{team}</li>
-      )}
-    </ul>
+    <div>
+      <p>Circle of suck:</p>
+      <ul>
+        {pathOfSuck.map((team) =>
+          <li key={team}>{team}</li>
+        )}
+      </ul>
+      <p>Remaining teams:</p>
+      <ul>
+        {leftOutTeams.map((team) =>
+          <li key={team.abbreviation}>{team.school}</li>
+        )}
+      </ul>
+    </div>
   )
 }

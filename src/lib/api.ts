@@ -1,15 +1,14 @@
 import axios from 'axios'
-import _ from 'lodash'
 import { useEffect, useState } from 'react'
 
-// https://api.collegefootballdata.com/api/docs/
-const collegeFootballData = axios.create({
-  baseURL: 'https://api.collegefootballdata.com/',
-})
+type Maybe<T> = T | null
 
-export type Game = {
-  winner: string
-  loser: string
+export interface Game {
+  conference_game: boolean
+  away_team: string
+  home_team: string
+  away_points: number
+  home_points: number
 }
 
 // api.collegefootballdata.com/conferences
@@ -49,40 +48,36 @@ type Conference
   | 'BE' // Big East Conference
   | 'BIAA' // Border Intercollegiate Athletic Association
 
-export const getGames = async (year: number, conference: Conference): Promise<Game[]> => {
-  const { data } = await collegeFootballData.get('/games', { params: { year, conference } })
-  return _.compact(_.map(data, ({ conference_game, away_team, home_team, away_points, home_points }) => {
-    if (!conference_game) {
-      return null
-    }
-
-    if (away_points > home_points) {
-      return {
-        winner: away_team,
-        loser: home_team,
-      }
-    } else {
-      return {
-        winner: home_team,
-        loser: away_team,
-      }
-    }
-  }))
+export interface Team {
+  school: string
+  abbreviation: string
 }
 
-/**
- * A react hook for loading API calls.
- */
-export const useAPI = <T>(f: (...args: any[]) => Promise<T>, ...args: any[]): T | null => {
+export const useGetTeams = (conference: Conference): Maybe<Team[]> => {
+  return useAPI<Team[]>('/teams', { conference })
+}
+
+export const useGetGames = (year: number, conference: Conference): Maybe<Game[]> => {
+  return useAPI<Game[]>('/games', { year, conference })
+}
+
+// https://api.collegefootballdata.com/api/docs/
+const collegeFootballData = axios.create({
+  baseURL: 'https://api.collegefootballdata.com/',
+})
+
+const useAPI = <T>(url: string, params: object): Maybe<T> => {
   const [result, setResult] = useState<T | null>(null)
 
   useEffect(() => {
     const doAPI = async () => {
-      setResult(await f(...args))
+      const { data } = await collegeFootballData.get(url, { params })
+      setResult(data)
     }
 
     doAPI()
-  })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return result
 }
