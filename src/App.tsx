@@ -1,19 +1,11 @@
 import _ from 'lodash'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC } from 'react'
 
-import { Game, getGames } from './lib/api'
+import { Game, getGames, useAPI } from './lib/api'
 import { getLongestPath } from './lib/graph'
 
 export const App: FC = () => {
-  const [games, setGames] = useState<Game[] | null>(null)
-
-  useEffect(() => {
-    const fetchGames = async () => {
-      setGames(await getGames(2019, 'PAC'))
-    }
-
-    fetchGames()
-  }, [])
+  const games = useAPI(getGames, 2019, 'PAC')
 
   if (!games) {
     return null

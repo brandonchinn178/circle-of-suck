@@ -1,5 +1,11 @@
 import axios from 'axios'
 import _ from 'lodash'
+import { useEffect, useState } from 'react'
+
+// https://api.collegefootballdata.com/api/docs/
+const collegeFootballData = axios.create({
+  baseURL: 'https://api.collegefootballdata.com/',
+})
 
 export type Game = {
   winner: string
@@ -43,14 +49,8 @@ type Conference
   | 'BE' // Big East Conference
   | 'BIAA' // Border Intercollegiate Athletic Association
 
-
-/**
- * Get games using api.collegefootballdata.com
- *
- * https://api.collegefootballdata.com/api/docs/
- */
 export const getGames = async (year: number, conference: Conference): Promise<Game[]> => {
-  const { data } = await axios.get(`https://api.collegefootballdata.com/games?year=${year}&conference=${conference}`)
+  const { data } = await collegeFootballData.get('/games', { params: { year, conference } })
   return _.compact(_.map(data, ({ conference_game, away_team, home_team, away_points, home_points }) => {
     if (!conference_game) {
       return null
@@ -68,4 +68,21 @@ export const getGames = async (year: number, conference: Conference): Promise<Ga
       }
     }
   }))
+}
+
+/**
+ * A react hook for loading API calls.
+ */
+export const useAPI = <T>(f: (...args: any[]) => Promise<T>, ...args: any[]): T | null => {
+  const [result, setResult] = useState<T | null>(null)
+
+  useEffect(() => {
+    const doAPI = async () => {
+      setResult(await f(...args))
+    }
+
+    doAPI()
+  })
+
+  return result
 }
