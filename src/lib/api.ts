@@ -12,7 +12,7 @@ export interface Game {
 }
 
 // api.collegefootballdata.com/conferences
-type Conference
+export type Conference
   = 'ACC' // Atlantic Coast Conference
   | 'B12' // Big 12 Conference
   | 'B1G' // Big Ten Conference
