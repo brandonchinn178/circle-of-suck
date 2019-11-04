@@ -44,8 +44,7 @@ export const CircleOfSuck: FC<Props> = ({ year, conference }) => {
 
   // find a hamiltonian cycle if possible, otherwise find the current longest path of suck
   const hamiltonian = getHamiltonian(graph)
-  const longest = getLongestPath(graph)
-  const circleOfSuck = (hamiltonian || longest).map((v) => teams[v])
+  const circleOfSuck = (hamiltonian || getLongestPath(graph)).map((v) => teams[v])
   const circleOfSuckEdges = _.compact(_.map(circleOfSuck, (team, i) =>{
     if (i === circleOfSuck.length - 1 && hamiltonian === null) {
       return
