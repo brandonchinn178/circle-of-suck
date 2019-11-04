@@ -2,6 +2,7 @@
   "name": "circle-of-suck",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://brandonchinn178.github.io/circle-of-suck",
   "dependencies": {
     "axios": "^0.19.0",
     "js-graph-algorithms": "^1.0.18",

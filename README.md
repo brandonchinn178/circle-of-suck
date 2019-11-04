@@ -6,3 +6,9 @@
 yarn install
 yarn start
 ```
+
+## Deploy
+
+```
+./deploy.sh
+```
