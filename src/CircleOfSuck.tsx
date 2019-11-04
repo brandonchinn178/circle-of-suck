@@ -27,14 +27,17 @@ export const CircleOfSuck: FC<Props> = ({ year, conference }) => {
   }
 
   // maps winner team -> loser team
-  const gameGraph = {}
+  const gameGraph = _.fromPairs(_.map(teams, (team) => [team.school, [] as string[]]))
   _.each(games, ({ conference_game, away_team, home_team, away_points, home_points }) => {
     if (!conference_game) {
       return
     }
 
-    const game = away_points > home_points ? { [away_team]: [home_team] } : { [home_team]: [away_team] }
-    _.merge(gameGraph, game)
+    if (away_points > home_points) {
+      gameGraph[away_team].push(home_team)
+    } else {
+      gameGraph[home_team].push(away_team)
+    }
   })
 
   const pathOfSuck = getLongestPath(gameGraph).map(getTeam)
