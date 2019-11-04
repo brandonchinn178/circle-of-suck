@@ -48,19 +48,16 @@ export const CircleOfSuck: FC<Props> = ({ year, conference }) => {
   }
 
   return (
-    <div>
-      <h1>PAC-12 Circle of Suck</h1>
-      <Graphviz
-        dot={`digraph {
-          ${teams.map((team) => `"${teamName(team)}";`).join(' ')}
-          ${circleOfSuckEdges.map(([team1, team2]) => `"${teamName(team1)}" -> "${teamName(team2)}";`).join(' ')}
-        }`}
-        options={{
-          width: '100%',
-          height: '600px',
-        }}
-      />
-    </div>
+    <Graphviz
+      dot={`digraph {
+        ${teams.map((team) => `"${teamName(team)}";`).join(' ')}
+        ${circleOfSuckEdges.map(([team1, team2]) => `"${teamName(team1)}" -> "${teamName(team2)}";`).join(' ')}
+      }`}
+      options={{
+        width: '100%',
+        height: '600px',
+      }}
+    />
   )
 }
 
