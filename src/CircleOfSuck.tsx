@@ -24,7 +24,7 @@ export const CircleOfSuck: FC<Props> = ({ year, conference }) => {
   // maps winner team -> loser team
   const gameGraph = _.fromPairs(_.map(teams, ({ school }) => [school, [] as string[]]))
   _.each(games, ({ conference_game, away_team, home_team, away_points, home_points }) => {
-    if (!conference_game) {
+    if (!conference_game || away_points === null || home_points === null) {
       return
     }
 
