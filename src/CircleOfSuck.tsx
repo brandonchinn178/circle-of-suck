@@ -1,7 +1,7 @@
-import { Graphviz } from 'graphviz-react'
 import jsgraphs from 'js-graph-algorithms'
 import _ from 'lodash'
 import React, { FC } from 'react'
+import Graph from 'react-graph-vis'
 
 import { Conference, Team, useGetGames, useGetTeams } from './lib/api'
 import { getHamiltonian, getLongestPath } from './lib/graph'
@@ -48,20 +48,31 @@ export const CircleOfSuck: FC<Props> = ({ year, conference }) => {
   }
 
   return (
-    <Graphviz
-      dot={`digraph {
-        ${teams.map((team) => `"${teamName(team)}";`).join(' ')}
-        ${circleOfSuckEdges.map(([team1, team2]) => `"${teamName(team1)}" -> "${teamName(team2)}";`).join(' ')}
-      }`}
+    <Graph
+      graph={{
+        nodes: teams.map(({ school, abbreviation }) => ({
+          id: school,
+          label: `${school} (${abbreviation})`,
+        })),
+        edges: circleOfSuckEdges.map(([team1, team2]) => ({
+          from: team1.school,
+          to: team2.school,
+          width: 2,
+        }))
+      }}
       options={{
-        width: '100%',
         height: '600px',
+        interaction: {
+          dragNodes: false,
+          dragView: false,
+        },
+        physics: {
+          enabled: false,
+        },
       }}
     />
   )
 }
-
-const teamName = (team: Team): string => `${team.school} (${team.abbreviation})`
 
 // pairify([1,2,3,4]) => [[1,2],[2,3],[3,4]]
 const pairify = <T,>(arr: T[]): [T, T][] =>
