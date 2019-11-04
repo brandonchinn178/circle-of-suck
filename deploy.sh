@@ -2,10 +2,12 @@
 
 set -eux
 
+if [[ $(git rev-parse HEAD) != $(git rev-parse master) ]]; then
+    echo 'not on master branch'
+    exit 1
+fi
+
 yarn build
-sed -i.bak '/build/d' .gitignore
-git add build
-git commit -m "Deploying to gh-pages"
-git subtree push --prefix build/ origin gh-pages
-git reset --hard HEAD~1
-rm .gitignore.bak
+git subtree split --prefix build -b gh-pages
+git push --force origin gh-pages:gh-pages
+git branch -D gh-pages
