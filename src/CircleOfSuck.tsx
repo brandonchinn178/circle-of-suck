@@ -68,10 +68,6 @@ export const CircleOfSuck: FC<Props> = ({ year, conference }) => {
       }}
       options={{
         height: '600px',
-        interaction: {
-          dragNodes: false,
-          dragView: false,
-        },
         physics: {
           enabled: false,
         },
