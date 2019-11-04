@@ -1,21 +1,28 @@
+import jsgraphs from 'js-graph-algorithms'
 import _ from 'lodash'
 
-// A directed graph represented as a mapping from a vertex to its connected
-// vertices.
-type DirectedGraph = {
-  [vertex: string]: string[]
+/**
+ * Get the hamiltonian path of the given graph, if one exists.
+ */
+export const getHamiltonian = (graph: jsgraphs.DiGraph): number[] | null => {
+  const cc = new jsgraphs.StronglyConnectedComponents(graph)
+
+  if (cc.componentCount() !== 1 || !_.every(_.range(graph.V), (v) => cc.componentId(v) === 0)) {
+    return null
+  }
+
+  return new jsgraphs.TopologicalSort(graph).order()
 }
 
 /**
- * Get the longest path in the given graph, ending up with a hamiltonian path
- * in the best case scenario.
+ * Get the longest path in the given graph.
  */
-export const getLongestPath = (graph: DirectedGraph): string[] => {
+export const getLongestPath = (graph: jsgraphs.DiGraph): number[] => {
   const longestPathFrom = (
-    curr: string,
-    seen: string[], // has 'curr' already
-  ): string[] => {
-    const neighborPaths = _.compact(_.map(graph[curr], (neighbor) => {
+    curr: number,
+    seen: number[], // has 'curr' already
+  ): number[] => {
+    const neighborPaths = _.compact(_.map(graph.adj(curr), (neighbor) => {
       if (_.includes(seen, neighbor)) {
         return null
       }
@@ -26,7 +33,7 @@ export const getLongestPath = (graph: DirectedGraph): string[] => {
     return _.concat([curr], getLongest(neighborPaths))
   }
 
-  const vertexPaths = _.map(_.keys(graph), (vertex) => longestPathFrom(vertex, [vertex]))
+  const vertexPaths = _.map(_.range(graph.V), (vertex) => longestPathFrom(vertex, [vertex]))
   return getLongest(vertexPaths)
 }
 

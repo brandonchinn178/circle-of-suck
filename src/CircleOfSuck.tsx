@@ -1,9 +1,10 @@
 import { Graphviz } from 'graphviz-react'
+import jsgraphs from 'js-graph-algorithms'
 import _ from 'lodash'
 import React, { FC } from 'react'
 
 import { Conference, Team, useGetGames, useGetTeams } from './lib/api'
-import { getLongestPath } from './lib/graph'
+import { getHamiltonian, getLongestPath } from './lib/graph'
 
 type Props = {
   year: number
@@ -18,29 +19,33 @@ export const CircleOfSuck: FC<Props> = ({ year, conference }) => {
     return null
   }
 
-  const getTeam = (school: string): Team => {
-    const team = _.find(teams, { school })
-    if (!team) {
-      throw new Error(`Could not find team: ${school}`)
-    }
-    return team
-  }
+  const teamToIndex = _.fromPairs(_.map(teams, ({ school }, i) => [school, i]))
 
   // maps winner team -> loser team
-  const gameGraph = _.fromPairs(_.map(teams, (team) => [team.school, [] as string[]]))
+  const gameGraph = new jsgraphs.DiGraph(teams.length)
   _.each(games, ({ conference_game, away_team, home_team, away_points, home_points }) => {
     if (!conference_game) {
       return
     }
 
+    const away = teamToIndex[away_team]
+    const home = teamToIndex[home_team]
+
     if (away_points > home_points) {
-      gameGraph[away_team].push(home_team)
+      gameGraph.addEdge(away, home)
     } else {
-      gameGraph[home_team].push(away_team)
+      gameGraph.addEdge(home, away)
     }
   })
 
-  const pathOfSuck = getLongestPath(gameGraph).map(getTeam)
+  // find a hamiltonian cycle if possible, otherwise find the current longest path of suck
+  const hamiltonian = _.map(getHamiltonian(gameGraph), (v) => teams[v])
+  const longest = _.map(getLongestPath(gameGraph), (v) => teams[v])
+  const circleOfSuck = hamiltonian || longest
+  const circleOfSuckEdges = pairify(circleOfSuck)
+  if (hamiltonian) {
+    circleOfSuckEdges.push([_.last(hamiltonian) as Team, hamiltonian[0]])
+  }
 
   return (
     <div>
@@ -48,7 +53,7 @@ export const CircleOfSuck: FC<Props> = ({ year, conference }) => {
       <Graphviz
         dot={`digraph {
           ${teams.map((team) => `"${teamName(team)}";`).join(' ')}
-          ${pairify(pathOfSuck).map(([team1, team2]) => `"${teamName(team1)}" -> "${teamName(team2)}";`).join(' ')}
+          ${circleOfSuckEdges.map(([team1, team2]) => `"${teamName(team1)}" -> "${teamName(team2)}";`).join(' ')}
         }`}
         options={{
           width: '100%',
