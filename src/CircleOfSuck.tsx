@@ -3,7 +3,7 @@ import _ from 'lodash'
 import React, { FC } from 'react'
 import Graph from 'react-graph-vis'
 
-import { Conference, Team, useGetGames, useGetTeams } from './lib/api'
+import { Conference, useGetGames, useGetTeams } from './lib/api'
 import { getHamiltonian, getLongestPath } from './lib/graph'
 
 type Props = {
@@ -43,13 +43,16 @@ export const CircleOfSuck: FC<Props> = ({ year, conference }) => {
   })
 
   // find a hamiltonian cycle if possible, otherwise find the current longest path of suck
-  const hamiltonian = _.map(getHamiltonian(graph), (v) => teams[v])
-  const longest = _.map(getLongestPath(graph), (v) => teams[v])
-  const circleOfSuck = hamiltonian || longest
-  const circleOfSuckEdges = pairify(circleOfSuck)
-  if (hamiltonian) {
-    circleOfSuckEdges.push([_.last(hamiltonian) as Team, hamiltonian[0]])
-  }
+  const hamiltonian = getHamiltonian(graph)
+  const longest = getLongestPath(graph)
+  const circleOfSuck = (hamiltonian || longest).map((v) => teams[v])
+  const circleOfSuckEdges = _.compact(_.map(circleOfSuck, (team, i) =>{
+    if (i === circleOfSuck.length - 1 && hamiltonian === null) {
+      return
+    }
+
+    return [team, circleOfSuck[i + 1]]
+  }))
 
   return (
     <Graph
@@ -77,7 +80,3 @@ export const CircleOfSuck: FC<Props> = ({ year, conference }) => {
     />
   )
 }
-
-// pairify([1,2,3,4]) => [[1,2],[2,3],[3,4]]
-const pairify = <T,>(arr: T[]): [T, T][] =>
-  _.zip(_.dropRight(arr, 1), _.drop(arr, 1)) as [T, T][]
