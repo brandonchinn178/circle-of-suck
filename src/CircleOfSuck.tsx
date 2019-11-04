@@ -1,3 +1,4 @@
+import { Graphviz } from 'graphviz-react'
 import _ from 'lodash'
 import React, { FC } from 'react'
 
@@ -36,25 +37,27 @@ export const CircleOfSuck: FC<Props> = ({ year, conference }) => {
     _.merge(gameGraph, game)
   })
 
-  const pathOfSuck = getLongestPath(gameGraph)
-
-  const leftOutTeams = _.filter(teams, (team) => !_.includes(pathOfSuck, team.school))
+  const pathOfSuck = getLongestPath(gameGraph).map(getTeam)
 
   return (
     <div>
       <h1>PAC-12 Circle of Suck</h1>
-      <p>Circle of suck:</p>
-      <TeamList teams={pathOfSuck.map(getTeam)} />
-      <p>Remaining teams:</p>
-      <TeamList teams={leftOutTeams} />
+      <Graphviz
+        dot={`digraph {
+          ${teams.map((team) => `"${teamName(team)}";`).join(' ')}
+          ${pairify(pathOfSuck).map(([team1, team2]) => `"${teamName(team1)}" -> "${teamName(team2)}";`).join(' ')}
+        }`}
+        options={{
+          width: '100%',
+          height: '600px',
+        }}
+      />
     </div>
   )
 }
 
-const TeamList: FC<{ teams: Team[] }> = ({ teams }) => (
-  <ul>
-    {teams.map(({ abbreviation, school }) =>
-      <li key={abbreviation}>{school} ({abbreviation})</li>
-    )}
-  </ul>
-)
+const teamName = (team: Team): string => `${team.school} (${team.abbreviation})`
+
+// pairify([1,2,3,4]) => [[1,2],[2,3],[3,4]]
+const pairify = <T,>(arr: T[]): [T, T][] =>
+  _.zip(_.dropRight(arr, 1), _.drop(arr, 1)) as [T, T][]
