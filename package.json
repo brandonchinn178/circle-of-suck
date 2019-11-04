@@ -1,15 +1,41 @@
 {
   "name": "circle-of-suck",
-  "author": "Brandon Chinn",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": "0.10.x",
-    "npm": "1.2.x"
+  "dependencies": {
+    "axios": "^0.19.0",
+    "js-graph-algorithms": "^1.0.18",
+    "lodash": "^4.17.15",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-graph-vis": "^1.0.5",
+    "react-scripts": "3.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
-    "grunt": "=0.4.5",
-    "grunt-contrib-sass": "latest",
-    "grunt-contrib-watch": "latest"
+    "@types/lodash": "^4.14.144",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.3",
+    "typescript": "^3.6.4"
   }
 }
