@@ -1,13 +1,15 @@
 import _ from 'lodash'
 import { useEffect, useState } from 'react'
 
-import { Conference, Game, Team, useGetGames, useGetTeams } from './lib/api'
+import { useGetGames, useGetTeams } from './lib/api'
 import { getHamiltonian, WeightedDiGraph } from './lib/graph'
+import { Conference, Game, Team } from './lib/types'
+import { Maybe } from './lib/typeutils'
 
 type CircleOfSuckResult = {
   loading: boolean
-  circleOfSuck: CircleOfSuckEdge[] | null
-  teams: Team[] | null
+  circleOfSuck: Maybe<CircleOfSuckEdge[]>
+  teams: Maybe<Team[]>
 }
 
 export const useCircleOfSuck = (year: number, conference: Conference): CircleOfSuckResult => {
@@ -42,7 +44,7 @@ type CircleOfSuckEdge = {
   isPlayed: boolean // has this game already been played?
 }
 
-const findCircleOfSuck = async (teams: Team[], games: Game[]): Promise<CircleOfSuckEdge[] | null> => {
+const findCircleOfSuck = async (teams: Team[], games: Game[]): Promise<Maybe<CircleOfSuckEdge[]>> => {
   // maps winner team -> loser team
   const gameGraph = _.fromPairs(_.map(teams, ({ school }) => [school, [] as string[]]))
 

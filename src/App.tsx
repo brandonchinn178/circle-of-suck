@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react'
 import Graph from 'react-graph-vis'
 
-import { Conference } from './lib/api'
+import { Conference } from './lib/types'
 import { useCircleOfSuck } from './CircleOfSuck'
 
 // year should initially be the year of the last fall season

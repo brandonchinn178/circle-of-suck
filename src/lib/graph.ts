@@ -1,8 +1,10 @@
 import _ from 'lodash'
 
+import { Maybe } from './typeutils'
+
 export class WeightedDiGraph {
   size: number
-  adjMatrix: (number | null)[][]
+  adjMatrix: Maybe<number>[][]
 
   constructor(size: number) {
     this.size = size
@@ -34,7 +36,7 @@ type Path = {
 /**
  * Get the shortest hamiltonian path of the given graph.
  */
-export const getHamiltonian = (graph: WeightedDiGraph): number[] | null => {
+export const getHamiltonian = (graph: WeightedDiGraph): Maybe<number[]> => {
   const START_NODE = 0
 
   const getHamiltonianFrom = (curr: number, currPath: Path): Path[] => {
