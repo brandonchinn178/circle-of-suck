@@ -42,8 +42,7 @@ type CircleOfSuckEdge = {
   isPlayed: boolean // has this game already been played?
 }
 
-const findCircleOfSuck = (teams: Team[], games: Game[]): Promise<CircleOfSuckEdge[] | null> =>
-  new Promise((resolve) => {
+const findCircleOfSuck = async (teams: Team[], games: Game[]): Promise<CircleOfSuckEdge[] | null> => {
     // maps winner team -> loser team
     const gameGraph = _.fromPairs(_.map(teams, ({ school }) => [school, [] as string[]]))
 
@@ -82,7 +81,7 @@ const findCircleOfSuck = (teams: Team[], games: Game[]): Promise<CircleOfSuckEdg
       return null
     }
 
-    resolve(_.map(hamiltonian.map((v) => teams[v]), (team1, i, arr) => {
+    return _.map(hamiltonian.map((v) => teams[v]), (team1, i, arr) => {
       const team2 = arr[i === arr.length - 1 ? 0 : i + 1]
 
       return {
@@ -90,5 +89,5 @@ const findCircleOfSuck = (teams: Team[], games: Game[]): Promise<CircleOfSuckEdg
         to: team2,
         isPlayed: _.includes(gameGraph[team1.school], team2.school),
       }
-    }))
-  })
+    })
+  }
