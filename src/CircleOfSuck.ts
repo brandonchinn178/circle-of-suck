@@ -1,21 +1,22 @@
 import _ from 'lodash'
-import React, { FC, useEffect, useState } from 'react'
-import Graph from 'react-graph-vis'
+import { useEffect, useState } from 'react'
 
 import { Conference, Game, Team, useGetGames, useGetTeams } from './lib/api'
 import { getHamiltonian, WeightedDiGraph } from './lib/graph'
 
-type Props = {
-  year: number
-  conference: Conference
+type CircleOfSuckResult = {
+  loading: boolean
+  circleOfSuck: CircleOfSuckEdge[] | null
+  teams: Team[] | null
 }
 
-export const CircleOfSuck: FC<Props> = ({ year, conference }) => {
+export const useCircleOfSuck = (year: number, conference: Conference): CircleOfSuckResult => {
   const games = useGetGames(year, conference)
   const teams = useGetTeams(conference)
-  const [{ loading, circleOfSuck }, setCircleOfSuck] = useState({
+  const [result, setCircleOfSuck] = useState<CircleOfSuckResult>({
     loading: true,
-    circleOfSuck: null as CircleOfSuckEdge[] | null,
+    circleOfSuck: null,
+    teams: null,
   })
 
   useEffect(() => {
@@ -27,43 +28,12 @@ export const CircleOfSuck: FC<Props> = ({ year, conference }) => {
       setCircleOfSuck({
         loading: false,
         circleOfSuck: result,
+        teams,
       })
     })
   }, [games, teams])
 
-  if (!games || !teams || loading) {
-    return null
-  }
-
-  if (!circleOfSuck) {
-    // TODO: find circle of suck with minimum number of schools left out?
-    return <p>No possible circle of suck for this season.</p>
-  }
-
-  return (
-    <Graph
-      graph={{
-        nodes: teams.map(({ school, abbreviation }) => ({
-          id: school,
-          label: `${school} (${abbreviation})`,
-        })),
-        edges: circleOfSuck.map(({ from, to, isPlayed }) => {
-          return {
-            from: from.school,
-            to: to.school,
-            width: isPlayed ? 2 : 1,
-            dashes: !isPlayed,
-          }
-        })
-      }}
-      options={{
-        height: '600px',
-        physics: {
-          enabled: false,
-        },
-      }}
-    />
-  )
+  return result
 }
 
 type CircleOfSuckEdge = {
