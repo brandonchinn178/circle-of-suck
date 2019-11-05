@@ -1,5 +1,5 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import Axios from 'axios'
+import useAxios, { configure } from 'axios-hooks'
 
 type Maybe<T> = T | null
 
@@ -62,22 +62,13 @@ export const useGetGames = (year: number, conference: Conference): Maybe<Game[]>
 }
 
 // https://api.collegefootballdata.com/api/docs/
-const collegeFootballData = axios.create({
+const axios = Axios.create({
   baseURL: 'https://api.collegefootballdata.com/',
 })
 
-const useAPI = <T>(url: string, params: object): Maybe<T> => {
-  const [result, setResult] = useState<T | null>(null)
+configure({ axios })
 
-  useEffect(() => {
-    const doAPI = async () => {
-      const { data } = await collegeFootballData.get(url, { params })
-      setResult(data)
-    }
-
-    doAPI()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  return result
+export const useAPI = <T>(url: string, params: object): Maybe<T> => {
+  const [{ data }] = useAxios({ url, params })
+  return data
 }
