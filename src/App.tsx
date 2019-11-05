@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { FC, useState } from 'react'
 import Graph from 'react-graph-vis'
 
@@ -32,28 +33,48 @@ const CircleOfSuck: FC<{ year: number; conference: Conference }> = ({ year, conf
     return <p>No possible circle of suck for this season.</p>
   }
 
+  const isComplete = _.every(circleOfSuck, 'isPlayed')
+
   return (
-    <Graph
-      graph={{
-        nodes: teams!.map(({ school, abbreviation }) => ({
-          id: school,
-          label: `${school} (${abbreviation})`,
-        })),
-        edges: circleOfSuck.map(({ from, to, isPlayed }) => {
-          return {
-            from: from.school,
-            to: to.school,
-            width: isPlayed ? 2 : 1,
-            dashes: !isPlayed,
-          }
-        })
-      }}
-      options={{
-        height: '600px',
-        physics: {
-          enabled: false,
-        },
-      }}
-    />
+    <>
+      {!isComplete && (
+        <p>
+          No complete circle of suck was found. Displaying a possible circle of
+          suck.
+        </p>
+      )}
+      <p>
+        An arrow from school A to school B represents a game where school A
+        beats school B.
+      </p>
+      {!isComplete && (
+        <p>
+          A dashed arrow from school A to school B represent a future game
+          that could complete the circle of suck, if school A beats school B.
+        </p>
+      )}
+      <Graph
+        graph={{
+          nodes: teams!.map(({ school, abbreviation }) => ({
+            id: school,
+            label: `${school} (${abbreviation})`,
+          })),
+          edges: circleOfSuck.map(({ from, to, isPlayed }) => {
+            return {
+              from: from.school,
+              to: to.school,
+              width: isPlayed ? 2 : 1,
+              dashes: !isPlayed,
+            }
+          })
+        }}
+        options={{
+          height: '500px',
+          physics: {
+            enabled: false,
+          },
+        }}
+      />
+    </>
   )
 }
