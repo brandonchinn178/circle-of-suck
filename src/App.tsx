@@ -1,12 +1,14 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 
 import { CircleOfSuck } from './CircleOfSuck'
 
+// year should initially be the year of the last fall season
+const NOW = new Date()
+const INITIAL_YEAR = NOW.getFullYear() - (NOW.getMonth() < 6 ? -1 : 0)
+
 export const App: FC = () => {
   // TODO: make inputtable by user
-  const date = new Date()
-  // year should initially be the year of the last fall season
-  const year = date.getFullYear() - (date.getMonth() < 6 ? -1 : 0)
+  const [year] = useState(INITIAL_YEAR)
 
   return (
     <main>
