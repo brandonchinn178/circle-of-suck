@@ -4,13 +4,13 @@
   "private": true,
   "homepage": "https://brandonchinn178.github.io/circle-of-suck",
   "dependencies": {
-    "axios": "^0.19.0",
-    "axios-hooks": "^1.6.0",
+    "axios": "^0.19.1",
+    "axios-hooks": "^1.9.0",
     "lodash": "^4.17.15",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "react-graph-vis": "^1.0.5",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,9 +34,9 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.144",
-    "@types/react": "^16.9.11",
-    "@types/react-dom": "^16.9.3",
-    "typescript": "^3.6.4"
+    "@types/lodash": "^4.14.149",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
+    "typescript": "^3.7.4"
   }
 }
