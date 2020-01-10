@@ -45,5 +45,6 @@ export type Conference
 
 export interface Team {
   school: string
-  abbreviation: string
+  abbreviation: string,
+  color: string
 }

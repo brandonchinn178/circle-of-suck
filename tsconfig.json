@@ -21,5 +21,6 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  "sourceMap": true
 }
