@@ -7,7 +7,7 @@ import { useCircleOfSuck } from './CircleOfSuck'
 
 // year should initially be the year of the last fall season
 const NOW = new Date()
-const INITIAL_YEAR = NOW.getFullYear() - (NOW.getMonth() < 6 ? -1 : 0)
+const INITIAL_YEAR = NOW.getFullYear() + (NOW.getMonth() < 6 ? -1 : 0)
 
 export const App: FC = () => {
   // TODO: make inputtable by user
