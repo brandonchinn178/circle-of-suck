@@ -46,34 +46,39 @@ const CircleOfSuck: FC<{ year: number; conference: Conference }> = ({ year, conf
   }
 
   const isComplete = _.every(circleOfSuck, 'isPlayed')
-  const graph = <Graph
-    graph={{
-      nodes: teams!.map(({ school, abbreviation, color }) => ({
+  const graph = {
+    nodes: teams!.map(({ school, abbreviation, color }) => {
+      return {
         id: school,
         label: `${school} (${abbreviation})`,
         fixed: false,
-        color: color
-      })),
-      edges: circleOfSuck.map(({ from, to, isPlayed }) => {
-        return {
-          from: from.school,
-          to: to.school,
-          width: isPlayed ? 2 : 1,
-          dashes: !isPlayed,
+        color: color,
+        font: {
+          color: "#FFFFFF"
         }
-      })
-    }}
-    options={{
-      height: '500px',
-      physics: {
-        enabled: true,
-        stabilization: {
-          enabled: true,
-          iterations: 1
-        }
-      },
-      autoResize: true
-    }}
+    }
+    }),
+    edges: circleOfSuck.map(({ from, to, isPlayed }) => {
+      return {
+        from: from.school,
+        to: to.school,
+        width: isPlayed ? 2 : 1,
+        dashes: !isPlayed
+      }
+    })
+  }
+  const options = {
+    height: '500px',
+    physics: {
+      enabled: false
+    },
+    autoResize: true  
+  }
+
+  var component = <Graph
+    graph={graph}
+    options={options}
+    getNetwork={(network:any)=>{network.redraw()}}
   />
 
   return (
@@ -94,7 +99,7 @@ const CircleOfSuck: FC<{ year: number; conference: Conference }> = ({ year, conf
           that could complete the circle of suck, if school A beats school B.
         </p>
       )}
-      {graph}
+      {component}
     </>
   )
 }
