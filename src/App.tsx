@@ -79,7 +79,6 @@ const CircleOfSuck: FC<{ year: number; conference: Conference }> = ({ year, conf
   var component = <Graph
     graph={graph}
     options={options}
-    getNetwork={(network:any)=>{network.redraw()}}
   />
 
   return (
