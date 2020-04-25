@@ -83,7 +83,7 @@ const findCircleOfSuck = async (teams: Team[], games: Game[]): Promise<Maybe<Cir
     return null
   }
 
-  // Spacing of the teams should be 360 degress divided by the number of teams
+  // Spacing of the teams should be 360 degrees divided by the number of teams
   const degree_spacing = 360 / teams.length
   console.log(`${degree_spacing}`)
   // TODO: Should calculate this somehow based on the number of teams/the size of the screen
@@ -93,7 +93,7 @@ const findCircleOfSuck = async (teams: Team[], games: Game[]): Promise<Maybe<Cir
     const team2 = arr[i === arr.length - 1 ? 0 : i + 1]
     // Multiply the spacing by the index + 1 and convert ot radians
     var radians = (degree_spacing * (i+1)) * (pi/180)
-    // Calculate the x and y coordinates. x = radius x cos(radians), y = radius x sin(raians)
+    // Calculate the x and y coordinates. x = radius x cos(radians), y = radius x sin(radians)
     const team1_x = radius * Math.cos(radians)
     const team1_y = radius * Math.sin(radians)
     team1.x_position = team1_x
