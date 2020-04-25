@@ -8,14 +8,25 @@ import { useCircleOfSuck } from './CircleOfSuck'
 // year should initially be the year of the last fall season
 const NOW = new Date()
 const INITIAL_YEAR = NOW.getFullYear() + (NOW.getMonth() < 6 ? -1 : 0)
+const PREVIOUS_YEARS = Array.from(new Array(20), (val, index) => INITIAL_YEAR - index)
 
 export const App: FC = () => {
-  // TODO: make inputtable by user
-  const [year] = useState(INITIAL_YEAR)
+  const [year, setYear] = useState(INITIAL_YEAR)
 
   return (
     <main>
-      <h1>PAC-12 Circle of Suck ({year})</h1>
+      <h1>PAC-12 Circle of Suck</h1>
+      <p>Year:
+        <select value={year} onChange={(event) => {
+          setYear(parseInt(event.target.value))
+        }}>
+          {
+            PREVIOUS_YEARS.map((year, index) => {
+              return <option key={`year${index}`} value={year}>{year}</option>
+            })
+          }
+        </select>
+      </p>
       <CircleOfSuck year={year} conference="PAC" />
     </main>
   )
@@ -34,6 +45,41 @@ const CircleOfSuck: FC<{ year: number; conference: Conference }> = ({ year, conf
   }
 
   const isComplete = _.every(circleOfSuck, 'isPlayed')
+  const graph = {
+    nodes: teams!.map(({ school, abbreviation, color, x_position, y_position }) => {
+      return {
+        id: school,
+        label: `${school} (${abbreviation})`,
+        fixed: false,
+        color: color,
+        font: {
+          color: "#FFFFFF"
+        },
+        x: x_position,
+        y: y_position
+    }
+    }),
+    edges: circleOfSuck.map(({ from, to, isPlayed }) => {
+      return {
+        from: from.school,
+        to: to.school,
+        width: isPlayed ? 2 : 1,
+        dashes: !isPlayed
+      }
+    })
+  }
+  const options = {
+    height: '500px',
+    physics: {
+      enabled: false
+    },
+    autoResize: true  
+  }
+
+  var component = <Graph
+    graph={graph}
+    options={options}
+  />
 
   return (
     <>
@@ -53,28 +99,7 @@ const CircleOfSuck: FC<{ year: number; conference: Conference }> = ({ year, conf
           that could complete the circle of suck, if school A beats school B.
         </p>
       )}
-      <Graph
-        graph={{
-          nodes: teams!.map(({ school, abbreviation }) => ({
-            id: school,
-            label: `${school} (${abbreviation})`,
-          })),
-          edges: circleOfSuck.map(({ from, to, isPlayed }) => {
-            return {
-              from: from.school,
-              to: to.school,
-              width: isPlayed ? 2 : 1,
-              dashes: !isPlayed,
-            }
-          })
-        }}
-        options={{
-          height: '500px',
-          physics: {
-            enabled: false,
-          },
-        }}
-      />
+      {component}
     </>
   )
 }
