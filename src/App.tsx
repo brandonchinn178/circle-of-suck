@@ -11,24 +11,23 @@ const INITIAL_YEAR = NOW.getFullYear() + (NOW.getMonth() < 6 ? -1 : 0)
 const PREVIOUS_YEARS = Array.from(new Array(20), (val, index) => INITIAL_YEAR - index)
 
 export const App: FC = () => {
-  // TODO: make inputtable by user
   const [year, setYear] = useState(INITIAL_YEAR)
-  const [circleOfSuck, setCircleOfSuck] = useState(<CircleOfSuck year={year} conference="PAC" />)
 
   return (
     <main>
       <h1>PAC-12 Circle of Suck</h1>
-      <select value={year} onChange={(event) => {
-        setYear(parseInt(event.target.value))
-        setCircleOfSuck(<CircleOfSuck year={parseInt(event.target.value)} conference="PAC" />)
-      }}>
-        {
-          PREVIOUS_YEARS.map((year, index) => {
-            return <option key={`year${index}`} value={year}>{year}</option>
-          })
-        }
-      </select>
-      {circleOfSuck}
+      <p>Year:
+        <select value={year} onChange={(event) => {
+          setYear(parseInt(event.target.value))
+        }}>
+          {
+            PREVIOUS_YEARS.map((year, index) => {
+              return <option key={`year${index}`} value={year}>{year}</option>
+            })
+          }
+        </select>
+      </p>
+      <CircleOfSuck year={year} conference="PAC" />
     </main>
   )
 }
