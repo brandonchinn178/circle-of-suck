@@ -47,7 +47,7 @@ const CircleOfSuck: FC<{ year: number; conference: Conference }> = ({ year, conf
 
   const isComplete = _.every(circleOfSuck, 'isPlayed')
   const graph = {
-    nodes: teams!.map(({ school, abbreviation, color }) => {
+    nodes: teams!.map(({ school, abbreviation, color, x_position, y_position }) => {
       return {
         id: school,
         label: `${school} (${abbreviation})`,
@@ -55,7 +55,9 @@ const CircleOfSuck: FC<{ year: number; conference: Conference }> = ({ year, conf
         color: color,
         font: {
           color: "#FFFFFF"
-        }
+        },
+        x: x_position,
+        y: y_position
     }
     }),
     edges: circleOfSuck.map(({ from, to, isPlayed }) => {
