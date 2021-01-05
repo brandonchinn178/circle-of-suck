@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://brandonchinn178.github.io/circle-of-suck",
   "dependencies": {
-    "axios": "^0.19.1",
+    "axios": "^0.21.1",
     "axios-hooks": "^1.9.0",
     "lodash": "^4.17.15",
     "react": "^16.12.0",
