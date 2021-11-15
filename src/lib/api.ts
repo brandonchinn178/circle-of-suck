@@ -4,22 +4,20 @@ import useAxios, { configure } from 'axios-hooks'
 import { Conference, Game, Team } from './types'
 import { Maybe } from './typeutils'
 
-export const useGetTeams = (conference: Conference): Maybe<Team[]> => {
-  return useAPI<Team[]>('/teams', { conference })
-}
-
-export const useGetGames = (year: number, conference: Conference): Maybe<Game[]> => {
-  return useAPI<Game[]>('/games', { year, conference })
-}
-
-// https://api.collegefootballdata.com/api/docs/
 const axios = Axios.create({
-  baseURL: 'https://api.collegefootballdata.com/',
+  baseURL: 'https://raw.githubusercontent.com/brandonchinn178/circle-of-suck',
 })
 
 configure({ axios })
 
-export const useAPI = <T>(url: string, params: object): Maybe<T> => {
-  const [{ data }] = useAxios({ url, params })
+export type API = {
+  teams: Team[]
+  games: Game[]
+}
+
+export const useAPI = <T>(year: number, conference: Conference): Maybe<API> => {
+  const [{ data }] = useAxios({
+    url: `/data/${year}-${conference}.json`,
+  })
   return data
 }
