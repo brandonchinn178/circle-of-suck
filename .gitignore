@@ -10,3 +10,6 @@
 # Artifacts
 /build/
 /data/
+
+# CRA stuff
+node_modules/

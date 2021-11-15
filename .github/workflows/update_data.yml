@@ -13,12 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: borales/actions-yarn@v2.3.0
-          with:
-            cmd: install
-      - uses: borales/actions-yarn@v2.3.0
-          with:
-            cmd: update-data
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: yarn install
+      - name: Update data
+        run: yarn update-data
+        env:
+          CFDB_API_KEY: ${{ secrets.CFDB_API_KEY }}
       - uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: data
