@@ -13,8 +13,7 @@ type CircleOfSuckResult = {
 }
 
 export const useCircleOfSuck = (year: number, conference: Conference): CircleOfSuckResult => {
-  const games = useGetGames(year, conference)
-  const teams = useGetTeams(conference)
+  const api = useAPI(year, conference)
   const [result, setCircleOfSuck] = useState<CircleOfSuckResult>({
     loading: true,
     circleOfSuck: null,
@@ -22,9 +21,11 @@ export const useCircleOfSuck = (year: number, conference: Conference): CircleOfS
   })
 
   useEffect(() => {
-    if (!games || !teams) {
+    if (!api) {
       return
     }
+
+    const { teams, games } = api
 
     findCircleOfSuck(teams, games).then((result) => {
       setCircleOfSuck({
@@ -33,7 +34,7 @@ export const useCircleOfSuck = (year: number, conference: Conference): CircleOfS
         teams,
       })
     })
-  }, [games, teams])
+  }, [api])
 
   return result
 }

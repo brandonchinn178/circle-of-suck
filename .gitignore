@@ -1,3 +1,4 @@
+# Yarn
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -5,3 +6,7 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Artifacts
+/build/
+/data/
