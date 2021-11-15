@@ -15,7 +15,7 @@ export type API = {
   games: Game[]
 }
 
-export const useAPI = <T>(year: number, conference: Conference): Maybe<API> => {
+export const useAPI = (year: number, conference: Conference): Maybe<API> => {
   const [{ data }] = useAxios({
     url: `/data/${year}-${conference}.json`,
   })

@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { useEffect, useState } from 'react'
 
-import { useGetGames, useGetTeams } from './lib/api'
+import { useAPI } from './lib/api'
 import { getHamiltonian, WeightedDiGraph } from './lib/graph'
 import { Conference, Game, Team } from './lib/types'
 import { Maybe } from './lib/typeutils'
