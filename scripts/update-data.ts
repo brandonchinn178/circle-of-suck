@@ -31,7 +31,8 @@ const saveData = async (year: number, conference: string, data: unknown) => {
       await fs.mkdir(dir)
   } catch (e) {}
 
-  await fs.writeFile(dest, JSON.stringify(data))
+  // prettify it for better diffs
+  await fs.writeFile(dest, JSON.stringify(data, null, 2))
 }
 
 const main = async () => {
