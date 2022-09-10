@@ -24,7 +24,7 @@ jobs:
       - name: Update data
         run: yarn update-data
         env:
-          CFDB_API_KEY: ${{ secrets.CFDB_API_KEY }}
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
       - uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: data
