@@ -6,17 +6,23 @@ import { CircleOfSuckResult } from './lib/circleOfSuck'
 import { getCircleOfSuckDataFileName, useData } from './lib/data'
 import { Conference } from './lib/types'
 
-// year should initially be the year of the last fall season
 const NOW = new Date()
-const INITIAL_YEAR = NOW.getFullYear() + (NOW.getMonth() < 6 ? -1 : 0)
+const FIRST_YEAR = 2021 // the first year we have data for
+const LATEST_FALL_YEAR = NOW.getFullYear() + (NOW.getMonth() < 6 ? -1 : 0)
+const ALL_YEARS = _.rangeRight(FIRST_YEAR, LATEST_FALL_YEAR + 1)
 
 export const App: FC = () => {
-  // TODO: make inputtable by user
-  const [year] = useState(INITIAL_YEAR)
+  const [year, setYear] = useState(LATEST_FALL_YEAR)
 
   return (
     <main>
       <h1>PAC-12 Circle of Suck ({year})</h1>
+      <div>
+        <label>Check out a different year: </label>
+        <select onChange={(e) => setYear(_.parseInt(e.target.value))}>
+          {ALL_YEARS.map((year, i) => <option key={i} value={year}>{year}</option>)}
+        </select>
+      </div>
       <CircleOfSuck year={year} conference="PAC" />
     </main>
   )
