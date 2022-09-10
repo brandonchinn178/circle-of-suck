@@ -1,13 +1,18 @@
 import useAxios from 'axios-hooks'
 
-import { Maybe } from './typeutils'
+export type UseDataResult<T> =
+  | { loading: true; data: null }
+  | { loading: false; data: T }
 
-export const useData = <T>(file: string): Maybe<T> => {
-  const [{ data }] = useAxios({
+export const useData = <T>(file: string): UseDataResult<T> => {
+  const [{ loading, data }] = useAxios({
     baseURL: 'https://raw.githubusercontent.com/brandonchinn178/circle-of-suck',
     url: `/data/${file}`,
   })
-  return data
+  return {
+    loading,
+    data: loading ? null : data,
+  }
 }
 
 export const getConferenceDataFileName = (year: number, conference: string) =>

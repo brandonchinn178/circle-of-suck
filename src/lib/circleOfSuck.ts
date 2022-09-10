@@ -4,7 +4,7 @@ import { getHamiltonian, WeightedDiGraph } from './graph'
 import { Game, Team, TeamAbbreviation } from './types'
 import { Maybe } from './typeutils'
 
-export type CircleOfSuckResult = {
+export type CircleOfSuckResult = null | {
   circleOfSuck: CircleOfSuckEdge[]
   teams: Team[]
 }
@@ -15,7 +15,7 @@ export type CircleOfSuckEdge = {
   isPlayed: boolean // has this game already been played?
 }
 
-export const findCircleOfSuck = (teams: Team[], games: Game[]): Maybe<CircleOfSuckResult> => {
+export const findCircleOfSuck = (teams: Team[], games: Game[]): CircleOfSuckResult => {
   // maps winner team -> loser team
   const gameGraph = _.fromPairs(_.map(teams, ({ school }) => [school, [] as string[]]))
 
