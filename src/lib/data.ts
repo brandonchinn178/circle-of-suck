@@ -9,3 +9,9 @@ export const useData = <T>(file: string): Maybe<T> => {
   })
   return data
 }
+
+export const getConferenceDataFileName = (year: number, conference: string) =>
+  `${year}-${conference}.json`
+
+export const getCircleOfSuckDataFileName = (year: number, conference: string) =>
+  `${year}-${conference}-circleofsuck.json`
