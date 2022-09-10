@@ -43,7 +43,9 @@ export type Conference
   | 'BE' // Big East Conference
   | 'BIAA' // Border Intercollegiate Athletic Association
 
+export type TeamAbbreviation = string
+
 export interface Team {
   school: string
-  abbreviation: string
+  abbreviation: TeamAbbreviation
 }
