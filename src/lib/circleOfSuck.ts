@@ -10,7 +10,7 @@ export type CircleOfSuckEdge = {
   isPlayed: boolean // has this game already been played?
 }
 
-export const findCircleOfSuck = async (teams: Team[], games: Game[]): Promise<Maybe<CircleOfSuckEdge[]>> => {
+export const findCircleOfSuck = (teams: Team[], games: Game[]): Maybe<CircleOfSuckEdge[]> => {
   // maps winner team -> loser team
   const gameGraph = _.fromPairs(_.map(teams, ({ school }) => [school, [] as string[]]))
 

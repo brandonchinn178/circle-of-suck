@@ -26,7 +26,11 @@ export const useCircleOfSuck = (year: number, conference: Conference): CircleOfS
 
     const { teams, games } = rawData
 
-    findCircleOfSuck(teams, games).then((result) => {
+    // Do this as a Promise within useEffect to do the expensive
+    // calculation outside the main render loop
+    new Promise<Maybe<CircleOfSuckEdge[]>>((resolve) => {
+      resolve(findCircleOfSuck(teams, games))
+    }).then((result) => {
       setCircleOfSuck({
         loading: false,
         circleOfSuck: result,
