@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/circle-of-suck/static/js/main.db6c79d7.js",
+    "main.js": "/circle-of-suck/static/js/main.5fab9cab.js",
     "index.html": "/circle-of-suck/index.html",
-    "main.db6c79d7.js.map": "/circle-of-suck/static/js/main.db6c79d7.js.map"
+    "main.5fab9cab.js.map": "/circle-of-suck/static/js/main.5fab9cab.js.map"
   },
   "entrypoints": [
-    "static/js/main.db6c79d7.js"
+    "static/js/main.5fab9cab.js"
   ]
 }
