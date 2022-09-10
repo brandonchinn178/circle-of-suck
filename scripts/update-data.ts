@@ -4,9 +4,9 @@ import Axios from 'axios'
 import fs from 'fs/promises'
 import path from 'path'
 
-const API_KEY = process.env.CFDB_API_KEY
+const API_KEY = process.env.CFBD_API_KEY
 if (!API_KEY) {
-  throw new Error("CFDB_API_KEY not found")
+  throw new Error("CFBD_API_KEY not found")
 }
 
 // https://api.collegefootballdata.com/api/docs/?url=/api-docs.json
