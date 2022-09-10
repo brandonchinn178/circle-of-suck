@@ -19,7 +19,7 @@ jobs:
           path: ./data
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '18'
       - run: yarn install
       - name: Update data
         run: yarn update-data

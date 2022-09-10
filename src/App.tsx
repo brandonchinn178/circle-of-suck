@@ -2,8 +2,9 @@ import _ from 'lodash'
 import React, { FC, useState } from 'react'
 import Graph from 'react-graph-vis'
 
+import { CircleOfSuckResult } from './lib/circleOfSuck'
+import { getCircleOfSuckDataFileName, useData } from './lib/data'
 import { Conference } from './lib/types'
-import { useCircleOfSuck } from './CircleOfSuck'
 
 // year should initially be the year of the last fall season
 const NOW = new Date()
@@ -22,17 +23,19 @@ export const App: FC = () => {
 }
 
 const CircleOfSuck: FC<{ year: number; conference: Conference }> = ({ year, conference }) => {
-  const { loading, circleOfSuck, teams } = useCircleOfSuck(year, conference)
+  const circleOfSuckFile = getCircleOfSuckDataFileName(year, conference)
+  const { loading, data } = useData<CircleOfSuckResult>(circleOfSuckFile)
 
   if (loading) {
     return <p>Loading...</p>
   }
 
-  if (circleOfSuck === null) {
+  if (!data) {
     // TODO: show some other interesting graph
     return <p>No possible circle of suck for this season.</p>
   }
 
+  const { circleOfSuck, teams } = data
   const isComplete = _.every(circleOfSuck, 'isPlayed')
 
   return (
@@ -55,14 +58,14 @@ const CircleOfSuck: FC<{ year: number; conference: Conference }> = ({ year, conf
       )}
       <Graph
         graph={{
-          nodes: teams!.map(({ school, abbreviation }) => ({
-            id: school,
+          nodes: teams.map(({ school, abbreviation }) => ({
+            id: abbreviation,
             label: `${school} (${abbreviation})`,
           })),
           edges: circleOfSuck.map(({ from, to, isPlayed }) => {
             return {
-              from: from.school,
-              to: to.school,
+              from,
+              to,
               width: isPlayed ? 2 : 1,
               dashes: !isPlayed,
             }

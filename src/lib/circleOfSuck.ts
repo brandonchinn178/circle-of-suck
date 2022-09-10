@@ -1,51 +1,21 @@
 import _ from 'lodash'
-import { useEffect, useState } from 'react'
 
-import { useAPI } from './lib/api'
-import { getHamiltonian, WeightedDiGraph } from './lib/graph'
-import { Conference, Game, Team } from './lib/types'
-import { Maybe } from './lib/typeutils'
+import { getHamiltonian, WeightedDiGraph } from './graph'
+import { Game, Team, TeamAbbreviation } from './types'
+import { Maybe } from './typeutils'
 
-type CircleOfSuckResult = {
-  loading: boolean
-  circleOfSuck: Maybe<CircleOfSuckEdge[]>
-  teams: Maybe<Team[]>
+export type CircleOfSuckResult = null | {
+  circleOfSuck: CircleOfSuckEdge[]
+  teams: Team[]
 }
 
-export const useCircleOfSuck = (year: number, conference: Conference): CircleOfSuckResult => {
-  const api = useAPI(year, conference)
-  const [result, setCircleOfSuck] = useState<CircleOfSuckResult>({
-    loading: true,
-    circleOfSuck: null,
-    teams: null,
-  })
-
-  useEffect(() => {
-    if (!api) {
-      return
-    }
-
-    const { teams, games } = api
-
-    findCircleOfSuck(teams, games).then((result) => {
-      setCircleOfSuck({
-        loading: false,
-        circleOfSuck: result,
-        teams,
-      })
-    })
-  }, [api])
-
-  return result
-}
-
-type CircleOfSuckEdge = {
-  from: Team
-  to: Team
+export type CircleOfSuckEdge = {
+  from: TeamAbbreviation
+  to: TeamAbbreviation
   isPlayed: boolean // has this game already been played?
 }
 
-const findCircleOfSuck = async (teams: Team[], games: Game[]): Promise<Maybe<CircleOfSuckEdge[]>> => {
+export const findCircleOfSuck = (teams: Team[], games: Game[]): CircleOfSuckResult => {
   // maps winner team -> loser team
   const gameGraph = _.fromPairs(_.map(teams, ({ school }) => [school, [] as string[]]))
 
@@ -84,13 +54,15 @@ const findCircleOfSuck = async (teams: Team[], games: Game[]): Promise<Maybe<Cir
     return null
   }
 
-  return _.map(hamiltonian.map((v) => teams[v]), (team1, i, arr) => {
+  const circleOfSuck = _.map(hamiltonian.map((v) => teams[v]), (team1, i, arr) => {
     const team2 = arr[i === arr.length - 1 ? 0 : i + 1]
 
     return {
-      from: team1,
-      to: team2,
+      from: team1.abbreviation,
+      to: team2.abbreviation,
       isPlayed: _.includes(gameGraph[team1.school], team2.school),
     }
   })
+
+  return { circleOfSuck, teams }
 }

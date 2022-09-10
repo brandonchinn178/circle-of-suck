@@ -4,9 +4,15 @@ import Axios from 'axios'
 import fs from 'fs/promises'
 import path from 'path'
 
-const API_KEY = process.env.CFDB_API_KEY
+import { findCircleOfSuck } from '../src/lib/circleOfSuck'
+import {
+  getConferenceDataFileName,
+  getCircleOfSuckDataFileName,
+} from '../src/lib/data'
+
+const API_KEY = process.env.CFBD_API_KEY
 if (!API_KEY) {
-  throw new Error("CFDB_API_KEY not found")
+  throw new Error("CFBD_API_KEY not found")
 }
 
 // https://api.collegefootballdata.com/api/docs/?url=/api-docs.json
@@ -17,14 +23,14 @@ const axios = Axios.create({
   },
 })
 
-const fetchData = async (year: number, conference: string) => {
+const fetchConferenceData = async (year: number, conference: string) => {
   const { data: teams } = await axios.get('/teams', { params: { conference } })
   const { data: games } = await axios.get('/games', { params: { year, conference } })
   return { teams, games }
 }
 
-const saveData = async (year: number, conference: string, data: unknown) => {
-  const dest = `./data/${year}-${conference}.json`
+const saveData = async (file: string, data: unknown) => {
+  const dest = `./data/${file}`
   const dir = path.dirname(dest)
 
   try {
@@ -40,8 +46,24 @@ const main = async () => {
   const conferences = ['PAC']
 
   for (const conference of conferences) {
-    const data = await fetchData(year, conference)
-    await saveData(year, conference, data)
+    console.log(`[${conference} ${year}] Fetching data`)
+    const conferenceData = await fetchConferenceData(year, conference)
+
+    console.log(`[${conference} ${year}] Calculating circle of suck`)
+    const { teams, games } = conferenceData
+    const circleOfSuck = findCircleOfSuck(teams, games)
+
+    console.log(`[${conference} ${year}] Saving data`)
+    await saveData(
+      getConferenceDataFileName(year, conference),
+      conferenceData
+    )
+    await saveData(
+      getCircleOfSuckDataFileName(year, conference),
+      circleOfSuck
+    )
+
+    console.log(`[${conference} ${year}] Done`)
   }
 }
 
