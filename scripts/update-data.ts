@@ -41,29 +41,33 @@ const saveData = async (file: string, data: unknown) => {
   await fs.writeFile(dest, JSON.stringify(data, null, 2))
 }
 
+const updateData = async (year: number, conference: string) => {
+  console.log(`[${conference} ${year}] Fetching data`)
+  const conferenceData = await fetchConferenceData(year, conference)
+
+  console.log(`[${conference} ${year}] Calculating circle of suck`)
+  const { teams, games } = conferenceData
+  const circleOfSuck = findCircleOfSuck(teams, games)
+
+  console.log(`[${conference} ${year}] Saving data`)
+  await saveData(
+    getConferenceDataFileName(year, conference),
+    conferenceData
+  )
+  await saveData(
+    getCircleOfSuckDataFileName(year, conference),
+    circleOfSuck
+  )
+
+  console.log(`[${conference} ${year}] Done`)
+}
+
 const main = async () => {
   const year = new Date().getFullYear()
   const conferences = ['PAC']
 
   for (const conference of conferences) {
-    console.log(`[${conference} ${year}] Fetching data`)
-    const conferenceData = await fetchConferenceData(year, conference)
-
-    console.log(`[${conference} ${year}] Calculating circle of suck`)
-    const { teams, games } = conferenceData
-    const circleOfSuck = findCircleOfSuck(teams, games)
-
-    console.log(`[${conference} ${year}] Saving data`)
-    await saveData(
-      getConferenceDataFileName(year, conference),
-      conferenceData
-    )
-    await saveData(
-      getCircleOfSuckDataFileName(year, conference),
-      circleOfSuck
-    )
-
-    console.log(`[${conference} ${year}] Done`)
+    await updateData(year, conference)
   }
 }
 
