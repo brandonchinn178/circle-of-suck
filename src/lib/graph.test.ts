@@ -2,7 +2,7 @@ import _ from 'lodash'
 
 import { WeightedDiGraph, getHamiltonian } from './graph'
 
-const graph = ([string]) => {
+const graph = ([string]: TemplateStringsArray) => {
     const [size, ...lines] = string.trim().split('\n')
     const g = new WeightedDiGraph(parseInt(size))
     _.each(lines, (line) => {
