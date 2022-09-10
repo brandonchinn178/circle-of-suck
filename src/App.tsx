@@ -56,13 +56,13 @@ const CircleOfSuck: FC<{ year: number; conference: Conference }> = ({ year, conf
       <Graph
         graph={{
           nodes: teams!.map(({ school, abbreviation }) => ({
-            id: school,
+            id: abbreviation,
             label: `${school} (${abbreviation})`,
           })),
           edges: circleOfSuck.map(({ from, to, isPlayed }) => {
             return {
-              from: from.school,
-              to: to.school,
+              from,
+              to,
               width: isPlayed ? 2 : 1,
               dashes: !isPlayed,
             }

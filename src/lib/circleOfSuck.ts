@@ -1,12 +1,12 @@
 import _ from 'lodash'
 
 import { getHamiltonian, WeightedDiGraph } from './graph'
-import { Game, Team } from './types'
+import { Game, Team, TeamAbbreviation } from './types'
 import { Maybe } from './typeutils'
 
 export type CircleOfSuckEdge = {
-  from: Team
-  to: Team
+  from: TeamAbbreviation
+  to: TeamAbbreviation
   isPlayed: boolean // has this game already been played?
 }
 
@@ -53,8 +53,8 @@ export const findCircleOfSuck = (teams: Team[], games: Game[]): Maybe<CircleOfSu
     const team2 = arr[i === arr.length - 1 ? 0 : i + 1]
 
     return {
-      from: team1,
-      to: team2,
+      from: team1.abbreviation,
+      to: team2.abbreviation,
       isPlayed: _.includes(gameGraph[team1.school], team2.school),
     }
   })
