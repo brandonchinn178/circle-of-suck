@@ -1,17 +1,10 @@
 {
   "files": {
-    "main.js": "/circle-of-suck/static/js/main.10b7d08c.chunk.js",
-    "main.js.map": "/circle-of-suck/static/js/main.10b7d08c.chunk.js.map",
-    "runtime-main.js": "/circle-of-suck/static/js/runtime-main.18b82e0c.js",
-    "runtime-main.js.map": "/circle-of-suck/static/js/runtime-main.18b82e0c.js.map",
-    "static/js/2.9b4d0dac.chunk.js": "/circle-of-suck/static/js/2.9b4d0dac.chunk.js",
-    "static/js/2.9b4d0dac.chunk.js.map": "/circle-of-suck/static/js/2.9b4d0dac.chunk.js.map",
+    "main.js": "/circle-of-suck/static/js/main.db6c79d7.js",
     "index.html": "/circle-of-suck/index.html",
-    "static/js/2.9b4d0dac.chunk.js.LICENSE.txt": "/circle-of-suck/static/js/2.9b4d0dac.chunk.js.LICENSE.txt"
+    "main.db6c79d7.js.map": "/circle-of-suck/static/js/main.db6c79d7.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.18b82e0c.js",
-    "static/js/2.9b4d0dac.chunk.js",
-    "static/js/main.10b7d08c.chunk.js"
+    "static/js/main.db6c79d7.js"
   ]
 }
