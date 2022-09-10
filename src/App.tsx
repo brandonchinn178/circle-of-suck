@@ -22,17 +22,18 @@ export const App: FC = () => {
 }
 
 const CircleOfSuck: FC<{ year: number; conference: Conference }> = ({ year, conference }) => {
-  const { loading, circleOfSuck, teams } = useCircleOfSuck(year, conference)
+  const { loading, result } = useCircleOfSuck(year, conference)
 
   if (loading) {
     return <p>Loading...</p>
   }
 
-  if (circleOfSuck === null) {
+  if (result === null) {
     // TODO: show some other interesting graph
     return <p>No possible circle of suck for this season.</p>
   }
 
+  const { circleOfSuck, teams } = result
   const isComplete = _.every(circleOfSuck, 'isPlayed')
 
   return (
@@ -55,7 +56,7 @@ const CircleOfSuck: FC<{ year: number; conference: Conference }> = ({ year, conf
       )}
       <Graph
         graph={{
-          nodes: teams!.map(({ school, abbreviation }) => ({
+          nodes: teams.map(({ school, abbreviation }) => ({
             id: abbreviation,
             label: `${school} (${abbreviation})`,
           })),

@@ -1,22 +1,20 @@
 import { useEffect, useState } from 'react'
 
 import { useData } from './lib/data'
-import { CircleOfSuckEdge, findCircleOfSuck } from './lib/circleOfSuck'
+import { CircleOfSuckResult, findCircleOfSuck } from './lib/circleOfSuck'
 import { Conference, Game, Team } from './lib/types'
 import { Maybe } from './lib/typeutils'
 
-type CircleOfSuckResult = {
+type CircleOfSuckHookResult = {
   loading: boolean
-  circleOfSuck: Maybe<CircleOfSuckEdge[]>
-  teams: Maybe<Team[]>
+  result: Maybe<CircleOfSuckResult>
 }
 
-export const useCircleOfSuck = (year: number, conference: Conference): CircleOfSuckResult => {
+export const useCircleOfSuck = (year: number, conference: Conference): CircleOfSuckHookResult => {
   const rawData = useData<{ teams: Team[]; games: Game[] }>(`${year}-${conference}.json`)
-  const [result, setCircleOfSuck] = useState<CircleOfSuckResult>({
+  const [result, setCircleOfSuck] = useState<CircleOfSuckHookResult>({
     loading: true,
-    circleOfSuck: null,
-    teams: null,
+    result: null,
   })
 
   useEffect(() => {
@@ -28,13 +26,12 @@ export const useCircleOfSuck = (year: number, conference: Conference): CircleOfS
 
     // Do this as a Promise within useEffect to do the expensive
     // calculation outside the main render loop
-    new Promise<Maybe<CircleOfSuckEdge[]>>((resolve) => {
+    new Promise<Maybe<CircleOfSuckResult>>((resolve) => {
       resolve(findCircleOfSuck(teams, games))
     }).then((result) => {
       setCircleOfSuck({
         loading: false,
-        circleOfSuck: result,
-        teams,
+        result,
       })
     })
   }, [rawData])

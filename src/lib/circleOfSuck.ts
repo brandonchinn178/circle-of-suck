@@ -4,13 +4,18 @@ import { getHamiltonian, WeightedDiGraph } from './graph'
 import { Game, Team, TeamAbbreviation } from './types'
 import { Maybe } from './typeutils'
 
+export type CircleOfSuckResult = {
+  circleOfSuck: CircleOfSuckEdge[]
+  teams: Team[]
+}
+
 export type CircleOfSuckEdge = {
   from: TeamAbbreviation
   to: TeamAbbreviation
   isPlayed: boolean // has this game already been played?
 }
 
-export const findCircleOfSuck = (teams: Team[], games: Game[]): Maybe<CircleOfSuckEdge[]> => {
+export const findCircleOfSuck = (teams: Team[], games: Game[]): Maybe<CircleOfSuckResult> => {
   // maps winner team -> loser team
   const gameGraph = _.fromPairs(_.map(teams, ({ school }) => [school, [] as string[]]))
 
@@ -49,7 +54,7 @@ export const findCircleOfSuck = (teams: Team[], games: Game[]): Maybe<CircleOfSu
     return null
   }
 
-  return _.map(hamiltonian.map((v) => teams[v]), (team1, i, arr) => {
+  const circleOfSuck = _.map(hamiltonian.map((v) => teams[v]), (team1, i, arr) => {
     const team2 = arr[i === arr.length - 1 ? 0 : i + 1]
 
     return {
@@ -58,4 +63,6 @@ export const findCircleOfSuck = (teams: Team[], games: Game[]): Maybe<CircleOfSu
       isPlayed: _.includes(gameGraph[team1.school], team2.school),
     }
   })
+
+  return { circleOfSuck, teams }
 }
