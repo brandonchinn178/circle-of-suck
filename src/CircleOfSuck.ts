@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { useEffect, useState } from 'react'
 
-import { useAPI } from './lib/api'
+import { useData } from './lib/data'
 import { getHamiltonian, WeightedDiGraph } from './lib/graph'
 import { Conference, Game, Team } from './lib/types'
 import { Maybe } from './lib/typeutils'
@@ -13,7 +13,7 @@ type CircleOfSuckResult = {
 }
 
 export const useCircleOfSuck = (year: number, conference: Conference): CircleOfSuckResult => {
-  const rawData = useAPI<{ teams: Team[]; games: Game[] }>(`${year}-${conference}.json`)
+  const rawData = useData<{ teams: Team[]; games: Game[] }>(`${year}-${conference}.json`)
   const [result, setCircleOfSuck] = useState<CircleOfSuckResult>({
     loading: true,
     circleOfSuck: null,
