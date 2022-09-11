@@ -27,8 +27,13 @@
     },
     {
       "from": "ORST",
-      "to": "STAN",
+      "to": "USC",
       "isPlayed": false
+    },
+    {
+      "from": "USC",
+      "to": "STAN",
+      "isPlayed": true
     },
     {
       "from": "STAN",
@@ -37,11 +42,6 @@
     },
     {
       "from": "UCLA",
-      "to": "USC",
-      "isPlayed": false
-    },
-    {
-      "from": "USC",
       "to": "UTAH",
       "isPlayed": false
     },
