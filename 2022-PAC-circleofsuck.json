@@ -78,6 +78,7 @@
         "http://a.espncdn.com/i/teamlogos/ncaa/500/12.png",
         "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/12.png"
       ],
+      "twitter": "@ArizonaFBall",
       "location": {
         "venue_id": 3619,
         "name": "Arizona Stadium",
@@ -111,6 +112,7 @@
         "http://a.espncdn.com/i/teamlogos/ncaa/500/9.png",
         "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/9.png"
       ],
+      "twitter": "@ASUFootball",
       "location": {
         "venue_id": 3947,
         "name": "Sun Devil Stadium",
@@ -144,6 +146,7 @@
         "http://a.espncdn.com/i/teamlogos/ncaa/500/25.png",
         "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/25.png"
       ],
+      "twitter": "@CalFootball",
       "location": {
         "venue_id": 3831,
         "name": "California Memorial Stadium",
@@ -177,6 +180,7 @@
         "http://a.espncdn.com/i/teamlogos/ncaa/500/38.png",
         "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/38.png"
       ],
+      "twitter": "@CUBuffsFootball",
       "location": {
         "venue_id": 3726,
         "name": "Folsom Field",
@@ -210,6 +214,7 @@
         "http://a.espncdn.com/i/teamlogos/ncaa/500/2483.png",
         "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/2483.png"
       ],
+      "twitter": "@OregonFootball",
       "location": {
         "venue_id": 3626,
         "name": "Autzen Stadium",
@@ -243,6 +248,7 @@
         "http://a.espncdn.com/i/teamlogos/ncaa/500/204.png",
         "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/204.png"
       ],
+      "twitter": "@BeaverFootball",
       "location": {
         "venue_id": 3893,
         "name": "Reser Stadium",
@@ -276,6 +282,7 @@
         "http://a.espncdn.com/i/teamlogos/ncaa/500/24.png",
         "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/24.png"
       ],
+      "twitter": "@StanfordFball",
       "location": {
         "venue_id": 3940,
         "name": "Stanford Stadium",
@@ -309,6 +316,7 @@
         "http://a.espncdn.com/i/teamlogos/ncaa/500/26.png",
         "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/26.png"
       ],
+      "twitter": "@UCLAFootball",
       "location": {
         "venue_id": 1056,
         "name": "Rose Bowl",
@@ -342,6 +350,7 @@
         "http://a.espncdn.com/i/teamlogos/ncaa/500/30.png",
         "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/30.png"
       ],
+      "twitter": "@uscfb",
       "location": {
         "venue_id": 477,
         "name": "Los Angeles Memorial Coliseum",
@@ -375,6 +384,7 @@
         "http://a.espncdn.com/i/teamlogos/ncaa/500/254.png",
         "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/254.png"
       ],
+      "twitter": "@Utah_Football",
       "location": {
         "venue_id": 587,
         "name": "Rice-Eccles Stadium",
@@ -408,6 +418,7 @@
         "http://a.espncdn.com/i/teamlogos/ncaa/500/264.png",
         "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/264.png"
       ],
+      "twitter": "@UW_Football",
       "location": {
         "venue_id": 3765,
         "name": "Husky Stadium",
@@ -441,6 +452,7 @@
         "http://a.espncdn.com/i/teamlogos/ncaa/500/265.png",
         "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/265.png"
       ],
+      "twitter": "@WSUCougarFB",
       "location": {
         "venue_id": 3820,
         "name": "Martin Stadium",
