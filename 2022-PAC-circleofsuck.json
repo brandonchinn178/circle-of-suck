@@ -7,8 +7,28 @@
     },
     {
       "from": "COLO",
-      "to": "CAL",
+      "to": "USC",
       "isPlayed": false
+    },
+    {
+      "from": "USC",
+      "to": "ORST",
+      "isPlayed": true
+    },
+    {
+      "from": "ORST",
+      "to": "ORE",
+      "isPlayed": false
+    },
+    {
+      "from": "ORE",
+      "to": "WSU",
+      "isPlayed": true
+    },
+    {
+      "from": "WSU",
+      "to": "CAL",
+      "isPlayed": true
     },
     {
       "from": "CAL",
@@ -37,26 +57,6 @@
     },
     {
       "from": "ASU",
-      "to": "USC",
-      "isPlayed": false
-    },
-    {
-      "from": "USC",
-      "to": "ORST",
-      "isPlayed": true
-    },
-    {
-      "from": "ORST",
-      "to": "ORE",
-      "isPlayed": false
-    },
-    {
-      "from": "ORE",
-      "to": "WSU",
-      "isPlayed": true
-    },
-    {
-      "from": "WSU",
       "to": "ARIZ",
       "isPlayed": false
     }
