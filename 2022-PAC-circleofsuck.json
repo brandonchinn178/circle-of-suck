@@ -3,7 +3,7 @@
     {
       "from": "ARIZ",
       "to": "COLO",
-      "isPlayed": false
+      "isPlayed": true
     },
     {
       "from": "COLO",
@@ -12,26 +12,11 @@
     },
     {
       "from": "USC",
-      "to": "ORST",
+      "to": "ASU",
       "isPlayed": true
     },
     {
-      "from": "ORST",
-      "to": "ORE",
-      "isPlayed": false
-    },
-    {
-      "from": "ORE",
-      "to": "WSU",
-      "isPlayed": true
-    },
-    {
-      "from": "WSU",
-      "to": "CAL",
-      "isPlayed": true
-    },
-    {
-      "from": "CAL",
+      "from": "ASU",
       "to": "UCLA",
       "isPlayed": false
     },
@@ -52,13 +37,28 @@
     },
     {
       "from": "UTAH",
-      "to": "ASU",
+      "to": "ORST",
       "isPlayed": true
     },
     {
-      "from": "ASU",
-      "to": "ARIZ",
+      "from": "ORST",
+      "to": "ORE",
       "isPlayed": false
+    },
+    {
+      "from": "ORE",
+      "to": "WSU",
+      "isPlayed": true
+    },
+    {
+      "from": "WSU",
+      "to": "CAL",
+      "isPlayed": true
+    },
+    {
+      "from": "CAL",
+      "to": "ARIZ",
+      "isPlayed": true
     }
   ],
   "teams": [
