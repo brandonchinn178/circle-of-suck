@@ -5,8 +5,8 @@ on:
     branches:
       - main
   schedule:
-    # once a week at midnight on Mondays
-    - cron: '0 0 * * *'
+    # every day at midnight PST
+    - cron: '0 7 * * *'
 
 jobs:
   update-data:
