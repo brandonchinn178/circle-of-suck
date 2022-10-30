@@ -12,6 +12,26 @@
     },
     {
       "from": "CAL",
+      "to": "ORST",
+      "isPlayed": false
+    },
+    {
+      "from": "ORST",
+      "to": "STAN",
+      "isPlayed": true
+    },
+    {
+      "from": "STAN",
+      "to": "ASU",
+      "isPlayed": true
+    },
+    {
+      "from": "ASU",
+      "to": "WASH",
+      "isPlayed": true
+    },
+    {
+      "from": "WASH",
       "to": "ORE",
       "isPlayed": false
     },
@@ -32,28 +52,8 @@
     },
     {
       "from": "USC",
-      "to": "ORST",
-      "isPlayed": true
-    },
-    {
-      "from": "ORST",
-      "to": "STAN",
-      "isPlayed": true
-    },
-    {
-      "from": "STAN",
-      "to": "ASU",
-      "isPlayed": true
-    },
-    {
-      "from": "ASU",
-      "to": "WASH",
-      "isPlayed": true
-    },
-    {
-      "from": "WASH",
       "to": "WSU",
-      "isPlayed": false
+      "isPlayed": true
     },
     {
       "from": "WSU",
