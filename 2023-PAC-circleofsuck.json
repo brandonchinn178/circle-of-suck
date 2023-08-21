@@ -1,1 +1,474 @@
-null
+{
+  "circleOfSuck": [
+    {
+      "from": "ARIZ",
+      "to": "ASU",
+      "isPlayed": false
+    },
+    {
+      "from": "ASU",
+      "to": "CAL",
+      "isPlayed": false
+    },
+    {
+      "from": "CAL",
+      "to": "ORE",
+      "isPlayed": false
+    },
+    {
+      "from": "ORE",
+      "to": "COLO",
+      "isPlayed": false
+    },
+    {
+      "from": "COLO",
+      "to": "ORST",
+      "isPlayed": false
+    },
+    {
+      "from": "ORST",
+      "to": "STAN",
+      "isPlayed": false
+    },
+    {
+      "from": "STAN",
+      "to": "UCLA",
+      "isPlayed": false
+    },
+    {
+      "from": "UCLA",
+      "to": "USC",
+      "isPlayed": false
+    },
+    {
+      "from": "USC",
+      "to": "UTAH",
+      "isPlayed": false
+    },
+    {
+      "from": "UTAH",
+      "to": "WASH",
+      "isPlayed": false
+    },
+    {
+      "from": "WASH",
+      "to": "WSU",
+      "isPlayed": false
+    },
+    {
+      "from": "WSU",
+      "to": "ARIZ",
+      "isPlayed": false
+    }
+  ],
+  "teams": [
+    {
+      "id": 12,
+      "school": "Arizona",
+      "mascot": "Wildcats",
+      "abbreviation": "ARIZ",
+      "alt_name1": null,
+      "alt_name2": "ARIZ",
+      "alt_name3": "Arizona",
+      "conference": "Pac-12",
+      "classification": "fbs",
+      "color": "#002449",
+      "alt_color": "#00205b",
+      "logos": [
+        "http://a.espncdn.com/i/teamlogos/ncaa/500/12.png",
+        "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/12.png"
+      ],
+      "twitter": "@ArizonaFBall",
+      "location": {
+        "venue_id": 3619,
+        "name": "Arizona Stadium",
+        "city": "Tucson",
+        "state": "AZ",
+        "zip": "85721",
+        "country_code": "US",
+        "timezone": "America/Phoenix",
+        "latitude": 32.2288054,
+        "longitude": -110.9488677,
+        "elevation": "742.1530151",
+        "capacity": 50782,
+        "year_constructed": 1928,
+        "grass": false,
+        "dome": false
+      }
+    },
+    {
+      "id": 9,
+      "school": "Arizona State",
+      "mascot": "Sun Devils",
+      "abbreviation": "ASU",
+      "alt_name1": null,
+      "alt_name2": "ASU",
+      "alt_name3": "Arizona State",
+      "conference": "Pac-12",
+      "classification": "fbs",
+      "color": "#942139",
+      "alt_color": "#f1f2f3",
+      "logos": [
+        "http://a.espncdn.com/i/teamlogos/ncaa/500/9.png",
+        "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/9.png"
+      ],
+      "twitter": "@ASUFootball",
+      "location": {
+        "venue_id": 3947,
+        "name": "Sun Devil Stadium",
+        "city": "Tempe",
+        "state": "AZ",
+        "zip": "85287",
+        "country_code": "US",
+        "timezone": "America/Phoenix",
+        "latitude": 33.4264471,
+        "longitude": -111.9325005,
+        "elevation": "360.1569519",
+        "capacity": 65870,
+        "year_constructed": 1958,
+        "grass": true,
+        "dome": false
+      }
+    },
+    {
+      "id": 25,
+      "school": "California",
+      "mascot": "Golden Bears",
+      "abbreviation": "CAL",
+      "alt_name1": null,
+      "alt_name2": "CAL",
+      "alt_name3": "Cal",
+      "conference": "Pac-12",
+      "classification": "fbs",
+      "color": "#031522",
+      "alt_color": "#ffc423",
+      "logos": [
+        "http://a.espncdn.com/i/teamlogos/ncaa/500/25.png",
+        "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/25.png"
+      ],
+      "twitter": "@CalFootball",
+      "location": {
+        "venue_id": 3831,
+        "name": "California Memorial Stadium",
+        "city": "Berkeley",
+        "state": "CA",
+        "zip": "94720",
+        "country_code": "US",
+        "timezone": "America/Los_Angeles",
+        "latitude": 37.8710434,
+        "longitude": -122.2507729,
+        "elevation": "125.3108063",
+        "capacity": 62467,
+        "year_constructed": 1923,
+        "grass": false,
+        "dome": false
+      }
+    },
+    {
+      "id": 38,
+      "school": "Colorado",
+      "mascot": "Buffaloes",
+      "abbreviation": "COLO",
+      "alt_name1": null,
+      "alt_name2": "COLO",
+      "alt_name3": "Colorado",
+      "conference": "Pac-12",
+      "classification": "fbs",
+      "color": "#d1c57e",
+      "alt_color": "#ffd200",
+      "logos": [
+        "http://a.espncdn.com/i/teamlogos/ncaa/500/38.png",
+        "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/38.png"
+      ],
+      "twitter": "@CUBuffsFootball",
+      "location": {
+        "venue_id": 3726,
+        "name": "Folsom Field",
+        "city": "Boulder",
+        "state": "CO",
+        "zip": "80309",
+        "country_code": "US",
+        "timezone": "America/Denver",
+        "latitude": 40.0094746,
+        "longitude": -105.266905,
+        "elevation": "1634.041138",
+        "capacity": 50183,
+        "year_constructed": 1924,
+        "grass": true,
+        "dome": false
+      }
+    },
+    {
+      "id": 2483,
+      "school": "Oregon",
+      "mascot": "Ducks",
+      "abbreviation": "ORE",
+      "alt_name1": null,
+      "alt_name2": "ORE",
+      "alt_name3": "Oregon",
+      "conference": "Pac-12",
+      "classification": "fbs",
+      "color": "#044520",
+      "alt_color": "#fee123",
+      "logos": [
+        "http://a.espncdn.com/i/teamlogos/ncaa/500/2483.png",
+        "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/2483.png"
+      ],
+      "twitter": "@OregonFootball",
+      "location": {
+        "venue_id": 3626,
+        "name": "Autzen Stadium",
+        "city": "Eugene",
+        "state": "OR",
+        "zip": "97401",
+        "country_code": "US",
+        "timezone": "America/Los_Angeles",
+        "latitude": 44.0582712,
+        "longitude": -123.0684883,
+        "elevation": "127.4198303",
+        "capacity": 54000,
+        "year_constructed": 1967,
+        "grass": false,
+        "dome": false
+      }
+    },
+    {
+      "id": 204,
+      "school": "Oregon State",
+      "mascot": "Beavers",
+      "abbreviation": "ORST",
+      "alt_name1": null,
+      "alt_name2": "ORST",
+      "alt_name3": "Oregon State",
+      "conference": "Pac-12",
+      "classification": "fbs",
+      "color": "#c34500",
+      "alt_color": "#dea076",
+      "logos": [
+        "http://a.espncdn.com/i/teamlogos/ncaa/500/204.png",
+        "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/204.png"
+      ],
+      "twitter": "@BeaverFootball",
+      "location": {
+        "venue_id": 3893,
+        "name": "Reser Stadium",
+        "city": "Corvallis",
+        "state": "OR",
+        "zip": "97331",
+        "country_code": "US",
+        "timezone": "America/Los_Angeles",
+        "latitude": 44.5594559,
+        "longitude": -123.2814341,
+        "elevation": "66.90744781",
+        "capacity": 43363,
+        "year_constructed": 1953,
+        "grass": false,
+        "dome": false
+      }
+    },
+    {
+      "id": 24,
+      "school": "Stanford",
+      "mascot": "Cardinal",
+      "abbreviation": "STAN",
+      "alt_name1": null,
+      "alt_name2": "STAN",
+      "alt_name3": "Stanford",
+      "conference": "Pac-12",
+      "classification": "fbs",
+      "color": "#A80532",
+      "alt_color": "#ffffff",
+      "logos": [
+        "http://a.espncdn.com/i/teamlogos/ncaa/500/24.png",
+        "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/24.png"
+      ],
+      "twitter": "@StanfordFball",
+      "location": {
+        "venue_id": 3940,
+        "name": "Stanford Stadium",
+        "city": "Stanford",
+        "state": "CA",
+        "zip": "94305",
+        "country_code": "US",
+        "timezone": "America/Los_Angeles",
+        "latitude": 37.4345556,
+        "longitude": -122.1611271,
+        "elevation": "18.38425636",
+        "capacity": 50424,
+        "year_constructed": 2006,
+        "grass": true,
+        "dome": false
+      }
+    },
+    {
+      "id": 26,
+      "school": "UCLA",
+      "mascot": "Bruins",
+      "abbreviation": "UCLA",
+      "alt_name1": null,
+      "alt_name2": "UCLA",
+      "alt_name3": "UCLA",
+      "conference": "Pac-12",
+      "classification": "fbs",
+      "color": "#005C8E",
+      "alt_color": "#ffc72c",
+      "logos": [
+        "http://a.espncdn.com/i/teamlogos/ncaa/500/26.png",
+        "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/26.png"
+      ],
+      "twitter": "@UCLAFootball",
+      "location": {
+        "venue_id": 1056,
+        "name": "Rose Bowl",
+        "city": "Pasadena",
+        "state": "CA",
+        "zip": "90095",
+        "country_code": "US",
+        "timezone": "America/Los_Angeles",
+        "latitude": 34.1613284,
+        "longitude": -118.1676462,
+        "elevation": "245.1772461",
+        "capacity": 88565,
+        "year_constructed": 1922,
+        "grass": true,
+        "dome": false
+      }
+    },
+    {
+      "id": 30,
+      "school": "USC",
+      "mascot": "Trojans",
+      "abbreviation": "USC",
+      "alt_name1": null,
+      "alt_name2": "USC",
+      "alt_name3": "USC",
+      "conference": "Pac-12",
+      "classification": "fbs",
+      "color": "#ffc72c",
+      "alt_color": "#ae2531",
+      "logos": [
+        "http://a.espncdn.com/i/teamlogos/ncaa/500/30.png",
+        "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/30.png"
+      ],
+      "twitter": "@uscfb",
+      "location": {
+        "venue_id": 477,
+        "name": "Los Angeles Memorial Coliseum",
+        "city": "Los Angeles",
+        "state": "CA",
+        "zip": "90089",
+        "country_code": "US",
+        "timezone": "America/Los_Angeles",
+        "latitude": 34.014167,
+        "longitude": -118.287778,
+        "elevation": "42.50374222",
+        "capacity": 77500,
+        "year_constructed": 1923,
+        "grass": true,
+        "dome": false
+      }
+    },
+    {
+      "id": 254,
+      "school": "Utah",
+      "mascot": "Utes",
+      "abbreviation": "UTAH",
+      "alt_name1": null,
+      "alt_name2": "UTAH",
+      "alt_name3": "Utah",
+      "conference": "Pac-12",
+      "classification": "fbs",
+      "color": "#890012",
+      "alt_color": "#7e8083",
+      "logos": [
+        "http://a.espncdn.com/i/teamlogos/ncaa/500/254.png",
+        "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/254.png"
+      ],
+      "twitter": "@Utah_Football",
+      "location": {
+        "venue_id": 587,
+        "name": "Rice-Eccles Stadium",
+        "city": "Salt Lake City",
+        "state": "UT",
+        "zip": "84112",
+        "country_code": "US",
+        "timezone": "America/Denver",
+        "latitude": 40.7599724,
+        "longitude": -111.8488255,
+        "elevation": "1411.543579",
+        "capacity": 45807,
+        "year_constructed": 1998,
+        "grass": false,
+        "dome": false
+      }
+    },
+    {
+      "id": 264,
+      "school": "Washington",
+      "mascot": "Huskies",
+      "abbreviation": "WASH",
+      "alt_name1": null,
+      "alt_name2": "WASH",
+      "alt_name3": "Washington",
+      "conference": "Pac-12",
+      "classification": "fbs",
+      "color": "#2B2F64",
+      "alt_color": "#e8e3d3",
+      "logos": [
+        "http://a.espncdn.com/i/teamlogos/ncaa/500/264.png",
+        "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/264.png"
+      ],
+      "twitter": "@UW_Football",
+      "location": {
+        "venue_id": 3765,
+        "name": "Husky Stadium",
+        "city": "Seattle",
+        "state": "WA",
+        "zip": "98195",
+        "country_code": "US",
+        "timezone": "America/Los_Angeles",
+        "latitude": 47.6503235,
+        "longitude": -122.3015746,
+        "elevation": "11.65622807",
+        "capacity": 70138,
+        "year_constructed": 1920,
+        "grass": false,
+        "dome": false
+      }
+    },
+    {
+      "id": 265,
+      "school": "Washington State",
+      "mascot": "Cougars",
+      "abbreviation": "WSU",
+      "alt_name1": null,
+      "alt_name2": "WSU",
+      "alt_name3": "Washington St",
+      "conference": "Pac-12",
+      "classification": "fbs",
+      "color": "#94022a",
+      "alt_color": "#6a747c",
+      "logos": [
+        "http://a.espncdn.com/i/teamlogos/ncaa/500/265.png",
+        "http://a.espncdn.com/i/teamlogos/ncaa/500-dark/265.png"
+      ],
+      "twitter": "@WSUCougarFB",
+      "location": {
+        "venue_id": 3820,
+        "name": "Martin Stadium",
+        "city": "Pullman",
+        "state": "WA",
+        "zip": "99164",
+        "country_code": "US",
+        "timezone": "America/Los_Angeles",
+        "latitude": 46.731831,
+        "longitude": -117.1604991,
+        "elevation": "773.9526367",
+        "capacity": 32952,
+        "year_constructed": 1972,
+        "grass": false,
+        "dome": false
+      }
+    }
+  ]
+}
