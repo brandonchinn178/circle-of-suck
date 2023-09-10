@@ -27,11 +27,6 @@
     },
     {
       "from": "ORST",
-      "to": "STAN",
-      "isPlayed": false
-    },
-    {
-      "from": "STAN",
       "to": "UCLA",
       "isPlayed": false
     },
@@ -42,21 +37,26 @@
     },
     {
       "from": "USC",
-      "to": "UTAH",
-      "isPlayed": false
+      "to": "STAN",
+      "isPlayed": true
     },
     {
-      "from": "UTAH",
-      "to": "WASH",
-      "isPlayed": false
-    },
-    {
-      "from": "WASH",
+      "from": "STAN",
       "to": "WSU",
       "isPlayed": false
     },
     {
       "from": "WSU",
+      "to": "WASH",
+      "isPlayed": false
+    },
+    {
+      "from": "WASH",
+      "to": "UTAH",
+      "isPlayed": false
+    },
+    {
+      "from": "UTAH",
       "to": "ARIZ",
       "isPlayed": false
     }
