@@ -2,61 +2,61 @@
   "circleOfSuck": [
     {
       "from": "ARIZ",
-      "to": "ASU",
-      "isPlayed": false
+      "to": "STAN",
+      "isPlayed": true
     },
     {
-      "from": "ASU",
-      "to": "CAL",
-      "isPlayed": false
-    },
-    {
-      "from": "CAL",
+      "from": "STAN",
       "to": "ORE",
       "isPlayed": false
     },
     {
       "from": "ORE",
       "to": "COLO",
-      "isPlayed": false
+      "isPlayed": true
     },
     {
       "from": "COLO",
-      "to": "ORST",
-      "isPlayed": false
-    },
-    {
-      "from": "ORST",
-      "to": "UCLA",
-      "isPlayed": false
-    },
-    {
-      "from": "UCLA",
       "to": "USC",
       "isPlayed": false
     },
     {
       "from": "USC",
-      "to": "STAN",
+      "to": "ASU",
       "isPlayed": true
     },
     {
-      "from": "STAN",
-      "to": "WSU",
-      "isPlayed": false
-    },
-    {
-      "from": "WSU",
+      "from": "ASU",
       "to": "WASH",
       "isPlayed": false
     },
     {
       "from": "WASH",
+      "to": "CAL",
+      "isPlayed": true
+    },
+    {
+      "from": "CAL",
       "to": "UTAH",
       "isPlayed": false
     },
     {
       "from": "UTAH",
+      "to": "UCLA",
+      "isPlayed": true
+    },
+    {
+      "from": "UCLA",
+      "to": "WSU",
+      "isPlayed": false
+    },
+    {
+      "from": "WSU",
+      "to": "ORST",
+      "isPlayed": true
+    },
+    {
+      "from": "ORST",
       "to": "ARIZ",
       "isPlayed": false
     }
