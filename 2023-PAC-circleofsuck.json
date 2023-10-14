@@ -32,6 +32,16 @@
     },
     {
       "from": "STAN",
+      "to": "COLO",
+      "isPlayed": true
+    },
+    {
+      "from": "COLO",
+      "to": "ASU",
+      "isPlayed": true
+    },
+    {
+      "from": "ASU",
       "to": "WASH",
       "isPlayed": false
     },
@@ -47,18 +57,8 @@
     },
     {
       "from": "USC",
-      "to": "COLO",
-      "isPlayed": true
-    },
-    {
-      "from": "COLO",
-      "to": "ASU",
-      "isPlayed": true
-    },
-    {
-      "from": "ASU",
       "to": "ARIZ",
-      "isPlayed": false
+      "isPlayed": true
     }
   ],
   "teams": [
