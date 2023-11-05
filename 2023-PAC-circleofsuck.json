@@ -17,11 +17,26 @@
     },
     {
       "from": "ASU",
-      "to": "UCLA",
+      "to": "ORE",
       "isPlayed": false
     },
     {
+      "from": "ORE",
+      "to": "UTAH",
+      "isPlayed": true
+    },
+    {
+      "from": "UTAH",
+      "to": "UCLA",
+      "isPlayed": true
+    },
+    {
       "from": "UCLA",
+      "to": "STAN",
+      "isPlayed": true
+    },
+    {
+      "from": "STAN",
       "to": "WSU",
       "isPlayed": true
     },
@@ -32,26 +47,11 @@
     },
     {
       "from": "WASH",
-      "to": "ORE",
-      "isPlayed": true
-    },
-    {
-      "from": "ORE",
-      "to": "UTAH",
-      "isPlayed": true
-    },
-    {
-      "from": "UTAH",
       "to": "USC",
       "isPlayed": true
     },
     {
       "from": "USC",
-      "to": "STAN",
-      "isPlayed": true
-    },
-    {
-      "from": "STAN",
       "to": "COLO",
       "isPlayed": true
     },
