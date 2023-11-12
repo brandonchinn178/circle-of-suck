@@ -2,31 +2,16 @@
   "circleOfSuck": [
     {
       "from": "ARIZ",
-      "to": "ORST",
+      "to": "COLO",
       "isPlayed": true
     },
     {
-      "from": "ORST",
-      "to": "CAL",
-      "isPlayed": true
-    },
-    {
-      "from": "CAL",
+      "from": "COLO",
       "to": "ASU",
       "isPlayed": true
     },
     {
       "from": "ASU",
-      "to": "ORE",
-      "isPlayed": false
-    },
-    {
-      "from": "ORE",
-      "to": "UTAH",
-      "isPlayed": true
-    },
-    {
-      "from": "UTAH",
       "to": "UCLA",
       "isPlayed": true
     },
@@ -37,28 +22,43 @@
     },
     {
       "from": "STAN",
+      "to": "CAL",
+      "isPlayed": false
+    },
+    {
+      "from": "CAL",
       "to": "WSU",
       "isPlayed": true
     },
     {
       "from": "WSU",
+      "to": "ORST",
+      "isPlayed": true
+    },
+    {
+      "from": "ORST",
       "to": "WASH",
       "isPlayed": false
     },
     {
       "from": "WASH",
+      "to": "ORE",
+      "isPlayed": true
+    },
+    {
+      "from": "ORE",
+      "to": "UTAH",
+      "isPlayed": true
+    },
+    {
+      "from": "UTAH",
       "to": "USC",
       "isPlayed": true
     },
     {
       "from": "USC",
-      "to": "COLO",
-      "isPlayed": true
-    },
-    {
-      "from": "COLO",
       "to": "ARIZ",
-      "isPlayed": false
+      "isPlayed": true
     }
   ],
   "teams": [
